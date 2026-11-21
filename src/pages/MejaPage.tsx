@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
+import { CangkirTubruk, Uap } from '../components/brand/icons';
 import { CustomerHeader } from '../components/layout/CustomerHeader';
+import { LangkahPesan } from '../features/menu/LangkahPesan';
 import { Button, InlineMessage } from '../components/ui';
 import { MasukGoogleButton } from '../features/auth/MasukGoogleButton';
 import { clearPending, peekPending, setPending } from '../features/auth/pending';
@@ -130,20 +132,28 @@ function MejaView({ nomor }: { nomor: number }) {
         onUbahProfil={() => setUbahProfil(true)}
       />
 
-      <section aria-labelledby="judul-meja" className="mt-10">
-        <h1 id="judul-meja" className="flex flex-col">
-          <span className="text-body-s text-ampas">Meja</span>
-          <span className="font-display text-display-xl">{nomor}</span>
-        </h1>
-        <p className="mt-3 text-ampas">Pesan dari sini, bayar kalau sudah selesai.</p>
+      <section aria-labelledby="judul-meja" className="pt-8">
+        <div className="flex items-end justify-between gap-4">
+          <h1 id="judul-meja" className="flex flex-col">
+            <span className="text-body-s text-ampas">Meja</span>
+            <span className="font-display text-display-xl">{nomor}</span>
+          </h1>
+          <span aria-hidden="true" className="mr-1 flex flex-col items-center text-tubruk">
+            <Uap size={26} strokeWidth={1.25} className="-mb-2 text-ampas" />
+            <CangkirTubruk size={60} strokeWidth={1.25} />
+          </span>
+        </div>
+        <p className="mt-4 text-body-l">Pesan dari sini, bayar kalau sudah selesai.</p>
         {billDiminta ? (
           <InlineMessage tone="info" className="mt-6">
             Bill sudah diminta. Tambah pesanan lewat kasir.
           </InlineMessage>
-        ) : null}
+        ) : (
+          <LangkahPesan className="mt-6" />
+        )}
       </section>
 
-      <div className="mt-12">
+      <div className="mt-8">
         <MenuBoard terkunci={billDiminta} />
       </div>
 

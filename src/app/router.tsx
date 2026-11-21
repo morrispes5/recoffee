@@ -2,10 +2,13 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { createBrowserRouter, RouterProvider, type RouteObject } from 'react-router';
 import { CustomerLayout } from '../components/layout/CustomerLayout';
 import { Skeleton } from '../components/ui';
-import HomePage from '../pages/HomePage';
 import MejaPage from '../pages/MejaPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import TagihanPage from '../pages/TagihanPage';
+
+// Beranda jarang dibuka (pelanggan langsung scan QR ke /meja/:nomor), jadi ikut dimuat terpisah.
+const HomePage = lazy(() => import('../pages/HomePage'));
+// Tagihan baru dibuka setelah memesan; menu tetap di bundle utama agar tampil paling cepat.
+const TagihanPage = lazy(() => import('../pages/TagihanPage'));
 
 // Halaman admin dimuat terpisah agar HP pelanggan tidak mengunduh kode admin (NFR-01).
 const AdminLayout = lazy(() =>
@@ -52,9 +55,23 @@ const routes: RouteObject[] = [
   {
     element: <CustomerLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
+      {
+        path: '/',
+        element: (
+          <Muat>
+            <HomePage />
+          </Muat>
+        ),
+      },
       { path: '/meja/:nomor', element: <MejaPage /> },
-      { path: '/meja/:nomor/tagihan', element: <TagihanPage /> },
+      {
+        path: '/meja/:nomor/tagihan',
+        element: (
+          <Muat>
+            <TagihanPage />
+          </Muat>
+        ),
+      },
     ],
   },
   {

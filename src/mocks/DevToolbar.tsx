@@ -30,7 +30,7 @@ export default function DevToolbar() {
   }
 
   return (
-    <details className="fixed right-2 bottom-24 z-20 rounded-ui border border-garis bg-putih text-body-s open:w-64 open:pb-2">
+    <details className="fixed bottom-24 left-2 z-40 rounded-ui border border-garis bg-putih text-body-s open:w-64 open:pb-2">
       <summary className="cursor-pointer list-none px-2.5 py-1.5 font-semibold select-none">
         Mock (dev)
       </summary>

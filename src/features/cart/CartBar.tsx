@@ -1,5 +1,5 @@
+import { CaretRight } from '@phosphor-icons/react';
 import { BottomBar } from '../../components/layout/BottomBar';
-import { Button } from '../../components/ui';
 import { formatRupiah } from '../../lib/format';
 import { useCart } from './useCart';
 
@@ -9,12 +9,22 @@ export function CartBar({ onBuka }: { onBuka: () => void }) {
   if (jumlahItem === 0) return null;
   return (
     <BottomBar>
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-body font-medium tabular-nums" aria-live="polite">
-          {jumlahItem} item, {formatRupiah(total)}
-        </p>
-        <Button onClick={onBuka}>Lihat pesanan</Button>
-      </div>
+      <button
+        type="button"
+        onClick={onBuka}
+        className="flex min-h-14 w-full items-center gap-3 rounded-ui bg-blirik px-4 text-left text-putih transition-colors duration-150 hover:bg-blirik/90"
+      >
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-putih text-body-s font-semibold text-blirik tabular-nums">
+          {jumlahItem}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold">Lihat pesanan</span>
+          <span className="block text-body-s text-putih/80 tabular-nums" aria-live="polite">
+            {jumlahItem} item, {formatRupiah(total)}
+          </span>
+        </span>
+        <CaretRight size={20} aria-hidden="true" />
+      </button>
     </BottomBar>
   );
 }

@@ -1,7 +1,8 @@
 import { GoogleLogo } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Logo } from '../components/brand/Logo';
+import { RakWarung } from '../components/brand/RakWarung';
 import { Button, InlineMessage } from '../components/ui';
 import { useAuth } from '../features/auth/useAuth';
 import { toUserMessage } from '../lib/errors';
@@ -29,12 +30,16 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-putih">
-      <main className="mx-auto flex w-full max-w-pelanggan flex-col items-start px-5 pt-24">
+    <div className="flex min-h-dvh items-start justify-center bg-putih sm:items-center sm:bg-tegel sm:p-8">
+      <main className="flex w-full max-w-pelanggan flex-col items-start bg-putih px-5 pt-16 pb-12 sm:rounded-ui sm:border sm:border-garis sm:px-10 sm:pt-12">
         <Logo size="md" />
-        <h1 className="mt-12 text-body-l">Masuk untuk mengelola meja dan pesanan.</h1>
+        <h1 className="mt-10 font-display text-display-m text-balance">
+          Masuk untuk mengelola meja dan pesanan.
+        </h1>
+        <p className="mt-3 text-ampas">Khusus kasir dan barista dengan akun Google terdaftar.</p>
         <Button
           className="mt-8"
+          fullWidth
           onClick={() => void masuk()}
           loading={proses}
           icon={<GoogleLogo size={20} weight="bold" aria-hidden="true" />}
@@ -42,10 +47,17 @@ export default function AdminLoginPage() {
           Masuk dengan Google
         </Button>
         {error ? (
-          <InlineMessage tone="error" className="mt-4">
+          <InlineMessage tone="error" className="mt-4 w-full">
             {error}
           </InlineMessage>
         ) : null}
+        <RakWarung className="mt-12 w-full" />
+        <Link
+          to="/"
+          className="mt-6 rounded-ui py-2 text-body-s text-ampas underline-offset-4 hover:text-tubruk hover:underline"
+        >
+          Ke beranda pelanggan
+        </Link>
       </main>
     </div>
   );

@@ -4,14 +4,67 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                          | Status                                                         |
-| ---------------------------------- | -------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL    | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat) |
-| M1 Setup project dan design system | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)  |
-| M2 Frontend pelanggan (mock)       | **Selesai (21 Nov 2026)**                                      |
-| M3 Frontend admin (mock)           | **Selesai (21 Nov 2026)**                                      |
-| M4 Backend Supabase                | Berikutnya (butuh slot project Supabase dari pemilik akun)     |
-| M5–M8                              | Belum                                                          |
+| Milestone                            | Status                                                                 |
+| ------------------------------------ | ---------------------------------------------------------------------- |
+| M0 Perencanaan dan dokumen MPPL      | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat)         |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)          |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                              |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                              |
+| M4 Backend Supabase                  | **Database selesai (21 Nov 2026)**; Google login menunggu setup manual |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                              |
+| M5–M8                                | Belum                                                                  |
+
+---
+
+## Revisi tampilan atas permintaan pemilik proyek (21 Nov 2026)
+
+Pemilik menilai tampilan M1–M3 "masih jelek": terlalu polos, beranda hampir kosong, dan di laptop kolom 480 px melayang di halaman putih yang luas. Perbaikan tetap memakai token dan larangan desain PRD 15 (latar putih, tanpa shadow/gradien/foto/gambar AI, hanya ikon garis tulis tangan).
+
+1. **Bingkai pelanggan** (`CustomerLayout`): di layar ≥ 640 px kolom putih 480 px berdiri di atas latar `tegel` dengan border `garis`; footer "Warung kopi, diseduh ulang."; `BottomBar` selebar kolom.
+2. **Header menempel** (`CustomerTopBar`, `CustomerHeader`): logo, Tagihan meja, Masuk/Keluar dengan ikon Phosphor.
+3. **Beranda** (menyimpang dari PRD 16.2 yang sangat minimal): judul Gloock besar, `RakWarung` (deretan ikon warung di atas bilah papan), bagian "Cara pesan" 3 langkah. Copy hanya menjelaskan fitur yang memang ada.
+4. **Halaman meja**: cangkir tubruk beruap di samping nomor meja, strip `LangkahPesan` (Pilih menu, Kirim pesanan, Minta bill), navigasi kategori menempel di bawah header (link jangkar, bukan fitur baru), garis papan 2 px `tubruk` per kategori, ikon kategori blirik, tombol + bergaris blirik (terisi saat item sudah di keranjang).
+5. **Bar keranjang**: satu tombol blirik besar "Lihat pesanan" + "3 item, Rp57.000".
+6. **Tagihan**: header menempel dengan "Kembali ke menu", judul `display-l`, total di blok `tegel`.
+7. **Masuk admin**: kartu di atas `tegel` + `RakWarung`.
+8. Beranda dan halaman tagihan ikut di-lazy load: bundle awal 149,5 KB gzip (sebelumnya 151 KB).
+
+Diuji di browser 375 px dan 1280 px; 64 tes, lint, format, dan build lolos.
+
+---
+
+## M4 — Backend Supabase (21 Nov 2026)
+
+### Yang selesai
+
+1. `final project hactiv8` di-pause oleh pemilik akun lewat dashboard. Project baru **`recoffee`** dibuat di organisasi `morrispes5`, region `ap-southeast-1` (Singapore), biaya $0 (free plan). Ref: `yfzdriwrdbacqzkhzzzj`.
+2. Migrasi dijalankan berurutan dan disimpan di `supabase/migrations/`: `0001_schema`, `0002_auth_rls`, `0003_functions` (isi sama persis dengan PRD 13.1–13.3), lalu `supabase/seed.sql` (28 meja, 12 menu, admin `morrispes5@gmail.com`).
+3. `0004_trigger_search_path`: tambahan kecil dari Supabase security advisor (lint 0011), mengunci `search_path` di `set_updated_at()` dan `cek_transisi_pesanan()`. Tidak mengubah tabel, relasi, maupun aturan.
+4. `src/types/database.types.ts` di-generate dari project (dikecualikan dari Prettier karena file hasil generate).
+5. `.env.local` berisi `VITE_SUPABASE_URL` + publishable key (di-ignore git, tidak di-commit). `service_role` tidak dipakai.
+
+### Hasil `supabase/tests/rls_check.sql` (role `anon`)
+
+| Pemeriksaan                                                       | Hasil                                |
+| ----------------------------------------------------------------- | ------------------------------------ |
+| Insert langsung ke `pesanan`                                      | OK, ditolak                          |
+| Baca `sesi_meja` / `pelanggan`                                    | OK, 0 baris                          |
+| `buat_pesanan`, `get_tagihan_meja`, `minta_bill`, `simpan_profil` | OK, ditolak (insufficient_privilege) |
+| `konfirmasi_bayar`, `batalkan_sesi`                               | OK, ditolak                          |
+| Baca `menu` dan `meja`                                            | OK, 12 menu dan 28 meja terbaca      |
+
+Catatan: notice `raise notice` tidak dikembalikan oleh tool SQL, jadi saat dijalankan hasil tiap pemeriksaan ditulis ke tabel sementara lalu dibaca; logika pemeriksaannya sama dengan skrip.
+
+### Security advisor
+
+- Peringatan "SECURITY DEFINER bisa dijalankan `authenticated`" (8 fungsi) dan "`is_admin()` bisa dijalankan `anon`" **disengaja** sesuai desain PRD 13.3: fungsi pelanggan memang untuk user login, `is_admin()` dipakai policy RLS. Setiap fungsi admin mengecek `is_admin()` di dalamnya.
+
+### DoD
+
+- [x] Semua tabel, index, trigger, function, view ada.
+- [x] Uji RLS: anon gagal insert langsung ke `pesanan`, gagal panggil `konfirmasi_bayar`, gagal baca `sesi_meja`.
+- [x] Anon tidak bisa memanggil `buat_pesanan`, `get_tagihan_meja`, `minta_bill`, `simpan_profil`.
+- [ ] Login Google admin dan login Google akun lain (sebagai pelanggan) berhasil di localhost. **Menunggu pemilik akun**: tambah redirect URI `https://yfzdriwrdbacqzkhzzzj.supabase.co/auth/v1/callback` di OAuth Client Google, isi Client ID/Secret di Supabase → Authentication → Providers → Google, consent screen "In production", Redirect URLs `http://localhost:5173/**`. Login baru bisa diuji setelah M5 menyambungkan frontend.
 
 ---
 

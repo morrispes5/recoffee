@@ -8,12 +8,12 @@ export function TagihanView({ tagihan }: { tagihan: Tagihan }) {
     <div>
       <p className="text-body-s text-ampas">Dibuka {formatJam(tagihan.dibuka_at)}</p>
 
-      <ol className="mt-8 flex flex-col divide-y divide-garis border-y border-garis">
+      <ol className="mt-8 flex flex-col divide-y divide-garis border-t-2 border-tubruk">
         {tagihan.pesanan.map((p, i) => (
           <li key={p.id} className="py-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-semibold">Pesanan {i + 1}</p>
+                <p className="text-body-l font-semibold">Pesanan {i + 1}</p>
                 <p className="text-body-s text-ampas">
                   {formatJam(p.created_at)} oleh {p.dipesan_oleh}
                   {p.milik_saya ? ' (kamu)' : ''}
@@ -38,8 +38,8 @@ export function TagihanView({ tagihan }: { tagihan: Tagihan }) {
         ))}
       </ol>
 
-      <div className="mt-6 flex items-baseline justify-between gap-4">
-        <span className="text-body-l">Total</span>
+      <div className="mt-2 flex items-baseline justify-between gap-4 rounded-ui bg-tegel px-5 py-5">
+        <span className="text-body-l font-semibold">Total</span>
         <span className="font-display text-display-l tabular-nums">
           {formatRupiah(tagihan.total)}
         </span>

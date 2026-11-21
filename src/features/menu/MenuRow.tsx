@@ -20,15 +20,17 @@ export function MenuRow({ menu, qty, onTambah, terkunci = false }: MenuRowProps)
     <li className="py-4">
       <div className="flex items-center gap-3">
         <div className="flex min-w-0 flex-1 items-baseline gap-2">
-          <span className={cn('text-body-l font-medium', habis && 'text-ampas')}>{menu.nama}</span>
+          <span className={cn('text-body-l font-semibold', habis && 'text-ampas')}>
+            {menu.nama}
+          </span>
           <span
             aria-hidden="true"
-            className="min-w-4 flex-1 translate-y-[-0.3em] border-b border-dotted border-ampas/50"
+            className="min-w-4 flex-1 translate-y-[-0.3em] border-b border-dotted border-ampas/60"
           />
           <span
             className={cn(
-              'text-body whitespace-nowrap tabular-nums',
-              habis && 'text-ampas line-through',
+              'text-body font-semibold whitespace-nowrap tabular-nums',
+              habis && 'font-normal text-ampas line-through',
             )}
           >
             {habis ? <span className="sr-only">Harga </span> : null}
@@ -51,6 +53,7 @@ export function MenuRow({ menu, qty, onTambah, terkunci = false }: MenuRowProps)
                 }
                 onClick={onTambah}
                 disabled={terkunci || qty >= MAX_QTY}
+                variant={qty > 0 ? 'primary' : 'aksen'}
               >
                 <Plus size={18} aria-hidden="true" />
               </IconButton>

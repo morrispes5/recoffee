@@ -4,12 +4,14 @@ import { cn } from '../../lib/cn';
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Wajib: tombol ikon tidak punya teks, jadi label dibacakan screen reader. */
   label: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'aksen' | 'secondary';
   children: ReactNode;
 }
 
 const VARIANT = {
   primary: 'bg-blirik text-putih hover:bg-blirik/90 disabled:bg-garis disabled:text-ampas',
+  aksen:
+    'border border-blirik bg-putih text-blirik hover:bg-blirik hover:text-putih disabled:border-garis disabled:text-garis disabled:hover:bg-putih',
   secondary:
     'border border-garis bg-putih text-tubruk hover:bg-tegel disabled:text-garis disabled:hover:bg-putih',
 } as const;

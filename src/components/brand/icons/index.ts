@@ -1,0 +1,10 @@
+export { BijiKopi } from './BijiKopi';
+export { CangkirTubruk } from './CangkirTubruk';
+export { GelasBlirik } from './GelasBlirik';
+export { IkonKategori } from './IkonKategori';
+export { KalengKerupuk } from './KalengKerupuk';
+export { KursiPlastik } from './KursiPlastik';
+export { PiringRoti } from './PiringRoti';
+export { Teko } from './Teko';
+export { Uap } from './Uap';
+export type { IconProps } from './IconBase';

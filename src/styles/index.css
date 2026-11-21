@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+/*
+ * Design token RE:coffee — sumber kebenaran: docs/design-system.md (PRD bagian 15).
+ * Palet, radius, dan shadow bawaan Tailwind dimatikan agar hanya token di bawah yang bisa dipakai.
+ */
+@theme {
+  /* 15.2 Warna */
+  --color-*: initial;
+  --color-putih: #ffffff;
+  --color-tegel: #f4f4f2;
+  --color-garis: #e4e2de;
+  --color-tubruk: #2b201b;
+  --color-ampas: #76695f;
+  --color-blirik: #2f6b57;
+  --color-lampu: #f0b840;
+  --color-kaleng: #b23a2e;
+
+  /* 15.3 Tipografi */
+  --font-*: initial;
+  --font-display: 'Gloock', 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --text-*: initial;
+  --text-display-xl: 4rem;
+  --text-display-xl--line-height: 1;
+  --text-display-l: 2.5rem;
+  --text-display-l--line-height: 1.1;
+  --text-display-m: 1.75rem;
+  --text-display-m--line-height: 1.2;
+  --text-body-l: 1.125rem;
+  --text-body-l--line-height: 1.5;
+  --text-body: 1rem;
+  --text-body--line-height: 1.55;
+  --text-body-s: 0.875rem;
+  --text-body-s--line-height: 1.5;
+
+  /* 15.4 Bentuk: hanya 6px (ui) dan penuh (meja, badge) */
+  --radius-*: initial;
+  --radius-ui: 6px;
+  --radius-full: 9999px;
+
+  /* 15.2: tidak ada shadow */
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  /* 15.4 Lebar konten */
+  --container-pelanggan: 480px;
+  --container-admin: 1120px;
+
+  /* 15.9 Motion: satu momen, uap naik dan memudar */
+  --animate-uap: uap 600ms ease-out forwards;
+
+  @keyframes uap {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-putih);
+    color: var(--color-tubruk);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blirik);
+    outline-offset: 2px;
+  }
+
+  /* Kunci scroll halaman saat dialog/sheet terbuka */
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-blirik);
+    color: var(--color-putih);
+  }
+}
+
+/* 15.9 Hormati prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after,
+  ::backdrop {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

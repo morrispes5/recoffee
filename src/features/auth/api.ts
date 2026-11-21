@@ -17,12 +17,13 @@ export function onAuthChange(cb: (user: AuthUser | null) => void): () => void {
 
 /**
  * M5: supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } }).
- * Mock M2: tidak ada redirect; anggap langsung kembali dari Google sebagai pelanggan demo.
+ * Mock M2–M3: tidak ada redirect; anggap langsung kembali dari Google. Tujuan `/admin` masuk
+ * sebagai kasir demo, selain itu sebagai pelanggan demo. Cek is_admin() dibuat di M5.
  */
 export async function signInWithGoogle(redirectTo: string): Promise<void> {
-  void redirectTo;
   await new Promise((r) => setTimeout(r, 400));
-  setUserMock(MOCK_USERS.saya);
+  const keAdmin = new URL(redirectTo, window.location.origin).pathname.startsWith('/admin');
+  setUserMock(keAdmin ? MOCK_USERS.admin : MOCK_USERS.saya);
 }
 
 /** M5: supabase.auth.signOut() */

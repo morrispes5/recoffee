@@ -64,7 +64,10 @@ export default function DevToolbar() {
 
         <Judul>Sistem</Judul>
         <Aksi onClick={() => jalankan(() => toggleMenuHabis(MENU_UJI_HABIS.id))}>
-          {MENU_UJI_HABIS.nama}: {db.menuHabis.includes(MENU_UJI_HABIS.id) ? 'habis' : 'tersedia'}
+          {MENU_UJI_HABIS.nama}:{' '}
+          {db.menu.find((m) => m.id === MENU_UJI_HABIS.id)?.tersedia === false
+            ? 'habis'
+            : 'tersedia'}
         </Aksi>
         <Aksi onClick={() => jalankan(toggleOffline)}>
           Jaringan: {db.offline ? 'putus' : 'normal'}

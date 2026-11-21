@@ -17,6 +17,10 @@ export function temanPesan(nomor: number): void {
         status: 'aktif',
         metode_bayar: null,
         dibuka_at: new Date().toISOString(),
+        minta_bill_at: null,
+        ditutup_at: null,
+        total_bayar: null,
+        dikonfirmasi_oleh: null,
       };
       db.sesi.push(sesi);
     }
@@ -51,6 +55,12 @@ export function kasirKonfirmasi(nomor: number): void {
     if (!sesi) return;
     sesi.status = 'selesai';
     sesi.metode_bayar = sesi.metode_bayar ?? 'kasir';
+    sesi.ditutup_at = new Date().toISOString();
+    sesi.total_bayar = db.pesanan
+      .filter((p) => p.sesi_id === sesi.id)
+      .flatMap((p) => p.items)
+      .reduce((sum, i) => sum + i.qty * i.harga_satuan, 0);
+    sesi.dikonfirmasi_oleh = 'kasir.demo@gmail.com';
   });
 }
 
@@ -60,9 +70,8 @@ export const MENU_UJI_HABIS = kopiTubruk;
 
 export function toggleMenuHabis(menuId: string): void {
   ubahDb((db) => {
-    db.menuHabis = db.menuHabis.includes(menuId)
-      ? db.menuHabis.filter((id) => id !== menuId)
-      : [...db.menuHabis, menuId];
+    const menu = db.menu.find((m) => m.id === menuId);
+    if (menu) menu.tersedia = !menu.tersedia;
   });
 }
 

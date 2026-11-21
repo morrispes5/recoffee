@@ -1,28 +1,47 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, type ReactNode } from 'react';
 import { createBrowserRouter, RouterProvider, type RouteObject } from 'react-router';
-import { AdminLayout } from '../components/layout/AdminLayout';
 import { CustomerLayout } from '../components/layout/CustomerLayout';
-import AdminAntrianPage from '../pages/AdminAntrianPage';
-import AdminDenahPage from '../pages/AdminDenahPage';
-import AdminDetailMejaPage from '../pages/AdminDetailMejaPage';
-import AdminLoginPage from '../pages/AdminLoginPage';
-import AdminMenuPage from '../pages/AdminMenuPage';
+import { Skeleton } from '../components/ui';
 import HomePage from '../pages/HomePage';
 import MejaPage from '../pages/MejaPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import TagihanPage from '../pages/TagihanPage';
 
+// Halaman admin dimuat terpisah agar HP pelanggan tidak mengunduh kode admin (NFR-01).
+const AdminLayout = lazy(() =>
+  import('../components/layout/AdminLayout').then((m) => ({ default: m.AdminLayout })),
+);
+const AdminLoginPage = lazy(() => import('../pages/AdminLoginPage'));
+const AdminDenahPage = lazy(() => import('../pages/AdminDenahPage'));
+const AdminDetailMejaPage = lazy(() => import('../pages/AdminDetailMejaPage'));
+const AdminAntrianPage = lazy(() => import('../pages/AdminAntrianPage'));
+const AdminMenuPage = lazy(() => import('../pages/AdminMenuPage'));
+
 // Halaman katalog komponen, hanya di mode dev (tidak ikut build produksi).
 const DevUiPage = import.meta.env.DEV ? lazy(() => import('../pages/DevUiPage')) : null;
+
+function Muat({ children }: { children: ReactNode }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="mx-auto w-full max-w-admin px-5 py-12 sm:px-8">
+          <Skeleton lines={4} className="max-w-md" />
+        </div>
+      }
+    >
+      {children}
+    </Suspense>
+  );
+}
 
 const devRoutes: RouteObject[] = DevUiPage
   ? [
       {
         path: '/dev/ui',
         element: (
-          <Suspense fallback={null}>
+          <Muat>
             <DevUiPage />
-          </Suspense>
+          </Muat>
         ),
       },
     ]
@@ -38,15 +57,54 @@ const routes: RouteObject[] = [
       { path: '/meja/:nomor/tagihan', element: <TagihanPage /> },
     ],
   },
-  { path: '/admin/masuk', element: <AdminLoginPage /> },
+  {
+    path: '/admin/masuk',
+    element: (
+      <Muat>
+        <AdminLoginPage />
+      </Muat>
+    ),
+  },
   {
     path: '/admin',
-    element: <AdminLayout />,
+    element: (
+      <Muat>
+        <AdminLayout />
+      </Muat>
+    ),
     children: [
-      { index: true, element: <AdminDenahPage /> },
-      { path: 'meja/:nomor', element: <AdminDetailMejaPage /> },
-      { path: 'antrian', element: <AdminAntrianPage /> },
-      { path: 'menu', element: <AdminMenuPage /> },
+      {
+        index: true,
+        element: (
+          <Muat>
+            <AdminDenahPage />
+          </Muat>
+        ),
+      },
+      {
+        path: 'meja/:nomor',
+        element: (
+          <Muat>
+            <AdminDetailMejaPage />
+          </Muat>
+        ),
+      },
+      {
+        path: 'antrian',
+        element: (
+          <Muat>
+            <AdminAntrianPage />
+          </Muat>
+        ),
+      },
+      {
+        path: 'menu',
+        element: (
+          <Muat>
+            <AdminMenuPage />
+          </Muat>
+        ),
+      },
     ],
   },
   ...devRoutes,

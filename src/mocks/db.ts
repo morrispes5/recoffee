@@ -1,4 +1,11 @@
-import type { ItemTagihan, MetodeBayar, Profil, StatusPesanan, StatusSesi } from '../types/domain';
+import type {
+  ItemTagihan,
+  Menu,
+  MetodeBayar,
+  Profil,
+  StatusPesanan,
+  StatusSesi,
+} from '../types/domain';
 import { seedMockDb } from './tagihan';
 
 /*
@@ -13,6 +20,10 @@ export interface MockSesi {
   status: StatusSesi;
   metode_bayar: MetodeBayar | null;
   dibuka_at: string;
+  minta_bill_at: string | null;
+  ditutup_at: string | null;
+  total_bayar: number | null;
+  dikonfirmasi_oleh: string | null;
 }
 
 export interface MockPesanan {
@@ -29,7 +40,7 @@ export interface MockDb {
   sesi: MockSesi[];
   pesanan: MockPesanan[];
   profil: Record<string, Profil>;
-  menuHabis: string[];
+  menu: Menu[];
   offline: boolean;
 }
 
@@ -38,12 +49,13 @@ export interface MockUser {
   email: string;
 }
 
-const DB_KEY = 'recoffee:mock:db';
+const DB_KEY = 'recoffee:mock:db:v2';
 const AUTH_KEY = 'recoffee:mock:auth';
 
 export const MOCK_USERS = {
   saya: { id: 'mock-pelanggan-1', email: 'pelanggan.demo@gmail.com' },
   teman: { id: 'mock-pelanggan-2', email: 'teman.demo@gmail.com' },
+  admin: { id: 'mock-admin', email: 'kasir.demo@gmail.com' },
 } as const satisfies Record<string, MockUser>;
 
 function isRecord(v: unknown): v is Record<string, unknown> {
@@ -60,7 +72,7 @@ export function bacaDb(): MockDb {
         Array.isArray(data.sesi) &&
         Array.isArray(data.pesanan) &&
         isRecord(data.profil) &&
-        Array.isArray(data.menuHabis)
+        Array.isArray(data.menu)
       ) {
         return data as unknown as MockDb;
       }

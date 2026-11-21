@@ -7,7 +7,6 @@ import {
   ubahDb,
   type MockPesanan,
 } from '../../mocks/db';
-import { MOCK_MENU } from '../../mocks/menu';
 import { TOTAL_MEJA } from '../../lib/meja';
 import type { MetodeBayar, StatusSesi, Tagihan } from '../../types/domain';
 
@@ -76,9 +75,7 @@ export async function kirimPesanan(
 
     const itemsTagihan = items.map((i) => {
       if (!Number.isInteger(i.qty) || i.qty < 1 || i.qty > 20) throw new Error('QTY_TIDAK_VALID');
-      const menu = MOCK_MENU.find(
-        (m) => m.id === i.menu_id && m.tersedia && !m.diarsipkan && !db.menuHabis.includes(m.id),
-      );
+      const menu = db.menu.find((m) => m.id === i.menu_id && m.tersedia && !m.diarsipkan);
       if (!menu) throw new Error('MENU_TIDAK_TERSEDIA');
       return { nama_menu: menu.nama, qty: i.qty, harga_satuan: menu.harga };
     });
@@ -91,6 +88,10 @@ export async function kirimPesanan(
         status: 'aktif',
         metode_bayar: null,
         dibuka_at: new Date().toISOString(),
+        minta_bill_at: null,
+        ditutup_at: null,
+        total_bayar: null,
+        dikonfirmasi_oleh: null,
       };
       db.sesi.push(sesi);
     } else if (sesi.status === 'minta_bill') {
@@ -126,6 +127,7 @@ export async function mintaBill(nomorMeja: number, metode: MetodeBayar): Promise
     if (!sesi) throw new Error('SESI_TIDAK_AKTIF');
     sesi.status = 'minta_bill';
     sesi.metode_bayar = metode;
+    sesi.minta_bill_at = sesi.minta_bill_at ?? new Date().toISOString();
   });
 }
 

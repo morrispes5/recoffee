@@ -1,8 +1,15 @@
 import { bacaDb, tundaMock } from '../../mocks/db';
-import { MOCK_MENU } from '../../mocks/menu';
 import type { KategoriMenu, Menu } from '../../types/domain';
 
 export const URUTAN_KATEGORI: KategoriMenu[] = ['kopi', 'non_kopi', 'makanan', 'camilan'];
+
+export function urutkanMenu(a: Menu, b: Menu): number {
+  return (
+    URUTAN_KATEGORI.indexOf(a.kategori) - URUTAN_KATEGORI.indexOf(b.kategori) ||
+    a.urutan - b.urutan ||
+    a.nama.localeCompare(b.nama)
+  );
+}
 
 /**
  * Menu yang tidak diarsipkan, urut kategori lalu urutan.
@@ -10,12 +17,7 @@ export const URUTAN_KATEGORI: KategoriMenu[] = ['kopi', 'non_kopi', 'makanan', '
  */
 export async function fetchMenu(): Promise<Menu[]> {
   await tundaMock();
-  const { menuHabis } = bacaDb();
-  return MOCK_MENU.filter((m) => !m.diarsipkan)
-    .map((m) => ({ ...m, tersedia: m.tersedia && !menuHabis.includes(m.id) }))
-    .sort(
-      (a, b) =>
-        URUTAN_KATEGORI.indexOf(a.kategori) - URUTAN_KATEGORI.indexOf(b.kategori) ||
-        a.urutan - b.urutan,
-    );
+  return bacaDb()
+    .menu.filter((m) => !m.diarsipkan)
+    .sort(urutkanMenu);
 }

@@ -9,8 +9,39 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M0 Perencanaan dan dokumen MPPL    | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat) |
 | M1 Setup project dan design system | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)  |
 | M2 Frontend pelanggan (mock)       | **Selesai (21 Nov 2026)**                                      |
-| M3 Frontend admin (mock)           | Berikutnya                                                     |
-| M4–M8                              | Belum                                                          |
+| M3 Frontend admin (mock)           | **Selesai (21 Nov 2026)**                                      |
+| M4 Backend Supabase                | Berikutnya (butuh slot project Supabase dari pemilik akun)     |
+| M5–M8                              | Belum                                                          |
+
+---
+
+## M3 — Frontend admin dengan data mock (21 Nov 2026)
+
+### Yang selesai
+
+1. `AdminLayout`: navigasi Denah / Antrian / Menu (tab aktif ditandai garis blirik + `aria-current`; Denah tetap aktif di detail meja), email admin, tombol Keluar.
+2. `AdminLoginPage`: tombol Masuk dengan Google. Mock: langsung masuk sebagai `kasir.demo@gmail.com` lalu ke `/admin`. Cek `is_admin()` dan penolakan akun di M5.
+3. `features/admin-meja`: `DenahMeja` + `MejaBulat` (28 meja, grid 7 kolom desktop / 4 kolom tablet dan HP, 3 status dengan teks di bawah lingkaran: "Kosong", total berjalan, "Minta bill, QRIS"), ringkasan teks (meja terisi, minta bill, pesanan belum diantar), keterangan, empty state `KursiPlastik`, polling 5 detik.
+4. `DetailMeja`: pesanan dengan nama + nomor HP (`tel:`), harga satuan, catatan, peringatan non-blocking bila ada pesanan belum diantar, total, metode pilihan pelanggan + `Select` untuk mengganti, dialog **Konfirmasi bayar** dan **Batalkan sesi** (danger, terpisah). Setelah sukses kembali ke denah dengan pesan.
+5. `features/admin-antrian`: `AntrianList` berupa baris (bukan kartu), urut terlama, filter Semua / Baru / Diproses dengan jumlah, tombol hanya langkah berikutnya (Proses → Antar), pesanan diantar hilang dari daftar. Tata letak baris menyesuaikan ke HP.
+6. `features/admin-menu`: `MenuTable` per kategori (switch Tersedia/Habis, Ubah, Arsipkan, toggle tampilkan arsip + Pulihkan), `MenuForm` dalam dialog dengan validasi Zod sama dengan constraint database.
+7. Data mock diperluas: menu sekarang disimpan di "database" mock (bisa ditambah/diubah/diarsipkan admin), seed awal meja 3 (minta bill QRIS), 7, 12 (terisi), 21 (minta bill kasir). Perubahan admin langsung terlihat di halaman pelanggan.
+8. Halaman admin dimuat terpisah (lazy) agar HP pelanggan tidak mengunduh kode admin.
+
+### DoD
+
+- [x] Semua halaman admin bisa dinavigasi dengan data mock.
+- [x] Status meja terbaca tanpa warna (ada teks di bawah lingkaran dan `aria-label` "Meja 12, terisi, total Rp106.000").
+- [x] Form menu menampilkan error validasi yang jelas (diuji nama 1 huruf + harga 0).
+
+Diuji di browser (desktop 1280 px, tablet 768 px, HP 360 px): login mock, denah, konfirmasi bayar meja 12 (meja kosong lagi + pesan), batalkan sesi meja 7, antrian Proses → Antar (TC-16), tambah menu valid/tidak valid (TC-20, TC-21), arsipkan Kopi Jahe (hilang di halaman pelanggan, TC-22), tandai Kopi Tubruk habis (TC-06). 64 unit test lulus (+ `menuSchema`).
+
+### Keputusan dan catatan
+
+- "Meja terisi" di ringkasan = sesi `aktif` + `minta_bill` (sesuai PRD 5.3); "minta bill" dihitung terpisah.
+- Antrian mengikuti query PRD (semua pesanan `baru`/`diproses`), jadi pesanan dari sesi yang sudah dibayar/dibatalkan tetap muncul sampai ditandai diantar. Bila dirasa membingungkan, bisa ditambah filter sesi terbuka di M5 (dicatat di Usulan).
+- Mock admin belum mengecek hak admin; halaman `/admin/*` bisa dibuka tanpa login sampai `RequireAdmin` dipasang di M5.
+- Bundle awal pelanggan 151 KB gzip; kode admin 1–4 KB gzip per halaman.
 
 ---
 
@@ -105,4 +136,4 @@ Tambahan: `npm run test` lulus (19 tes: `format`, `meja`, `Button`, `Switch`, `T
 
 ## Usulan (di luar scope, belum dikerjakan)
 
-_Belum ada._
+- Antrian admin hanya menampilkan pesanan dari sesi yang masih terbuka (`aktif`/`minta_bill`), agar pesanan dari sesi yang dibatalkan tidak menggantung. Perlu keputusan pelaksana sebelum M5.

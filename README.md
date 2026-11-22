@@ -4,6 +4,7 @@ Sistem pemesanan kopi berbasis meja (open bill) — proyek UAS Manajemen Proyek 
 
 - PRD (sumber kebenaran): [`docs/REcoffeePrd.md`](docs/REcoffeePrd.md)
 - Progres per milestone: [`docs/PROGRESS.md`](docs/PROGRESS.md)
+- Operasional dan serah terima: [`docs/serah-terima.md`](docs/serah-terima.md)
 - Design system: [`docs/design-system.md`](docs/design-system.md)
 - ERD, LRS, dan kamus data: [`docs/mppl/05-erd-lrs.md`](docs/mppl/05-erd-lrs.md)
 
@@ -29,6 +30,10 @@ Isi `.env.local` dengan `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` (publis
 ## Database
 
 Jalankan migrasi `supabase/migrations/0001` sampai `0005` berurutan, lalu `supabase/seed.sql` (28 meja dan admin). Menu kafe dimasukkan oleh migrasi `0005`. Uji akses anon: `supabase/tests/rls_check.sql`. Uji aturan bisnis dengan akun simulasi: `supabase/tests/aturan_bisnis.sql` (keduanya dijalankan di SQL Editor dan membatalkan perubahannya sendiri).
+
+## Deploy
+
+Produksi: https://recoffee-ten.vercel.app (Vercel, tersambung ke repo GitHub; push ke `main` otomatis deploy). ENV di Vercel: `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY`. QR meja dibuat dengan `node scripts/generate-qr.mjs https://alamat-produksi` lalu cetak `/qr-meja/cetak.html`. Checklist sebelum demo, mengganti alamat, dan pasang ulang dari nol ada di [`docs/serah-terima.md`](docs/serah-terima.md).
 
 ## Pengujian
 

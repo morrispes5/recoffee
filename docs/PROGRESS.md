@@ -4,20 +4,61 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                            | Status                                                                                                |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                       |
-| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                         |
-| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                             |
-| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                             |
-| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                             |
-| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                             |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                  |
-| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                             |
-| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                             |
-| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                             |
-| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik |
-| M7–M8                                | Belum                                                                                                 |
+| Milestone                            | Status                                                                                                                                    |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                           |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                             |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                 |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                 |
+| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                 |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                 |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                                                      |
+| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                 |
+| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                 |
+| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                 |
+| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik                                     |
+| M7 Deployment                        | **Sebagian (22 Nov 2026)**: produksi aktif di https://recoffee-ten.vercel.app; uji login Google di produksi dan cetak QR menunggu pemilik |
+| M8                                   | Belum                                                                                                                                     |
+
+---
+
+## M7 — Deployment (22 Nov 2026)
+
+Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
+
+### Yang selesai
+
+- **Repo GitHub privat** `morrispes5/recoffee` (riwayat commit ikut apa adanya). Sebelum push, file yang dilacak dan seluruh riwayat dipindai: tidak ada kunci rahasia (hanya pengecekan awalan `sb_publishable_` di `env.ts`).
+- **Vercel:** project `recoffee` tersambung ke repo, jadi tiap push ke `main` otomatis deploy. Preset Vite, rewrite SPA dari `vercel.json`, dua ENV (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) di Production dan Preview. **URL produksi: https://recoffee-ten.vercel.app** (`recoffee.vercel.app` sudah dipakai orang lain).
+- **Supabase Auth:** Site URL diubah ke URL produksi; Redirect URLs berisi `http://localhost:5173/**` dan `https://recoffee-ten.vercel.app/**`. Google Cloud tidak perlu diubah karena callback menuju Supabase.
+- **Skrip QR** `scripts/generate-qr.mjs <alamat>`: 28 QR SVG di `public/qr-meja/` plus halaman cetak `/qr-meja/cetak.html` (paket `qrcode`, devDependency). Menolak alamat tanpa https kecuali localhost. Sudah dijalankan untuk URL produksi.
+- **Keep-alive:** `.github/workflows/keep-alive.yml` membaca satu baris tabel `meja` tiap 3 hari agar project Supabase gratis tidak di-pause. `SUPABASE_URL` dan `SUPABASE_ANON_KEY` ada di GitHub Secrets.
+- **Panduan serah terima** (`docs/serah-terima.md`): peta akun, checklist H-1 sebelum demo, SQL pembersih data uji, mengganti alamat, dan setup dari nol.
+
+### Pemeriksaan di produksi
+
+- HTTPS aktif (HSTS), `/`, `/meja/18`, `/meja/18/tagihan`, `/admin/antrian`, dan `/admin/masuk` semuanya 200 dan tidak ada 404.
+- Browser tanpa sesi login: `/meja/18/tagihan` dibuka langsung menampilkan halaman tagihan (TC-24 lulus); `/meja/18` memuat 22 menu dari Supabase; `/admin/antrian` dialihkan ke `/admin/masuk`; konsol tanpa error.
+- Alur login Google dari domain produksi sampai ke pemilih akun Google dengan `redirect_to` ke URL produksi dan callback ke Supabase. Memilih akun adalah langkah pemilik.
+
+### Keputusan dan catatan
+
+- Atas keputusan pemilik, semua infrastruktur tetap di akun pemilik dan Nisa memakai akun Google pemilik untuk masuk saat demo. Verifikasi 2 langkah Google bisa meminta HP pemilik pada login dari perangkat baru; uji dari perangkat presentasi jauh sebelum hari H.
+- `vercel link` menulis `VERCEL_OIDC_TOKEN` ke `.env.local`; baris itu langsung dihapus lagi. `.vercel` ditambahkan ke `.gitignore`.
+- `supabase/seed.sql` masih berisi email admin pemilik; diganti saat setup di akun lain (lihat panduan serah terima).
+
+### Belum selesai
+
+- Login Google di domain produksi dibuktikan sampai selesai (butuh pemilik memilih akun di pemilih Google).
+- `public/qris.png` belum ada (menutup TC-11 dan B-03).
+- Cetak minimal 3 QR (meja 1, 18, 27) dan pindai satu dengan kamera HP.
+
+### DoD
+
+- [x] URL produksi bisa diakses via HTTPS.
+- [x] Refresh di `/meja/18` dan `/admin/antrian` tidak 404. (Dibuka langsung: halaman tampil; `/admin/antrian` dialihkan ke login karena belum masuk.)
+- [ ] Login Google berjalan di domain produksi. (Sampai pemilih akun; menunggu pemilik memilih akun.)
+- [ ] 28 QR tergenerate mengarah ke domain produksi; minimal 3 dicetak untuk demo. (28 QR sudah dibuat; pencetakan menunggu pemilik.)
 
 ---
 
@@ -29,7 +70,7 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 
 - **Uji otomatis:** 93 tes lulus (88 sebelumnya + 5 aksesibilitas). Paket baru `axe-core` (devDependency) dipakai di `src/test/a11y.test.tsx` untuk memeriksa WCAG 2.1 A/AA pada form beranda, komponen form, dialog data diri, dan form menu admin, termasuk satu kontrol negatif agar jelas axe benar-benar mendeteksi pelanggaran.
 - **Uji database:** `supabase/tests/aturan_bisnis.sql` (baru) menyimulasikan tiga akun pelanggan dan admin dengan klaim JWT: 39 pemeriksaan `[OK]`, 0 `[GAGAL]`, termasuk batas qty 0/1/20/21. `rls_check.sql` (4 kelompok, 9 pemeriksaan) lulus. Kedua skrip membatalkan perubahannya sendiri.
-- **Black box (32 kasus PRD 19.3):** 25 lulus lewat UI, 4 lulus lewat SQL (TC-10, 14, 30, 31: butuh akun Google kedua untuk versi UI), 2 sebagian (TC-11: gambar QRIS belum ada; TC-26: bagian setelah login belum diuji), 1 ditunda (TC-24: butuh deploy).
+- **Black box (32 kasus PRD 19.3):** 26 lulus lewat UI (TC-24 lulus di produksi pada M7), 4 lulus lewat SQL (TC-10, 14, 30, 31: butuh akun Google kedua untuk versi UI), 2 sebagian (TC-11: gambar QRIS belum ada; TC-26: bagian setelah login belum diuji).
 - **Aksesibilitas dasar:** kontras semua pasangan teks lulus AA; label form lengkap (42 elemen di halaman pelanggan, 80 di menu admin); keyboard di dialog admin logis (Tab, Esc, fokus kembali ke pemicu); axe 0 pelanggaran.
 
 ### Bug yang ditemukan dan diperbaiki
@@ -45,12 +86,11 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 - Akun Google kedua dan ketiga sebagai Test user untuk versi UI TC-10, 14, 30, 31.
 - Mencoba TC-26 sekali: isi keranjang saat keluar, masuk Google, cek keranjang masih utuh.
 - Sesi UAT dengan 3 sampai 5 teman memakai `docs/mppl/11-uat.md`; hasilnya diisi di bagian 6 dan 7 dokumen itu.
-- TC-24 dikerjakan di M7 setelah deploy.
 
 ### DoD
 
 - [x] `npm run test` lulus (93 tes). Lint dan build bersih.
-- [ ] 100% kasus black box prioritas tinggi lulus. (20 dari 23 lulus; TC-11 dan TC-26 sebagian, TC-24 ditunda.)
+- [ ] 100% kasus black box prioritas tinggi lulus. (21 dari 23 lulus; TC-11 dan TC-26 sebagian.)
 - [ ] Hasil UAT terdokumentasi. (Panduan dan formulir siap; sesi belum dijalankan.)
 
 ### Data uji

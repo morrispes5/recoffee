@@ -34,14 +34,14 @@ export function Switch({
         aria-hidden="true"
         className={cn(
           'relative inline-flex h-6 w-10 shrink-0 items-center rounded-full border transition-colors duration-150',
-          checked ? 'border-blirik bg-blirik' : 'border-garis bg-tegel',
+          checked ? 'border-blirik bg-blirik' : 'border-batas bg-tegel',
           'group-disabled:opacity-60',
         )}
       >
         <span
           className={cn(
             'absolute left-0.5 size-[1.125rem] rounded-full bg-putih transition-transform duration-150',
-            checked ? 'translate-x-4' : 'translate-x-0 border border-garis',
+            checked ? 'translate-x-4' : 'translate-x-0 border border-batas',
           )}
         />
       </span>

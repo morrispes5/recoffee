@@ -35,7 +35,8 @@ export function rangkumTerlaris(
 }
 
 /**
- * Ringkasan dasbor kasir untuk hari ini (WIB). Hanya admin yang bisa membaca
+ * Ringkasan dasbor kasir untuk hari ini (WIB). Sesi yang dibatalkan tidak dihitung sebagai
+ * pesanan maupun menu terlaris. Hanya admin yang bisa membaca
  * `sesi_meja`, `pesanan`, dan `item_pesanan` (RLS M4), jadi tidak perlu function baru.
  */
 export async function fetchRingkasanHariIni(): Promise<RingkasanHariIni> {
@@ -50,9 +51,14 @@ export async function fetchRingkasanHariIni(): Promise<RingkasanHariIni> {
       .gte('ditutup_at', mulai),
     supabase
       .from('item_pesanan')
-      .select('nama_menu, qty, harga_satuan, pesanan!inner(created_at)')
-      .gte('pesanan.created_at', mulai),
-    supabase.from('pesanan').select('id', { count: 'exact', head: true }).gte('created_at', mulai),
+      .select('nama_menu, qty, harga_satuan, pesanan!inner(created_at, sesi_meja!inner(status))')
+      .gte('pesanan.created_at', mulai)
+      .neq('pesanan.sesi_meja.status', 'batal'),
+    supabase
+      .from('pesanan')
+      .select('id, sesi_meja!inner(status)', { count: 'exact', head: true })
+      .gte('created_at', mulai)
+      .neq('sesi_meja.status', 'batal'),
   ]);
   if (sesi.error) throw sesi.error;
   if (items.error) throw items.error;

@@ -13,7 +13,10 @@ export interface AntrianRow {
   items: { nama_menu: string; qty: number }[];
 }
 
-/** Pesanan baru dan diproses, urut dari yang terlama (FR-16). */
+/**
+ * Pesanan baru dan diproses, urut dari yang terlama (FR-16). Pesanan dari sesi yang dibatalkan
+ * tidak ikut: barista tidak perlu membuat pesanan yang kasir sudah batalkan (temuan uji M6).
+ */
 export async function fetchAntrian(): Promise<AntrianRow[]> {
   const { data, error } = await getSupabase()
     .from('pesanan')
@@ -21,6 +24,7 @@ export async function fetchAntrian(): Promise<AntrianRow[]> {
       'id, status, catatan, created_at, sesi_meja!inner(nomor_meja), pelanggan(nama), items:item_pesanan(nama_menu, qty)',
     )
     .in('status', ['baru', 'diproses'])
+    .neq('sesi_meja.status', 'batal')
     .order('created_at')
     .order('id');
   if (error) throw error;

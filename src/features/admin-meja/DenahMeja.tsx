@@ -4,7 +4,7 @@ import { toUserMessage } from '../../lib/errors';
 import { useDenah } from './hooks';
 import { MejaBulat } from './MejaBulat';
 
-/** Denah 28 meja + ringkasan + keterangan (FR-12, FR-21). */
+/** Denah 28 meja + keterangan (FR-12, FR-21). Angka ringkasan ada di kartu dasbor. */
 export function DenahMeja() {
   const denahQ = useDenah();
 
@@ -27,39 +27,29 @@ export function DenahMeja() {
 
   const meja = denahQ.data;
   const terisi = meja.filter((m) => m.status !== 'kosong').length;
-  const mintaBill = meja.filter((m) => m.status === 'minta_bill').length;
-  const belumDiantar = meja.reduce((sum, m) => sum + m.pesanan_belum_diantar, 0);
 
   return (
-    <div className="flex flex-col gap-10">
-      <p className="flex flex-wrap gap-x-8 gap-y-1 text-body-l" aria-live="polite">
-        <span>
-          <span className="font-semibold tabular-nums">{terisi}</span> meja terisi
-        </span>
-        <span>
-          <span className="font-semibold tabular-nums">{mintaBill}</span> minta bill
-        </span>
-        <span>
-          <span className="font-semibold tabular-nums">{belumDiantar}</span> pesanan belum diantar
-        </span>
-      </p>
-
+    <div className="flex flex-col gap-8">
       {terisi === 0 ? (
-        <p className="flex items-center gap-3 text-ampas">
-          <KursiPlastik size={28} />
+        <p className="flex items-center gap-3 rounded-ui bg-tegel px-4 py-3 text-body-s text-ampas">
+          <KursiPlastik size={24} />
           Semua meja kosong. Pesanan pertama akan membuka meja otomatis.
         </p>
       ) : null}
 
-      <ul className="grid max-w-[60rem] grid-cols-4 gap-x-4 gap-y-8 lg:grid-cols-7">
-        {meja.map((m) => (
-          <li key={m.nomor} className="flex justify-center">
+      <ul className="grid grid-cols-4 gap-x-3 gap-y-6 sm:grid-cols-7">
+        {meja.map((m, i) => (
+          <li
+            key={m.nomor}
+            className="flex animate-muncul justify-center"
+            style={{ animationDelay: `${120 + i * 15}ms` }}
+          >
             <MejaBulat meja={m} />
           </li>
         ))}
       </ul>
 
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-body-s text-ampas">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-garis pt-4 text-body-s text-ampas">
         <span className="font-medium text-tubruk">Keterangan</span>
         <span className="flex items-center gap-2">
           <span aria-hidden="true" className="size-4 rounded-full border border-garis" />

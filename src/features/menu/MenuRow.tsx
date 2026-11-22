@@ -43,7 +43,12 @@ export function MenuRow({ menu, qty, onTambah, terkunci = false }: MenuRowProps)
           ) : (
             <>
               {qty > 0 ? (
-                <span className="text-body-s font-semibold text-blirik tabular-nums">{qty}×</span>
+                <span
+                  key={qty}
+                  className="animate-pop text-body-s font-semibold text-blirik tabular-nums"
+                >
+                  {qty}×
+                </span>
               ) : null}
               <IconButton
                 label={

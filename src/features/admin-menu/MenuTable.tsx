@@ -1,7 +1,7 @@
 import { Plus } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { IkonKategori } from '../../components/brand/icons';
-import { Badge, Button, InlineMessage, Skeleton, Switch } from '../../components/ui';
+import { Badge, Button, InlineMessage, Panel, Skeleton, Switch } from '../../components/ui';
 import { cn } from '../../lib/cn';
 import { toUserMessage } from '../../lib/errors';
 import { formatRupiah } from '../../lib/format';
@@ -28,19 +28,42 @@ export function MenuTable() {
 
   const sedangDiubah = ubahStatus.isPending ? ubahStatus.variables.id : null;
 
+  const semua = menuQ.data ?? [];
+  const aktif = semua.filter((m) => !m.diarsipkan);
+  const ringkasan = [
+    { label: 'Menu tampil', nilai: aktif.filter((m) => m.tersedia).length, warna: 'bg-blirik' },
+    { label: 'Ditandai habis', nilai: aktif.filter((m) => !m.tersedia).length, warna: 'bg-lampu' },
+    { label: 'Diarsipkan', nilai: semua.length - aktif.length, warna: 'bg-garis' },
+  ];
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <Switch label="Tampilkan menu diarsipkan" checked={tampilArsip} onChange={setTampilArsip} />
-        <Button
-          icon={<Plus size={18} aria-hidden="true" />}
-          onClick={() => setForm({ open: true, menu: null })}
-        >
-          Tambah menu
-        </Button>
+    <div className="flex flex-col gap-6">
+      <div className="flex animate-muncul flex-wrap items-center justify-between gap-4 rounded-ui border border-garis bg-putih p-4 sm:px-6">
+        <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Ringkasan menu">
+          {ringkasan.map((r) => (
+            <li key={r.label} className="flex items-center gap-2 text-body-s text-ampas">
+              <span aria-hidden="true" className={cn('size-2.5 rounded-full', r.warna)} />
+              {r.label}
+              <span className="font-semibold text-tubruk tabular-nums">{r.nilai}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap items-center gap-4">
+          <Switch label="Tampilkan arsip" checked={tampilArsip} onChange={setTampilArsip} />
+          <Button
+            icon={<Plus size={18} aria-hidden="true" />}
+            onClick={() => setForm({ open: true, menu: null })}
+          >
+            Tambah menu
+          </Button>
+        </div>
       </div>
 
-      {pesan ? <InlineMessage tone="sukses">{pesan}</InlineMessage> : null}
+      {pesan ? (
+        <InlineMessage tone="sukses" className="animate-muncul">
+          {pesan}
+        </InlineMessage>
+      ) : null}
       {ubahStatus.isError ? (
         <InlineMessage tone="error">{toUserMessage(ubahStatus.error)}</InlineMessage>
       ) : null}
@@ -50,23 +73,31 @@ export function MenuTable() {
       ) : menuQ.isError ? (
         <InlineMessage tone="error">{toUserMessage(menuQ.error)}</InlineMessage>
       ) : (
-        URUTAN_KATEGORI.map((kategori) => {
+        URUTAN_KATEGORI.map((kategori, urutanKategori) => {
           const daftar = menuQ.data.filter(
             (m) => m.kategori === kategori && (tampilArsip || !m.diarsipkan),
           );
           return (
-            <section key={kategori} aria-labelledby={`admin-kategori-${kategori}`}>
-              <h2
-                id={`admin-kategori-${kategori}`}
-                className="flex items-center gap-3 font-display text-display-m"
-              >
-                {LABEL_KATEGORI[kategori]}
-                <IkonKategori kategori={kategori} size={24} />
-              </h2>
+            <Panel
+              key={kategori}
+              id={`admin-kategori-${kategori}`}
+              delay={80 + urutanKategori * 60}
+              judul={
+                <span className="flex items-center gap-3">
+                  <span className="grid size-10 place-items-center rounded-full bg-tegel text-blirik">
+                    <IkonKategori kategori={kategori} size={22} />
+                  </span>
+                  {LABEL_KATEGORI[kategori]}
+                </span>
+              }
+              aksi={
+                <span className="text-body-s text-ampas tabular-nums">{daftar.length} menu</span>
+              }
+            >
               {daftar.length === 0 ? (
-                <p className="mt-3 text-body-s text-ampas">Belum ada menu di kategori ini.</p>
+                <p className="text-body-s text-ampas">Belum ada menu di kategori ini.</p>
               ) : (
-                <div className="mt-3 overflow-x-auto">
+                <div className="-mx-5 overflow-x-auto px-5 sm:-mx-6 sm:px-6">
                   <table className="w-full min-w-[44rem] table-fixed border-collapse text-left">
                     <colgroup>
                       <col />
@@ -178,7 +209,7 @@ export function MenuTable() {
                   </table>
                 </div>
               )}
-            </section>
+            </Panel>
           );
         })
       )}

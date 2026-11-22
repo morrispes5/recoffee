@@ -64,14 +64,15 @@ export function MenuBoard({ terkunci = false }: { terkunci?: boolean }) {
       </nav>
 
       <div className="mt-8 flex flex-col gap-14">
-        {kelompok.map(({ kategori, daftar }) => {
+        {kelompok.map(({ kategori, daftar }, urutan) => {
           const judulId = `judul-kategori-${kategori}`;
           return (
             <section
               key={kategori}
               id={`kategori-${kategori}`}
               aria-labelledby={judulId}
-              className="scroll-mt-32 border-t-2 border-tubruk pt-5"
+              className="animate-muncul scroll-mt-32 border-t-2 border-tubruk pt-5"
+              style={{ animationDelay: `${120 + urutan * 90}ms` }}
             >
               <h2 id={judulId} className="flex items-end gap-3">
                 <span className="font-display text-display-m">{LABEL_KATEGORI[kategori]}</span>

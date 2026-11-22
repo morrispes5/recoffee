@@ -58,7 +58,7 @@ export function AntrianList() {
               'inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-body-s font-medium transition-colors duration-150',
               filter === f.value
                 ? 'border-tubruk bg-tubruk text-putih'
-                : 'border-garis text-tubruk hover:bg-tegel',
+                : 'border-garis bg-putih text-tubruk hover:border-tubruk',
             )}
           >
             {f.label}
@@ -72,7 +72,7 @@ export function AntrianList() {
       ) : null}
 
       {rows.length === 0 ? (
-        <div className="flex items-center gap-4 py-8 text-ampas">
+        <div className="flex animate-muncul items-center gap-4 rounded-ui border border-garis bg-putih px-5 py-8 text-ampas">
           <CangkirTubruk size={36} />
           <p>
             {semua.length === 0
@@ -81,13 +81,16 @@ export function AntrianList() {
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col divide-y divide-garis border-y border-garis">
+        <ul className="flex flex-col divide-y divide-garis overflow-hidden rounded-ui border border-garis bg-putih">
           {rows.map((r) => {
             const langkah = LANGKAH_BERIKUTNYA[r.status];
             return (
               <li
                 key={r.id}
-                className="grid grid-cols-[auto_1fr_auto] items-start gap-x-4 gap-y-2 py-4 md:grid-cols-[4rem_5.5rem_8rem_minmax(0,1fr)_6.5rem_7rem] md:items-center"
+                className={cn(
+                  'grid animate-muncul grid-cols-[auto_1fr_auto] items-start gap-x-4 gap-y-2 border-l-4 px-4 py-4 sm:px-5 md:grid-cols-[4rem_5.5rem_8rem_minmax(0,1fr)_6.5rem_7rem] md:items-center',
+                  r.status === 'baru' ? 'border-l-blirik' : 'border-l-transparent',
+                )}
               >
                 <span className="text-body-s text-ampas tabular-nums md:text-body">
                   {formatJam(r.created_at)}

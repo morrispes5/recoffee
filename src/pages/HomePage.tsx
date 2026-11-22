@@ -28,16 +28,19 @@ export default function HomePage() {
     <div className="flex flex-col pt-10">
       <Logo size="md" />
 
-      <h1 className="mt-14 font-display text-display-l text-balance">
+      <h1 className="mt-14 animate-muncul font-display text-display-l text-balance">
         Pesan dari meja, bayar kalau sudah selesai.
       </h1>
-      <p className="mt-4 max-w-[36ch] text-body-l text-ampas">
+      <p className="mt-4 max-w-[36ch] animate-muncul text-body-l text-ampas [animation-delay:80ms]">
         Scan QR di meja kamu untuk mulai pesan.
       </p>
 
-      <RakWarung className="mt-12" />
+      <RakWarung className="mt-12 animate-muncul [animation-delay:160ms]" />
 
-      <section aria-labelledby="cara-pesan" className="mt-16">
+      <section
+        aria-labelledby="cara-pesan"
+        className="mt-16 animate-muncul [animation-delay:240ms]"
+      >
         <h2 id="cara-pesan" className="font-display text-display-m">
           Cara pesan
         </h2>

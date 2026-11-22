@@ -4,10 +4,11 @@ import { AntrianList } from '../features/admin-antrian/AntrianList';
 export default function AdminAntrianPage() {
   return (
     <section className="flex flex-col gap-6">
-      <div>
+      <div className="animate-muncul">
         <h1 className="font-display text-display-l">Antrian pesanan</h1>
         <p className="mt-2 text-ampas">
-          Urut dari yang terlama. Pesanan yang sudah diantar hilang dari daftar.
+          Urut dari yang terlama. Garis hijau menandai pesanan baru; yang sudah diantar hilang dari
+          daftar.
         </p>
       </div>
       <AntrianList />

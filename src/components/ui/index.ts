@@ -4,6 +4,7 @@ export { buttonClass, type ButtonVariant } from './buttonStyles';
 export { Dialog, type DialogProps } from './Dialog';
 export { IconButton, type IconButtonProps } from './IconButton';
 export { InlineMessage, type MessageTone } from './InlineMessage';
+export { Panel } from './Panel';
 export { Select, type SelectOption, type SelectProps } from './Select';
 export { Sheet, type SheetProps } from './Sheet';
 export { Skeleton } from './Skeleton';

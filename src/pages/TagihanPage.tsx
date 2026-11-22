@@ -20,7 +20,7 @@ export default function TagihanPage() {
           Kembali ke menu
         </Link>
       </CustomerTopBar>
-      <section className="pt-8">
+      <section className="animate-muncul pt-8">
         <h1 className="font-display text-display-l">Tagihan meja {nomor}</h1>
         <div className="mt-2">
           <RequireLogin penjelasan="Masuk dulu untuk melihat tagihan meja ini. Menu tetap bisa dilihat tanpa masuk.">

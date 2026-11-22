@@ -149,7 +149,7 @@ function MejaView({ nomor }: { nomor: number }) {
         onUbahProfil={() => setUbahProfil(true)}
       />
 
-      <section aria-labelledby="judul-meja" className="pt-8">
+      <section aria-labelledby="judul-meja" className="animate-muncul pt-8">
         <div className="flex items-end justify-between gap-4">
           <h1 id="judul-meja" className="flex flex-col">
             <span className="text-body-s text-ampas">Meja</span>

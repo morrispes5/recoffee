@@ -7,7 +7,7 @@ import { IconButton } from '../../components/ui';
 /** Satu-satunya momen animasi: uap naik di atas cangkir saat pesanan terkirim (PRD 15.9). */
 export function KirimSukses({ nomorMeja, onTutup }: { nomorMeja: number; onTutup: () => void }) {
   return (
-    <BottomBar>
+    <BottomBar className="animate-naik">
       <div className="flex items-center gap-4" role="status">
         <span className="relative flex shrink-0 flex-col items-center text-tubruk">
           <Uap size={20} className="-mb-1.5 animate-uap text-ampas" />

@@ -8,13 +8,16 @@ export function CartBar({ onBuka }: { onBuka: () => void }) {
   const { jumlahItem, total } = useCart();
   if (jumlahItem === 0) return null;
   return (
-    <BottomBar>
+    <BottomBar className="animate-naik">
       <button
         type="button"
         onClick={onBuka}
-        className="flex min-h-14 w-full items-center gap-3 rounded-ui bg-blirik px-4 text-left text-putih transition-colors duration-150 hover:bg-blirik/90"
+        className="flex min-h-14 w-full items-center gap-3 rounded-ui bg-blirik px-4 text-left text-putih transition-[background-color,transform] duration-150 hover:bg-blirik/90 active:scale-[0.98]"
       >
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-putih text-body-s font-semibold text-blirik tabular-nums">
+        <span
+          key={jumlahItem}
+          className="flex size-8 shrink-0 animate-pop items-center justify-center rounded-full bg-putih text-body-s font-semibold text-blirik tabular-nums"
+        >
           {jumlahItem}
         </span>
         <span className="min-w-0 flex-1">

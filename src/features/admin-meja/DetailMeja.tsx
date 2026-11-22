@@ -42,7 +42,7 @@ export function DetailMeja({ nomor }: { nomor: number }) {
 
   if (detailQ.data === null) {
     return (
-      <div className="flex flex-col items-start gap-4">
+      <div className="flex animate-muncul flex-col items-start gap-4 rounded-ui border border-garis bg-putih p-6">
         <KursiPlastik size={40} className="text-ampas" />
         <p className="text-body-l">Meja {nomor} sedang kosong.</p>
         <Link to="/admin" className={buttonClass('secondary')}>
@@ -96,8 +96,8 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-16">
-      <div className="flex flex-col gap-6">
+    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="flex animate-muncul flex-col gap-6 rounded-ui border border-garis bg-putih p-5 sm:p-6">
         <p className="text-body-s text-ampas">
           Dibuka {formatJam(detail.dibuka_at)}
           {detail.minta_bill_at ? `, bill diminta ${formatJam(detail.minta_bill_at)}` : ''}
@@ -109,7 +109,7 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
           </InlineMessage>
         ) : null}
 
-        <ol className="flex flex-col divide-y divide-garis border-y border-garis">
+        <ol className="flex flex-col divide-y divide-garis border-t border-garis">
           {detail.pesanan.map((p, i) => (
             <li key={p.id} className="py-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -154,7 +154,7 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
         </ol>
       </div>
 
-      <aside className="flex flex-col gap-6 lg:sticky lg:top-8 lg:self-start">
+      <aside className="flex animate-muncul flex-col gap-6 rounded-ui border border-garis bg-putih p-5 [animation-delay:80ms] sm:p-6 lg:sticky lg:top-24 lg:self-start">
         <div>
           <p className="text-body-s text-ampas">Total tagihan</p>
           <p className="font-display text-display-l tabular-nums">{formatRupiah(detail.total)}</p>

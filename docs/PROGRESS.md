@@ -4,16 +4,37 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                            | Status                                                                 |
-| ------------------------------------ | ---------------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL      | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat)         |
-| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)          |
-| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                              |
-| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                              |
-| M4 Backend Supabase                  | **Database selesai (21 Nov 2026)**; Google login menunggu setup manual |
-| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                              |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi (21 Nov 2026)**. Uji penuh menunggu Google OAuth   |
-| M6–M8                                | Belum                                                                  |
+| Milestone                            | Status                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------------------------ |
+| M0 Perencanaan dan dokumen MPPL      | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat)                       |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                        |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                            |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                            |
+| M4 Backend Supabase                  | **Database selesai (21 Nov 2026)**; Google login menunggu setup manual               |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                            |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum |
+| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                            |
+| M6–M8                                | Belum                                                                                |
+
+---
+
+## Dasbor admin dan animasi atas permintaan pemilik proyek (22 Nov 2026)
+
+Pemilik menilai admin "terlalu minimalis dan hambar". PRD 16.6 dan 15.9 sengaja meminta ringkasan berupa teks biasa, tanpa kartu statistik, tanpa animasi selain uap, dan tanpa efek hover. Atas permintaan pemilik, aturan itu dilonggarkan. Palet, font, larangan gradien, foto, dan gambar AI tetap berlaku.
+
+1. **Dasbor kasir di `/admin`**:
+   - Empat kartu dengan angka berjalan: pendapatan hari ini (WIB, dari sesi `selesai` hari ini, dipecah QRIS/kasir), tagihan berjalan, pesanan menunggu (link ke antrian), dan minta bill (garis lampu bila ada).
+   - Panel "Perlu ditagih": meja yang minta bill, yang paling lama menunggu di atas, dengan lama tunggu.
+   - Panel "Terlaris hari ini": lima menu teratas berupa batang.
+   - Denah 28 meja di dalam panel. Meja minta bill berdenyut.
+   - Data diambil dari tabel yang sudah bisa dibaca admin lewat RLS M4, jadi tidak ada function atau migrasi baru. Ringkasan diperbarui tiap 15 detik dan ikut diinvalidasi setelah konfirmasi bayar.
+2. **Kerangka admin**: latar `tegel` dengan panel putih, header menempel, navigasi berikon (Dasbor, Antrian, Menu), badge jumlah pesanan baru di tab Antrian, indikator Live, dan inisial akun.
+3. **Kelola menu**: ringkasan (tampil, habis, diarsipkan), tombol Tambah menu di bar atas, dan setiap kategori di panel sendiri. CRUD-nya sama seperti M3.
+4. **Antrian dan detail meja**: dibungkus panel putih. Pesanan baru ditandai garis kiri blirik.
+5. **Animasi** (semua mati lewat `prefers-reduced-motion`): `muncul` (fade dan naik, berurutan), `naik` (bar keranjang), `pop` (angka keranjang dan badge), `denyut` (meja minta bill), `tumbuh` (batang terlaris), umpan balik tekan di tombol, dan hover di meja.
+6. Kode baru: `lib/waktu.ts` (awal hari WIB, lama tunggu, tanggal panjang), `lib/useCountUp.ts`, `features/admin-dashboard/*`, `components/ui/Panel.tsx`. Ada 11 tes baru (`waktu`, `rangkumTerlaris`), jadi total 78 tes lulus. Lint dan build lolos. Bundle awal 205 KB gzip; dasbor 6,7 KB gzip dimuat terpisah.
+
+Login Google: Client Secret pertama tidak valid (`invalid_client` di log auth Supabase). Setelah secret baru dibuat, admin `morrispes5@gmail.com` berhasil masuk. Aplikasi Google masih berstatus **Testing**, dengan test user `morrispes5@gmail.com`. Publish ke In production menunggu domain Vercel di M7, karena Google mewajibkan halaman beranda dan privacy policy. Akun pelanggan kedua untuk uji harus ditambahkan sebagai test user.
 
 ---
 

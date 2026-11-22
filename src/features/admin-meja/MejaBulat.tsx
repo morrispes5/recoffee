@@ -5,7 +5,7 @@ import type { StatusMejaRow } from '../../types/domain';
 import { keteranganMeja } from './label';
 
 const LINGKARAN =
-  'grid size-18 place-items-center rounded-full font-display text-[1.75rem] leading-none tabular-nums sm:size-20';
+  'grid size-16 place-items-center rounded-full font-display text-[1.6rem] leading-none tabular-nums sm:size-[4.5rem]';
 
 /** Satu meja di denah (PRD 16.6). Meja kosong tidak bisa diklik. */
 export function MejaBulat({ meja }: { meja: StatusMejaRow }) {
@@ -34,8 +34,8 @@ export function MejaBulat({ meja }: { meja: StatusMejaRow }) {
       <span
         className={cn(
           LINGKARAN,
-          'transition-[box-shadow] duration-150 group-hover:ring-2 group-hover:ring-tubruk/30 group-hover:ring-offset-2',
-          mintaBill ? 'bg-lampu text-tubruk' : 'bg-blirik text-putih',
+          'transition-transform duration-200 group-hover:scale-105 group-active:scale-95',
+          mintaBill ? 'animate-denyut bg-lampu text-tubruk' : 'bg-blirik text-putih',
         )}
       >
         {meja.nomor}

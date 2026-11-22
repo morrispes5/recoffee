@@ -1,0 +1,13 @@
+flowchart TD
+  HP["HP pelanggan<br/>scan QR, buka /meja/18"]
+  LAP["Laptop kasir atau manajer<br/>buka /admin, login Google"]
+  VER["Vercel<br/>aplikasi web statis (React, Vite)"]
+  subgraph SUP["Supabase"]
+    AUTH["Auth<br/>Google OAuth, JWT"]
+    DB[("PostgreSQL<br/>tabel, constraint, index,<br/>RLS, function, view")]
+  end
+  HP -- HTTPS --> VER
+  LAP -- HTTPS --> VER
+  VER -- "supabase-js (REST dan RPC)" --> DB
+  VER -- "login Google" --> AUTH
+  AUTH -- "JWT berisi email" --> DB

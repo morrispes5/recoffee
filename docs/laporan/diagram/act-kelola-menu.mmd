@@ -1,0 +1,28 @@
+flowchart TD
+  classDef s fill:#2B201B,color:#fff,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  subgraph M["Manajer kafe"]
+    S(( )):::s --> A1["Buka Kelola menu"]:::a
+    D0{"Aksi?"}:::d
+    A2["Isi nama, deskripsi,<br/>kategori, harga, urutan"]:::a
+    A3["Geser sakelar habis atau tersedia"]:::a
+    A4["Tekan Arsipkan"]:::a
+  end
+  subgraph S2["Sistem"]
+    B1["Tampilkan menu per kategori"]:::a
+    D1{"Nama 2 sampai 60 huruf,<br/>harga 1 sampai 1.000.000?"}:::d
+    B2["Simpan menu"]:::a
+    B3["Tampilkan pesan validasi"]:::a
+    B4["Ubah status tersedia"]:::a
+    B5["Sembunyikan menu dari pelanggan,<br/>riwayat tagihan tetap utuh"]:::a
+    B6["Perubahan langsung tampil<br/>di halaman pelanggan"]:::a
+    E((( ))):::s
+  end
+  A1 --> B1 --> D0
+  D0 -- Tambah atau ubah --> A2 --> D1
+  D1 -- Ya --> B2 --> B6
+  D1 -- Tidak --> B3 --> A2
+  D0 -- Tandai habis --> A3 --> B4 --> B6
+  D0 -- Arsipkan --> A4 --> B5 --> B6
+  B6 --> E

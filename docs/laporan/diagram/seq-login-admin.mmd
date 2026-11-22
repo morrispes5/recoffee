@@ -1,0 +1,22 @@
+sequenceDiagram
+  autonumber
+  actor A as Kasir atau manajer
+  participant UI as Halaman /admin/masuk
+  participant AU as Supabase Auth
+  participant G as Google
+  participant DB as PostgreSQL
+  A->>UI: Tekan Masuk dengan Google
+  UI->>AU: signInWithOAuth(google)
+  AU->>G: Arahkan ke pemilih akun
+  A->>G: Pilih akun
+  G-->>AU: Kode otorisasi
+  AU-->>UI: Kembali ke /admin dengan JWT
+  UI->>DB: rpc is_admin()
+  alt email terdaftar di tabel admin
+    DB-->>UI: true
+    UI->>A: Tampilkan dasbor dan denah meja
+  else bukan admin
+    DB-->>UI: false
+    UI->>AU: signOut
+    UI->>A: Alert Akun ini bukan admin
+  end

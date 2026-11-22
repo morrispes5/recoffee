@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  actor P as Pelanggan
+  participant UI as Halaman tagihan
+  participant DB as PostgreSQL
+  actor K as Kasir
+  P->>UI: Buka Tagihan meja
+  UI->>DB: rpc get_tagihan_meja(nomor)
+  DB-->>UI: Pesanan, nama pemesan, status, total
+  P->>UI: Tekan Minta bill, pilih QRIS
+  UI->>DB: rpc minta_bill(nomor, metode)
+  DB->>DB: Cek pelanggan pernah memesan di sesi ini
+  DB->>DB: Ubah status sesi menjadi minta_bill
+  DB-->>UI: Berhasil
+  UI->>P: Tampilkan gambar QRIS dan nominal
+  loop setiap 5 detik
+    K->>DB: Baca v_status_meja
+    DB-->>K: Meja berstatus minta bill (kuning)
+  end

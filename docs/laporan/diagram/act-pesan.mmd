@@ -1,0 +1,26 @@
+flowchart TD
+  classDef s fill:#2B201B,color:#fff,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  subgraph P["Pelanggan"]
+    S(( )):::s --> A1["Scan QR atau ketik nomor meja"]:::a
+    A2["Pilih menu, atur jumlah dan catatan"]:::a
+    A3["Tekan Kirim pesanan"]:::a
+    A5["Masuk dengan Google"]:::a
+    A6["Isi nama dan nomor HP"]:::a
+  end
+  subgraph S2["Sistem"]
+    B1["Tampilkan menu per kategori"]:::a
+    D1{"Sudah login dan<br/>punya data diri?"}:::d
+    B2["Validasi meja, item, jumlah,<br/>ketersediaan menu"]:::a
+    D2{"Valid dan sesi<br/>bukan minta bill?"}:::d
+    B3["Buat atau pakai sesi meja aktif,<br/>simpan pesanan dengan harga database"]:::a
+    B4["Kosongkan keranjang,<br/>tampilkan Pesanan terkirim"]:::a
+    B5["Tampilkan pesan kesalahan,<br/>keranjang tetap"]:::a
+    E((( ))):::s
+  end
+  A1 --> B1 --> A2 --> A3 --> D1
+  D1 -- Belum --> A5 --> A6 --> B2
+  D1 -- Sudah --> B2 --> D2
+  D2 -- Ya --> B3 --> B4 --> E
+  D2 -- Tidak --> B5 --> A2

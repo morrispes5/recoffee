@@ -1,0 +1,27 @@
+sequenceDiagram
+  autonumber
+  actor P as Pelanggan
+  participant UI as Halaman meja (browser)
+  participant AU as Supabase Auth
+  participant DB as PostgreSQL (buat_pesanan)
+  P->>UI: Tekan Kirim pesanan
+  UI->>AU: Cek sesi login
+  alt belum login
+    UI->>P: Tampilkan Masuk dengan Google
+    P->>AU: Pilih akun Google
+    AU-->>UI: Kembali ke halaman meja (JWT)
+    UI->>P: Form data diri bila belum ada
+    P->>UI: Isi nama dan nomor HP
+    UI->>DB: rpc simpan_profil(nama, no_hp)
+  end
+  UI->>DB: rpc buat_pesanan(nomor_meja, item: menu_id dan qty, catatan)
+  DB->>DB: Validasi meja, qty 1 sampai 20, menu tersedia
+  DB->>DB: Pakai sesi aktif atau buat sesi baru
+  DB->>DB: Simpan pesanan dan item dengan harga dari tabel menu
+  alt berhasil
+    DB-->>UI: id pesanan
+    UI->>P: Kosongkan keranjang, tampilkan Pesanan terkirim
+  else menu habis atau bill sudah diminta
+    DB-->>UI: Kode kesalahan
+    UI->>P: Pesan yang menjelaskan, keranjang tetap
+  end

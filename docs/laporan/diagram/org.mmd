@@ -1,0 +1,16 @@
+flowchart TD
+  classDef luar fill:#E8F0EC,color:#2B201B,stroke:#2B201B
+  classDef pm fill:#2F6B57,color:#fff,stroke:#2B201B
+  classDef peran fill:#fff,color:#2B201B,stroke:#2B201B
+  D["Dosen pengampu MPPL<br/><i>sponsor dan penilai</i>"]:::luar
+  K["Klien: pemilik kafe RE:coffee<br/><i>pemberi kebutuhan, menyetujui hasil</i>"]:::luar
+  PM["Project Manager<br/>Khairunisa Yulia Cahyani"]:::pm
+  D -.-> PM
+  K <--> PM
+  PM --> SA["System Analyst"]:::peran
+  PM --> UX["UI/UX Designer"]:::peran
+  PM --> PG["Programmer<br/>frontend dan backend"]:::peran
+  PM --> QA["Tester / QA"]:::peran
+  N["Semua peran dijalankan oleh satu orang<br/>(proyek individu)"]
+  style N fill:#FCEFC7,stroke:#2B201B,stroke-dasharray: 4 3
+  QA ~~~ N

@@ -1,0 +1,8 @@
+flowchart LR
+  PEL([Pelanggan])
+  ADM([Kasir dan manajer])
+  SIS[["Sistem RE:coffee<br/>validasi, hitung harga, kelola sesi"]]
+  PEL -- "menu, jumlah, catatan, minta bill, data diri" --> SIS
+  SIS -- "menu, status pesanan, tagihan" --> PEL
+  ADM -- "data menu, status pesanan, konfirmasi bayar, batalkan sesi" --> SIS
+  SIS -- "denah meja, antrian, detail tagihan, ringkasan" --> ADM

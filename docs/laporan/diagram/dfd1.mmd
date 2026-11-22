@@ -1,0 +1,32 @@
+flowchart LR
+  PEL([Pelanggan])
+  ADM([Kasir dan manajer])
+  P1["1.0 Kelola pesanan"]
+  P2["2.0 Kelola tagihan<br/>dan pembayaran"]
+  P3["3.0 Kelola menu"]
+  P4["4.0 Autentikasi<br/>dan profil"]
+  D1[("D1 Meja")]
+  D2[("D2 Menu")]
+  D3[("D3 Sesi meja")]
+  D4[("D4 Pesanan dan item")]
+  D5[("D5 Pelanggan")]
+  D6[("D6 Admin")]
+  PEL -- "menu, jumlah, catatan" --> P1
+  P1 -- "pesanan terkirim" --> PEL
+  P1 -- "baca harga" --> D2
+  P1 -- "buat atau pakai sesi" --> D3
+  P1 -- "simpan pesanan" --> D4
+  P1 -- "cek data diri" --> D5
+  PEL -- "minta bill, metode bayar" --> P2
+  P2 -- "tagihan, QRIS" --> PEL
+  ADM -- "konfirmasi bayar, batalkan, ubah status" --> P2
+  P2 -- "denah, antrian, detail" --> ADM
+  P2 -- "baca dan ubah" --> D3
+  P2 -- "baca dan ubah status" --> D4
+  D1 -- "nomor meja" --> P2
+  ADM -- "tambah, ubah, arsipkan" --> P3
+  P3 -- "simpan" --> D2
+  PEL -- "login Google, nama, nomor HP" --> P4
+  ADM -- "login Google" --> P4
+  P4 -- "simpan profil" --> D5
+  P4 -- "cek email admin" --> D6

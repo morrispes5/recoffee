@@ -1,0 +1,20 @@
+sequenceDiagram
+  autonumber
+  actor K as Kasir
+  participant UI as Halaman detail meja
+  participant DB as PostgreSQL
+  participant T as Halaman tagihan pelanggan
+  K->>UI: Buka detail meja 18
+  UI->>DB: Baca sesi, pesanan, item, data pemesan (RLS admin)
+  DB-->>UI: Detail tagihan
+  K->>UI: Pilih metode, tekan Konfirmasi bayar
+  UI->>K: Dialog konfirmasi
+  K->>UI: Setujui
+  UI->>DB: rpc konfirmasi_bayar(sesi_id, metode)
+  DB->>DB: is_admin() benar, sesi masih terbuka
+  DB->>DB: Simpan total_bayar, ditutup_at, dikonfirmasi_oleh, status selesai
+  DB-->>UI: Berhasil
+  UI->>K: Meja 18 kembali kosong
+  T->>DB: Polling get_tagihan_meja (10 detik)
+  DB-->>T: Sesi selesai
+  T->>T: Tampilkan Terima kasih, pembayaran sudah dikonfirmasi

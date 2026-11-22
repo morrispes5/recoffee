@@ -1,0 +1,22 @@
+flowchart TD
+  classDef s fill:#2B201B,color:#fff,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  subgraph K["Kasir"]
+    S(( )):::s --> A1["Lihat denah 28 meja"]:::a
+    A2["Pilih meja berstatus<br/>minta bill atau terisi"]:::a
+    A3["Periksa total dan metode bayar,<br/>terima pembayaran"]:::a
+    D0{"Ganti metode bayar?"}:::d
+    A4["Pilih metode lain"]:::a
+    A5["Tekan Konfirmasi bayar<br/>dan setujui dialog"]:::a
+  end
+  subgraph S2["Sistem"]
+    B1["Tampilkan detail meja: pesanan,<br/>nama dan nomor HP pemesan, total"]:::a
+    B2["Simpan total_bayar, ditutup_at,<br/>dikonfirmasi_oleh, status selesai"]:::a
+    B3["Meja kembali kosong, tagihan pelanggan<br/>menampilkan terima kasih"]:::a
+    E((( ))):::s
+  end
+  A1 --> A2 --> B1 --> A3 --> D0
+  D0 -- Ya --> A4 --> A5
+  D0 -- Tidak --> A5
+  A5 --> B2 --> B3 --> E

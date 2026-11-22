@@ -1,0 +1,22 @@
+flowchart TD
+  classDef s fill:#2B201B,color:#fff,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  subgraph P["Pelanggan"]
+    S(( )):::s --> A1["Buka Tagihan meja"]:::a
+    A2["Tekan Minta bill"]:::a
+    A3["Pilih QRIS atau Bayar di kasir"]:::a
+    A4["Scan QRIS dan bayar,<br/>atau datang ke kasir"]:::a
+  end
+  subgraph S2["Sistem"]
+    B1["Tampilkan pesanan, status,<br/>dan total tagihan"]:::a
+    D1{"Pelanggan sudah<br/>memesan di sesi ini?"}:::d
+    B2["Ubah sesi menjadi minta_bill,<br/>simpan metode bayar"]:::a
+    B3["Tampilkan gambar QRIS<br/>dan nominal"]:::a
+    B4["Tolak: hanya pemesan<br/>yang bisa minta bill"]:::a
+    B5["Meja tampil kuning di denah kasir,<br/>pesanan baru diblokir"]:::a
+    E((( ))):::s
+  end
+  A1 --> B1 --> A2 --> D1
+  D1 -- Tidak --> B4 --> E
+  D1 -- Ya --> A3 --> B2 --> B3 --> B5 --> A4 --> E

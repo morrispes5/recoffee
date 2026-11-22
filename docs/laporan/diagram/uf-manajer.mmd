@@ -1,0 +1,8 @@
+flowchart LR
+  classDef h fill:#E8F0EC,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  L["/admin/masuk<br/>Masuk dengan Google"]:::h --> D["Dasbor: pendapatan hari ini,<br/>tagihan berjalan, terlaris"]:::h
+  D --> M["Kelola menu"]:::h
+  M --> T["Tambah atau ubah menu"]:::a --> M
+  M --> H["Tandai habis atau tersedia"]:::a --> M
+  M --> R["Arsipkan menu"]:::a --> M

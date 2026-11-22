@@ -1,0 +1,14 @@
+flowchart TD
+  classDef root fill:#2F6B57,color:#fff,stroke:#2B201B,stroke-width:2px
+  classDef fase fill:#E8F0EC,color:#2B201B,stroke:#2B201B,stroke-width:1.5px
+  classDef wp fill:#fff,color:#2B201B,stroke:#2B201B
+  R["<b>RE:coffee</b><br/>Sistem pemesanan kafe berbasis meja"]:::root
+  F1["<b>1</b><br/>Inisiasi dan<br/>perencanaan"]:::fase
+  F2["<b>2</b><br/>Analisis dan<br/>perancangan"]:::fase
+  F3["<b>3</b><br/>Implementasi"]:::fase
+  F4["<b>4</b><br/>Pengujian dan<br/>penutupan"]:::fase
+  R --- F1 & F2 & F3 & F4
+  F1 --- A11["1.1 Kick-off dan<br/>kebutuhan klien"]:::wp --- A12["1.2 Project charter<br/>dan stakeholder"]:::wp --- A13["1.3 Ruang lingkup,<br/>WBS, estimasi"]:::wp --- A14["1.4 Jadwal, anggaran,<br/>risiko"]:::wp
+  F2 --- A21["2.1 Analisis kebutuhan<br/>dan data"]:::wp --- A22["2.2 Use case, activity,<br/>sequence, user flow"]:::wp --- A23["2.3 ERD, LRS,<br/>kamus data"]:::wp --- A24["2.4 Design system<br/>dan mockup"]:::wp
+  F3 --- A31["3.1 Setup proyek<br/>dan database"]:::wp --- A32["3.2 Frontend<br/>pelanggan"]:::wp --- A33["3.3 Frontend kasir<br/>dan manajer"]:::wp --- A34["3.4 Integrasi dan<br/>deployment"]:::wp
+  F4 --- A41["4.1 Unit test dan<br/>black box"]:::wp --- A42["4.2 UAT"]:::wp --- A43["4.3 Perbaikan bug,<br/>QR meja, rilis"]:::wp --- A44["4.4 Laporan, demo,<br/>serah terima"]:::wp

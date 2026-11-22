@@ -1,0 +1,10 @@
+flowchart TD
+  classDef h fill:#E8F0EC,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  Q["Scan QR meja<br/>atau buka beranda"]:::a --> M["Halaman menu<br/>/meja/18"]:::h --> C["Tambah menu<br/>ke keranjang"]:::a --> K["Sheet keranjang"]:::h --> L{"Sudah login?"}:::d
+  L -- Belum --> G["Masuk dengan Google"]:::a --> DD["Lengkapi data diri"]:::h --> KR
+  L -- Sudah --> KR["Kirim pesanan"]:::a --> OK["Pesanan terkirim"]:::h
+  OK --> T["Halaman tagihan<br/>/meja/18/tagihan"]:::h
+  OK -. tambah pesanan .-> M
+  T --> B["Minta bill,<br/>pilih metode"]:::a --> QR["Panel QRIS<br/>atau ke kasir"]:::h --> TK["Layar terima kasih"]:::h

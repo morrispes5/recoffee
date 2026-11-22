@@ -1,0 +1,10 @@
+flowchart LR
+  classDef h fill:#E8F0EC,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  L["/admin/masuk<br/>Masuk dengan Google"]:::h --> V{"Email terdaftar<br/>sebagai admin?"}:::d
+  V -- Tidak --> X["Alert bukan admin,<br/>keluar otomatis"]:::h
+  V -- Ya --> D["Dasbor dan denah 28 meja"]:::h
+  D --> AN["Antrian pesanan"]:::h --> P["Majukan status:<br/>baru, diproses, diantar"]:::a
+  D --> DM["Detail meja"]:::h --> KB["Konfirmasi bayar"]:::a --> D
+  DM --> BS["Batalkan sesi"]:::a --> D

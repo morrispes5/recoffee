@@ -1,0 +1,22 @@
+flowchart TD
+  classDef s fill:#2B201B,color:#fff,stroke:#2B201B
+  classDef a fill:#fff,stroke:#2B201B
+  classDef d fill:#FCEFC7,stroke:#2B201B
+  subgraph K["Kasir dan barista"]
+    S(( )):::s --> A1["Buka halaman Antrian"]:::a
+    A2["Siapkan pesanan terlama"]:::a
+    A3["Tekan langkah berikutnya"]:::a
+  end
+  subgraph S2["Sistem"]
+    B1["Tampilkan pesanan baru dan diproses,<br/>urut dari yang terlama, perbarui tiap 5 detik"]:::a
+    D1{"Status sekarang?"}:::d
+    B2["Ubah baru menjadi diproses"]:::a
+    B3["Ubah diproses menjadi diantar,<br/>pesanan hilang dari antrian"]:::a
+    D2{"Masih ada pesanan?"}:::d
+    E((( ))):::s
+  end
+  A1 --> B1 --> A2 --> A3 --> D1
+  D1 -- baru --> B2 --> D2
+  D1 -- diproses --> B3 --> D2
+  D2 -- Ya --> A2
+  D2 -- Tidak --> E

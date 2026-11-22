@@ -39,6 +39,8 @@ Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
 
 - HTTPS aktif (HSTS), `/`, `/meja/18`, `/meja/18/tagihan`, `/admin/antrian`, dan `/admin/masuk` semuanya 200 dan tidak ada 404.
 - Browser tanpa sesi login: `/meja/18/tagihan` dibuka langsung menampilkan halaman tagihan (TC-24 lulus); `/meja/18` memuat 22 menu dari Supabase; `/admin/antrian` dialihkan ke `/admin/masuk`; konsol tanpa error.
+- Ke-28 QR didekode ulang dengan pembaca QR (`jsqr`, dijalankan di luar repo): semuanya berisi `https://recoffee-ten.vercel.app/meja/N` yang sesuai nomor mejanya. Halaman `/qr-meja/cetak.html` di produksi memuat 28 kartu berlabel "RE:coffee — Meja N".
+- Push ke `main` memicu deploy produksi otomatis (status Ready). Workflow `keep-alive` dijalankan manual sekali dan hijau, jadi rahasia GitHub dan kunci Supabase benar.
 - Alur login Google dari domain produksi sampai ke pemilih akun Google dengan `redirect_to` ke URL produksi dan callback ke Supabase. Memilih akun adalah langkah pemilik.
 
 ### Keputusan dan catatan

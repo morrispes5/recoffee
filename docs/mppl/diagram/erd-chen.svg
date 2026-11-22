@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1651" width="2200" height="1651" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-size="13">
+<title>ERD RE:coffee (notasi Chen)</title>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<line x1="1091.0" y1="740.0" x2="1250.9" y2="818.4" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="1195.5" y2="876.4" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="965.5" y2="851.5" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="910.8" y2="781.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="910.8" y2="698.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="965.5" y2="628.5" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="1189.0" y2="612.1" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="740.0" x2="1314.8" y2="630.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1750.4" y2="1140.8" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1829.9" y2="1087.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1944.4" y2="1054.9" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="2020.8" y2="1131.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="2071.8" y2="1200.2" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="2071.8" y2="1279.8" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="2020.8" y2="1348.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1938.8" y2="1405.6" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1822.2" y2="1411.4" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="1240.0" x2="1750.4" y2="1339.2" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="1218.1" y2="1350.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="1091.0" y2="1390.0" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="963.9" y2="1350.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="931.1" y2="1161.6" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="986.5" y2="1103.6" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="1240.0" x2="1223.6" y2="1133.9" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="407.3" y2="1357.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="248.8" y2="1386.2" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="122.0" y2="1305.0" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="122.0" y2="1175.0" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="248.8" y2="1093.8" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="291.0" y1="1240.0" x2="407.3" y2="1122.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="240.0" x2="908.1" y2="272.9" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="240.0" x2="1091.0" y2="90.0" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="240.0" x2="1273.9" y2="272.9" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="740.0" x2="1849.9" y2="593.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="740.0" x2="2078.5" y2="740.0" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1891.0" y1="740.0" x2="1849.9" y2="886.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1491.0" y1="1240.0" x2="1583.7" y2="1358.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1491.0" y1="1240.0" x2="1398.3" y2="1358.7" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1491.0" y1="1240.0" x2="1398.3" y2="1121.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1491.0" y1="1240.0" x2="1583.7" y2="1121.3" stroke="#2B201B" stroke-width="1.2"/>
+<line x1="1091.0" y1="240.0" x2="1091.0" y2="490.0" stroke="#2B201B" stroke-width="1.6"/>
+<line x1="1091.0" y1="740.0" x2="1091.0" y2="490.0" stroke="#2B201B" stroke-width="7"/>
+<line x1="1091.0" y1="740.0" x2="1091.0" y2="490.0" stroke="#FFFFFF" stroke-width="3"/>
+<line x1="1891.0" y1="740.0" x2="1491.0" y2="740.0" stroke="#2B201B" stroke-width="1.6"/>
+<line x1="1091.0" y1="740.0" x2="1491.0" y2="740.0" stroke="#2B201B" stroke-width="1.6"/>
+<line x1="1091.0" y1="740.0" x2="1091.0" y2="990.0" stroke="#2B201B" stroke-width="7"/>
+<line x1="1091.0" y1="740.0" x2="1091.0" y2="990.0" stroke="#FFFFFF" stroke-width="3"/>
+<line x1="1091.0" y1="1240.0" x2="1091.0" y2="990.0" stroke="#2B201B" stroke-width="7"/>
+<line x1="1091.0" y1="1240.0" x2="1091.0" y2="990.0" stroke="#FFFFFF" stroke-width="3"/>
+<line x1="291.0" y1="1240.0" x2="691.0" y2="1240.0" stroke="#2B201B" stroke-width="1.6"/>
+<line x1="1091.0" y1="1240.0" x2="691.0" y2="1240.0" stroke="#2B201B" stroke-width="7"/>
+<line x1="1091.0" y1="1240.0" x2="691.0" y2="1240.0" stroke="#FFFFFF" stroke-width="3"/>
+<line x1="1091.0" y1="1240.0" x2="1491.0" y2="1240.0" stroke="#2B201B" stroke-width="7"/>
+<line x1="1091.0" y1="1240.0" x2="1491.0" y2="1240.0" stroke="#FFFFFF" stroke-width="3"/>
+<line x1="1891.0" y1="1240.0" x2="1491.0" y2="1240.0" stroke="#2B201B" stroke-width="1.6"/>
+<rect x="1016.0" y="213.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="1091.0" y="240.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">MEJA</text>
+<polygon points="1091.0,448.0 1163.0,490.0 1091.0,532.0 1019.0,490.0" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="1091.0" y="490.0" text-anchor="middle" dominant-baseline="central" font-weight="600">Memiliki</text>
+<rect x="1016.0" y="713.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="1091.0" y="740.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">SESI_MEJA</text>
+<polygon points="1491.0,698.0 1563.0,740.0 1491.0,782.0 1419.0,740.0" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="1491.0" y="740.0" text-anchor="middle" dominant-baseline="central" font-weight="600">Mengonfirmasi</text>
+<rect x="1816.0" y="713.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="1891.0" y="740.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">ADMIN</text>
+<polygon points="1091.0,948.0 1163.0,990.0 1091.0,1032.0 1019.0,990.0" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="1091.0" y="990.0" text-anchor="middle" dominant-baseline="central" font-weight="600">Mencakup</text>
+<rect x="1016.0" y="1213.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="1091.0" y="1240.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">PESANAN</text>
+<polygon points="691.0,1198.0 763.0,1240.0 691.0,1282.0 619.0,1240.0" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="691.0" y="1240.0" text-anchor="middle" dominant-baseline="central" font-weight="600">Membuat</text>
+<rect x="216.0" y="1213.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="291.0" y="1240.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">PELANGGAN</text>
+<polygon points="1491.0,1198.0 1563.0,1240.0 1491.0,1282.0 1419.0,1240.0" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="1491.0" y="1240.0" text-anchor="middle" dominant-baseline="central" font-weight="600">Berisi</text>
+<rect x="1816.0" y="1213.0" width="150" height="54" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<text x="1891.0" y="1240.0" text-anchor="middle" dominant-baseline="central" font-weight="700" font-size="15">MENU</text>
+<ellipse cx="1250.9" cy="818.4" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1250.9" y="818.4" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">id</text>
+<ellipse cx="1195.5" cy="876.4" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1195.5" y="876.4" text-anchor="middle" dominant-baseline="central">status</text>
+<ellipse cx="965.5" cy="851.5" rx="59.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="965.5" y="851.5" text-anchor="middle" dominant-baseline="central">metode_bayar</text>
+<ellipse cx="910.8" cy="781.3" rx="56" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="910.8" y="781.3" text-anchor="middle" dominant-baseline="central">total_bayar</text>
+<ellipse cx="910.8" cy="698.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="910.8" y="698.7" text-anchor="middle" dominant-baseline="central">dibuka_at</text>
+<ellipse cx="965.5" cy="628.5" rx="63.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="965.5" y="628.5" text-anchor="middle" dominant-baseline="central">minta_bill_at</text>
+<ellipse cx="1189.0" cy="612.1" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1189.0" y="612.1" text-anchor="middle" dominant-baseline="central">ditutup_at</text>
+<ellipse cx="1314.8" cy="630.3" rx="63.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1314.8" y="630.3" text-anchor="middle" dominant-baseline="central">total_tagihan</text>
+<ellipse cx="1750.4" cy="1140.8" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1750.4" y="1140.8" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">id</text>
+<ellipse cx="1829.9" cy="1087.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1829.9" y="1087.7" text-anchor="middle" dominant-baseline="central">nama</text>
+<ellipse cx="1944.4" cy="1054.9" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1944.4" y="1054.9" text-anchor="middle" dominant-baseline="central">deskripsi</text>
+<ellipse cx="2020.8" cy="1131.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="2020.8" y="1131.7" text-anchor="middle" dominant-baseline="central">kategori</text>
+<ellipse cx="2071.8" cy="1200.2" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="2071.8" y="1200.2" text-anchor="middle" dominant-baseline="central">harga</text>
+<ellipse cx="2071.8" cy="1279.8" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="2071.8" y="1279.8" text-anchor="middle" dominant-baseline="central">tersedia</text>
+<ellipse cx="2020.8" cy="1348.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="2020.8" y="1348.3" text-anchor="middle" dominant-baseline="central">diarsipkan</text>
+<ellipse cx="1938.8" cy="1405.6" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1938.8" y="1405.6" text-anchor="middle" dominant-baseline="central">urutan</text>
+<ellipse cx="1822.2" cy="1411.4" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1822.2" y="1411.4" text-anchor="middle" dominant-baseline="central">created_at</text>
+<ellipse cx="1750.4" cy="1339.2" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1750.4" y="1339.2" text-anchor="middle" dominant-baseline="central">updated_at</text>
+<ellipse cx="1218.1" cy="1350.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1218.1" y="1350.3" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">id</text>
+<ellipse cx="1091.0" cy="1390.0" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1091.0" y="1390.0" text-anchor="middle" dominant-baseline="central">status</text>
+<ellipse cx="963.9" cy="1350.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="963.9" y="1350.3" text-anchor="middle" dominant-baseline="central">catatan</text>
+<ellipse cx="931.1" cy="1161.6" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="931.1" y="1161.6" text-anchor="middle" dominant-baseline="central">created_at</text>
+<ellipse cx="986.5" cy="1103.6" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="986.5" y="1103.6" text-anchor="middle" dominant-baseline="central">updated_at</text>
+<ellipse cx="1223.6" cy="1133.9" rx="74.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1223.6" y="1133.9" text-anchor="middle" dominant-baseline="central">subtotal_pesanan</text>
+<ellipse cx="407.3" cy="1357.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="407.3" y="1357.7" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">id</text>
+<ellipse cx="248.8" cy="1386.2" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="248.8" y="1386.2" text-anchor="middle" dominant-baseline="central">email</text>
+<ellipse cx="122.0" cy="1305.0" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="122.0" y="1305.0" text-anchor="middle" dominant-baseline="central">nama</text>
+<ellipse cx="122.0" cy="1175.0" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="122.0" y="1175.0" text-anchor="middle" dominant-baseline="central">no_hp</text>
+<ellipse cx="248.8" cy="1093.8" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="248.8" y="1093.8" text-anchor="middle" dominant-baseline="central">created_at</text>
+<ellipse cx="407.3" cy="1122.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="407.3" y="1122.3" text-anchor="middle" dominant-baseline="central">updated_at</text>
+<ellipse cx="908.1" cy="272.9" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="908.1" y="272.9" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">nomor</text>
+<ellipse cx="1091.0" cy="90.0" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1091.0" y="90.0" text-anchor="middle" dominant-baseline="central">kapasitas</text>
+<ellipse cx="1273.9" cy="272.9" rx="56" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1273.9" y="272.9" text-anchor="middle" dominant-baseline="central">status_meja</text>
+<ellipse cx="1849.9" cy="593.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1849.9" y="593.7" text-anchor="middle" dominant-baseline="central" text-decoration="underline" font-weight="700">email</text>
+<ellipse cx="2078.5" cy="740.0" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="2078.5" y="740.0" text-anchor="middle" dominant-baseline="central">nama</text>
+<ellipse cx="1849.9" cy="886.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1849.9" y="886.3" text-anchor="middle" dominant-baseline="central">created_at</text>
+<ellipse cx="1583.7" cy="1358.7" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1583.7" y="1358.7" text-anchor="middle" dominant-baseline="central">qty</text>
+<ellipse cx="1398.3" cy="1358.7" rx="59.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1398.3" y="1358.7" text-anchor="middle" dominant-baseline="central">harga_satuan</text>
+<ellipse cx="1398.3" cy="1121.3" rx="52" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4"/>
+<text x="1398.3" y="1121.3" text-anchor="middle" dominant-baseline="central">nama_menu</text>
+<ellipse cx="1583.7" cy="1121.3" rx="63.5" ry="20" fill="#FFFFFF" stroke="#2B201B" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1583.7" y="1121.3" text-anchor="middle" dominant-baseline="central">subtotal_item</text>
+<text x="1078.0" y="283.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">1</text>
+<text x="1104.0" y="697.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">M</text>
+<text x="1800.0" y="727.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">1</text>
+<text x="1182.0" y="753.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">M</text>
+<text x="1078.0" y="783.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">1</text>
+<text x="1104.0" y="1197.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">M</text>
+<text x="382.0" y="1253.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">1</text>
+<text x="1000.0" y="1227.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">M</text>
+<text x="1182.0" y="1253.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">M</text>
+<text x="1800.0" y="1227.0" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">N</text>
+<text x="40" y="1491.383290693585" font-weight="700" font-size="14">Keterangan</text>
+<rect x="40" y="1513.383290693585" width="48" height="24" fill="#fff" stroke="#2B201B" stroke-width="2"/>
+<text x="102" y="1525.383290693585" dominant-baseline="central">Entitas</text>
+<polygon points="364,1511.383290693585 388,1525.383290693585 364,1539.383290693585 340,1525.383290693585" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="402" y="1525.383290693585" dominant-baseline="central">Relasi (kata kerja)</text>
+<ellipse cx="664" cy="1525.383290693585" rx="24" ry="12" fill="#fff" stroke="#2B201B" stroke-width="1.4"/>
+<text x="702" y="1525.383290693585" dominant-baseline="central">Atribut</text>
+<ellipse cx="964" cy="1525.383290693585" rx="24" ry="12" fill="#fff" stroke="#2B201B" stroke-width="1.4"/><line x1="952" y1="1529.383290693585" x2="976" y2="1529.383290693585" stroke="#2B201B"/>
+<text x="1002" y="1525.383290693585" dominant-baseline="central">Atribut kunci (digarisbawahi)</text>
+<ellipse cx="64" cy="1569.383290693585" rx="24" ry="12" fill="#fff" stroke="#2B201B" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="102" y="1569.383290693585" dominant-baseline="central">Atribut turunan (tidak disimpan)</text>
+<line x1="340" y1="1569.383290693585" x2="388" y2="1569.383290693585" stroke="#2B201B" stroke-width="7"/><line x1="340" y1="1569.383290693585" x2="388" y2="1569.383290693585" stroke="#fff" stroke-width="3"/>
+<text x="402" y="1569.383290693585" dominant-baseline="central">Partisipasi total (garis ganda)</text>
+<line x1="640" y1="1569.383290693585" x2="688" y2="1569.383290693585" stroke="#2B201B" stroke-width="1.6"/>
+<text x="702" y="1569.383290693585" dominant-baseline="central">Partisipasi parsial (garis tunggal)</text>
+<text x="964" y="1569.383290693585" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="16" fill="#2F6B57">1 / M / N</text>
+<text x="1002" y="1569.383290693585" dominant-baseline="central">Kardinalitas</text>
+</svg>

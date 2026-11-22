@@ -6,7 +6,7 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 | Milestone                            | Status                                                                               |
 | ------------------------------------ | ------------------------------------------------------------------------------------ |
-| M0 Perencanaan dan dokumen MPPL      | Belum (dokumen `docs/mppl/*` dan diagram draw.io belum dibuat)                       |
+| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum      |
 | M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                        |
 | M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                            |
 | M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                            |
@@ -15,7 +15,54 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum |
 | Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                            |
 | Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                            |
+| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                            |
 | M6–M8                                | Belum                                                                                |
+
+---
+
+## Konteks proyek dan revisi klien kedua (22 Nov 2026)
+
+**Konteks yang ditegaskan pemilik:** ini tugas kuliah (PPL/MPPL) yang hanya dipresentasikan ke dosen. Tidak ada pengguna sungguhan, dan kalaupun di-hosting tidak ada yang memakainya. Prioritasnya tampilan, interaksi, dan dokumentasi, bukan hardening produksi. Implikasi:
+
+- Aplikasi Google OAuth cukup tetap berstatus **Testing**. Daftarkan akun dosen/penguji dan teman UAT sebagai _test user_ (batas 100). Publish ke _In production_ (yang mewajibkan halaman beranda dan privacy policy di domain sendiri) tidak wajib untuk demo.
+- Data uji di database (dua sesi selesai atas nama "Uji Kasir" di meja 5 dan 12, total Rp162.000) sebaiknya dibersihkan sebelum demo agar dasbor mulai dari nol.
+
+Aturan PRD yang dilonggarkan atas permintaan eksplisit pemilik: daftar library (bagian 11, ditambah tiga paket di bawah), "visual hanya SVG tulis tangan atau Phosphor" tetap dipatuhi (lihat butir 4), animasi minimal (15.9), dan beranda minimal (16.2).
+
+### Yang dikerjakan
+
+1. **Menu kafe kekinian.** Tiga sub agent Haiku meriset menu kafe anak muda Indonesia. Cakupan yang jujur: dari 15 merek target, **9 punya data menu yang jelas** (Kopi Kenangan, Fore, Kopi Nako, Starbucks, Maxx, Point Coffee, Cotti, Tanamera, Djournal), ditambah Kopikina sebagai pengganti pilihan agen. Luckin Indonesia dan Common Grounds tidak ketemu; Janji Jiwa, Tomoro, Anomali, dan Kopi Tuku hanya parsial (beberapa item atau satu harga). Pola yang konsisten di semua sumber: americano dan latte (aren, vanila, karamel, pandan) Rp18–30 ribu, matcha/cokelat/boba/teh susu Rp18–30 ribu, serta croissant, sandwich, croffle, cookies, muffin, dan brownies. Hasilnya **22 menu**: kopi 8, non-kopi 6, makanan 4, camilan 4 (Rp15.000–35.000). Nama dibuat generik, tidak meniru nama produk merek tertentu. Kopi tubruk, pisang goreng, dan kerupuk kaleng sudah tidak ada.
+   - Migrasi data `supabase/migrations/0005_menu_kafe_gen_z.sql` diterapkan ke project `recoffee`: 12 menu lama **diarsipkan** (bukan dihapus, BR-09), 22 menu baru dimasukkan. `supabase/seed.sql` tidak lagi memuat menu (jalankan migrasi 0001–0005 lebih dulu, lalu seed).
+   - Struktur tabel tidak berubah, jadi ERD dan LRS tidak ikut berubah.
+2. **Alert dan notifikasi di semua aksi.** Dua lapis: _toast_ tak-menghalangi (`lib/notify.ts`, library `sonner`) untuk kabar kecil, dan _alert modal_ global (`lib/alertStore.ts` + `components/feedback/AlertHost.tsx`) untuk kabar besar. Alert memakai `<dialog>` native selebar layar, jadi selalu tampil di atas sheet atau dialog lain dan konfeti di dalamnya ikut berada di lapisan atas.
+   - Alert modal: nomor meja salah atau kosong (contoh "Meja 50 tidak ada"), pesanan terkirim (cangkir beruap + konfeti), pesanan gagal (dengan tombol "Coba lagi" atau "Cek keranjang" bila menu habis), bill gagal diminta, data diri gagal, login Google gagal atau akun bukan admin, pembayaran gagal, menu gagal disimpan.
+   - Toast: data diri tersimpan, bill diminta, berhasil masuk, keluar, status pesanan berubah (diproses atau diantar), menu ditambah, disimpan, ditandai habis, diarsipkan, pembayaran dikonfirmasi (plus konfeti), sesi dibatalkan.
+   - Validasi field tetap berupa teks inline di bawah kolom (kebutuhan aksesibilitas), alert menjadi tambahan.
+3. **Animasi dan interaksi** (library `motion`, dimuat lazy lewat `LazyMotion` dan komponen `m`, mati otomatis saat `prefers-reduced-motion`): bar keranjang meluncur masuk dan keluar dengan pegas, item keranjang bergeser saat dihapus dan angkanya "pop", baris menu muncul saat digulir ke layar, chip kategori mengikuti scroll (penanda bergeser dengan `layoutId`) dan menggulir halus, pill navigasi admin bergeser antar tab, pesanan antrian masuk dari kiri dan keluar ke kanan sementara yang lain bergeser mulus, meja di denah membal saat disentuh, kartu dasbor terangkat saat hover, halaman memudar saat berpindah, rak kafe di beranda melayang bergantian.
+4. **Latar bertema kopi.** Pola tipis berupa biji kopi, cangkir beruap, gelas es, daun matcha, dan croissant, ditulis tangan sebagai SVG (`public/pola-kopi.svg`) dan dipasang lewat utilitas `latar-kopi` di halaman pelanggan, admin, dan login kasir. Pemilik menyarankan "generate di Figma"; saya memilih SVG tulis tangan karena PRD melarang gambar hasil generator AI, hasilnya vektor yang ringan (±2 KB), dan kekuatannya bisa diatur lewat variabel `--opasitas-pola`. Bila dosen atau pemilik tetap menginginkan versi di Figma, pola ini bisa diimpor ke sana.
+5. **Ikon kategori baru** (tulis tangan, gaya garis 24 px): `GelasEs` (kopi), `Daun` (non-kopi), `Croissant` (makanan), `Kue` (camilan). `RakWarung` menjadi `RakKafe`. Ikon warung lama (`GelasBlirik`, `KalengKerupuk`, `PiringRoti`, `Teko`) tetap ada di katalog `/dev/ui`.
+6. **ERD dan LRS** (bagian dari M0): `docs/mppl/05-erd-lrs.md` memuat ERD notasi Chen, transformasi, LRS, kamus data, aturan constraint, dan pertanyaan presentasi. Diagram dibuat otomatis oleh `scripts/generate-diagrams.mjs` menjadi `erd-chen.drawio`, `erd-chen.svg`, `lrs.drawio`, `lrs.svg` di `docs/mppl/diagram/`. Nama field di LRS sudah dicocokkan dengan `information_schema.columns`: 7 dari 7 record sama persis dengan database.
+
+### Library baru (di luar daftar PRD bagian 11, atas permintaan pemilik)
+
+| Paket             | Versi               | Fungsi                                                    |
+| ----------------- | ------------------- | --------------------------------------------------------- |
+| `motion`          | ^14.14              | Animasi (komponen `m`, `AnimatePresence`, layout, gestur) |
+| `sonner`          | ^2.0.8              | Toast                                                     |
+| `canvas-confetti` | ^1.9.4 (+ `@types`) | Konfeti, dimuat hanya saat dibutuhkan                     |
+
+### Pemeriksaan
+
+- 88 tes lulus (tambahan: `alertStore`, alert pada `MasukMejaForm`). Lint, format, tipe, dan build bersih.
+- Bundle awal 161 KB gzip (batas 250 KB). Fitur `motion` 34 KB gzip dimuat belakangan; konfeti dimuat saat dipakai.
+- Di browser: alert nomor meja 50 muncul dengan ikon bergetar; pesanan nyata (2 Es Kopi Susu Aren, Caramel Macchiato, Butter Croissant, Rp98.000) memunculkan alert "Pesanan terkirim!" dengan cangkir beruap dan konfeti; toast "Pesanan meja 5 diantar" muncul di antrian; konfirmasi bayar meja 12 menaikkan pendapatan hari uji menjadi Rp162.000 (2 transaksi).
+- Catatan uji: panel browser bawaan alat uji yang sedang tersembunyi menahan animasi CSS, jadi verifikasi visual memakai Chrome yang terlihat.
+
+### Belum dikerjakan
+
+- M0: dokumen MPPL lain (project charter, use case, dan seterusnya).
+- M5: uji dua akun Google berbeda di satu meja dan penolakan akun non-admin (butuh akun kedua sebagai test user).
+- M6: tabel black box, UAT, cek aksesibilitas. M7: deploy Vercel dan QR. M8: laporan dan demo.
 
 ---
 

@@ -170,3 +170,18 @@ Pemilik menilai hasil M1–M3 terlalu polos. Aturan di atas tetap berlaku (palet
 | Tidak ada hover lift                                      | Meja di denah membesar sedikit saat hover; tombol mengecil sedikit saat ditekan.                                                                                                                 |
 
 Keputusan input nomor meja: **kolom angka manual**, bukan dropdown. Di HP keypad angka langsung muncul (cukup ketik "5"), nomor tertulis di meja, dan 28 pilihan dropdown lebih lambat digulir. Validasi sama dengan route (`parseNomorMeja`).
+
+### Revisi kedua atas permintaan pemilik proyek (22 Nov 2026)
+
+Konteks: tugas kuliah yang hanya didemokan ke dosen, jadi kesan hidup dan interaksi diutamakan.
+
+| Hal           | Sekarang                                                                                                                                                                                                                                                                                                                                |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tema          | Dari "warung kopi, diseduh ulang" menjadi **kafe kekinian untuk Gen Z**. Nama, palet, font, dan larangan gradien/foto/gambar AI tetap. Footer: "Ngopi santai, pesan dari meja."                                                                                                                                                         |
+| Menu          | 22 menu kafe kekinian (lihat `supabase/migrations/0005_menu_kafe_gen_z.sql`), nama generik tanpa meniru merek.                                                                                                                                                                                                                          |
+| Ikon kategori | `GelasEs` (kopi), `Daun` (non-kopi), `Croissant` (makanan), `Kue` (camilan). `RakKafe` menggantikan `RakWarung`.                                                                                                                                                                                                                        |
+| Latar         | Pola ikon kopi tipis (`public/pola-kopi.svg`) lewat utilitas `latar-kopi`. Atur kekuatannya dengan `--opasitas-pola` (pelanggan 1, admin 0,7). Tetap SVG tulis tangan, bukan gambar AI.                                                                                                                                                 |
+| Alert         | Toast (`notify.success/error/warning/info`) untuk kabar kecil; alert modal (`showAlert`) untuk kabar besar. Pilih modal bila pengguna **harus** menyadari hasilnya (gagal, tidak ditemukan, berhasil kirim). Toast tidak terlihat di bawah dialog modal, jadi kabar dari dalam dialog memakai alert modal atau menunggu dialog menutup. |
+| Gerak         | Library `motion` untuk presence, layout, dan gestur; keyframe CSS untuk loop dekoratif (`melayang`, `denyut`, `pop`, `muncul`, `naik`, `tumbuh`). Semua mengikuti `prefers-reduced-motion`.                                                                                                                                             |
+
+Token tambahan di `src/styles/index.css`: `--animate-melayang`, `--animate-pop`, `--animate-denyut`, `--animate-muncul`, `--animate-naik`, `--animate-tumbuh`, dan utilitas `latar-kopi`.

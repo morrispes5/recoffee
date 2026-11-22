@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 1186" width="1250" height="1186" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-size="13">
+<title>LRS RE:coffee</title><rect width="100%" height="100%" fill="#FFFFFF"/>
+<line x1="290" y1="79" x2="500" y2="79" stroke="#2B201B" stroke-width="1.8"/>
+<text x="306" y="67" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="484" y="67" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<line x1="960" y1="79" x2="750" y2="79" stroke="#2B201B" stroke-width="1.8"/>
+<text x="944" y="67" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="766" y="67" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<line x1="290" y1="470" x2="500" y2="470" stroke="#2B201B" stroke-width="1.8"/>
+<text x="306" y="458" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="484" y="458" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<line x1="290" y1="790" x2="500" y2="790" stroke="#2B201B" stroke-width="1.8"/>
+<text x="306" y="778" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="484" y="778" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<line x1="625" y1="300" x2="625" y2="430" stroke="#2B201B" stroke-width="1.8"/>
+<text x="639" y="314" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="639" y="416" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<line x1="625" y1="638" x2="625" y2="750" stroke="#2B201B" stroke-width="1.8"/>
+<text x="639" y="652" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">1</text>
+<text x="639" y="736" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="15" fill="#2F6B57">M</text>
+<rect x="40" y="40" width="250" height="78" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="40" y="40" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="52" y="53" dominant-baseline="central" font-weight="800" font-size="14">MEJA</text>
+<text x="52" y="79" dominant-baseline="central" font-weight="700">nomor</text>
+<text x="278" y="79" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="52" y="105" dominant-baseline="central">kapasitas</text>
+<rect x="500" y="40" width="250" height="260" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="500" y="40" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="512" y="53" dominant-baseline="central" font-weight="800" font-size="14">SESI_MEJA</text>
+<text x="512" y="79" dominant-baseline="central" font-weight="700">id</text>
+<text x="738" y="79" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="512" y="105" dominant-baseline="central">nomor_meja</text>
+<text x="738" y="105" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="131" dominant-baseline="central">dikonfirmasi_oleh</text>
+<text x="738" y="131" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="157" dominant-baseline="central">status</text>
+<text x="512" y="183" dominant-baseline="central">metode_bayar</text>
+<text x="512" y="209" dominant-baseline="central">total_bayar</text>
+<text x="512" y="235" dominant-baseline="central">dibuka_at</text>
+<text x="512" y="261" dominant-baseline="central">minta_bill_at</text>
+<text x="512" y="287" dominant-baseline="central">ditutup_at</text>
+<rect x="960" y="40" width="250" height="104" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="960" y="40" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="972" y="53" dominant-baseline="central" font-weight="800" font-size="14">ADMIN</text>
+<text x="972" y="79" dominant-baseline="central" font-weight="700">email</text>
+<text x="1198" y="79" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="972" y="105" dominant-baseline="central">nama</text>
+<text x="972" y="131" dominant-baseline="central">created_at</text>
+<rect x="40" y="430" width="250" height="182" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="40" y="430" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="52" y="443" dominant-baseline="central" font-weight="800" font-size="14">PELANGGAN</text>
+<text x="52" y="469" dominant-baseline="central" font-weight="700">id</text>
+<text x="278" y="469" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="52" y="495" dominant-baseline="central">email</text>
+<text x="52" y="521" dominant-baseline="central">nama</text>
+<text x="52" y="547" dominant-baseline="central">no_hp</text>
+<text x="52" y="573" dominant-baseline="central">created_at</text>
+<text x="52" y="599" dominant-baseline="central">updated_at</text>
+<rect x="500" y="430" width="250" height="208" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="500" y="430" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="512" y="443" dominant-baseline="central" font-weight="800" font-size="14">PESANAN</text>
+<text x="512" y="469" dominant-baseline="central" font-weight="700">id</text>
+<text x="738" y="469" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="512" y="495" dominant-baseline="central">sesi_id</text>
+<text x="738" y="495" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="521" dominant-baseline="central">pelanggan_id</text>
+<text x="738" y="521" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="547" dominant-baseline="central">status</text>
+<text x="512" y="573" dominant-baseline="central">catatan</text>
+<text x="512" y="599" dominant-baseline="central">created_at</text>
+<text x="512" y="625" dominant-baseline="central">updated_at</text>
+<rect x="40" y="750" width="250" height="286" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="40" y="750" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="52" y="763" dominant-baseline="central" font-weight="800" font-size="14">MENU</text>
+<text x="52" y="789" dominant-baseline="central" font-weight="700">id</text>
+<text x="278" y="789" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="52" y="815" dominant-baseline="central">nama</text>
+<text x="52" y="841" dominant-baseline="central">deskripsi</text>
+<text x="52" y="867" dominant-baseline="central">kategori</text>
+<text x="52" y="893" dominant-baseline="central">harga</text>
+<text x="52" y="919" dominant-baseline="central">tersedia</text>
+<text x="52" y="945" dominant-baseline="central">diarsipkan</text>
+<text x="52" y="971" dominant-baseline="central">urutan</text>
+<text x="52" y="997" dominant-baseline="central">created_at</text>
+<text x="52" y="1023" dominant-baseline="central">updated_at</text>
+<rect x="500" y="750" width="250" height="182" fill="#FFFFFF" stroke="#2B201B" stroke-width="2"/>
+<rect x="500" y="750" width="250" height="26" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="512" y="763" dominant-baseline="central" font-weight="800" font-size="14">ITEM_PESANAN</text>
+<text x="512" y="789" dominant-baseline="central" font-weight="700">id</text>
+<text x="738" y="789" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">*</text>
+<text x="512" y="815" dominant-baseline="central">pesanan_id</text>
+<text x="738" y="815" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="841" dominant-baseline="central">menu_id</text>
+<text x="738" y="841" text-anchor="end" dominant-baseline="central" font-weight="800" fill="#2F6B57">**</text>
+<text x="512" y="867" dominant-baseline="central">nama_menu</text>
+<text x="512" y="893" dominant-baseline="central">qty</text>
+<text x="512" y="919" dominant-baseline="central">harga_satuan</text>
+<text x="500" y="950" font-size="12" fill="#76695F">UNIQUE (pesanan_id, menu_id)</text>
+<text x="40" y="1076" font-weight="700" font-size="14">Keterangan</text>
+<text x="40" y="1104">* = primary key     ** = foreign key     1 / M = kardinalitas (sisi 1 ke sisi M)</text>
+<text x="40" y="1128">7 record: 6 entitas ERD + ITEM_PESANAN (hasil transformasi relasi M:N Berisi). Atribut turunan tidak menjadi field.</text>
+</svg>

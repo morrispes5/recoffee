@@ -18,7 +18,78 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                                                                                                                                          |
 | M6 Testing                           | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: uji otomatis (94 tes), black box (29 UI, 2 SQL, 1 sebagian), 3 bug diperbaiki (B-01, B-02, B-04; B-03 menunggu `qris.png`). Tindak lanjut tidak memblokir: `qris.png` (TC-11), sesi UAT, TC-10 dan TC-30 lewat UI |
 | M7 Deployment                        | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: produksi aktif di https://recoffee-ten.vercel.app, login Google terbukti, 28 QR dibuat, keep-alive hijau. Tindak lanjut: `qris.png` dan cetak QR                                                                  |
-| M8                                   | Belum                                                                                                                                                                                                                                                                              |
+| M8 Laporan akhir dan persiapan demo  | **Belum dimulai.** Rencana dan bahan tercatat di bagian M8: dokumentasi penuh, tanpa coding                                                                                                                                                                                        |
+
+---
+
+## M8 — Laporan akhir dan persiapan demo (rencana, belum dimulai)
+
+M8 adalah milestone **dokumentasi penuh, bukan coding**. Tidak ada fitur baru dan aturan PRD bagian 0 tetap berlaku. Satu-satunya
+hal yang menyentuh aplikasi: memasang `public/qris.png` bila sudah ada, dan memperbaiki bug bila latihan demo menemukannya
+(dicatat sebagai bug di `docs/mppl/10-pengujian.md`, bukan sebagai fitur). Rencana ini dibuat 22 Nov 2026 supaya sesi berikutnya
+bisa langsung mengerjakan tanpa menggali ulang.
+
+### Cakupan (PRD bagian 18, 24, dan 25)
+
+| Tugas                        | Hasil                                                                 | Keadaan per 22 Nov 2026                                                                                          |
+| ---------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1. Laporan akhir             | Satu laporan utuh dari `docs/mppl/01` sampai `11` dan tangkapan layar | Bahan lengkap, belum dirangkai. Bab implementasi, kesimpulan, dan saran belum ada                                |
+| 2. Skenario demo dan latihan | Naskah demo sekitar 7 menit dan latihan minimal sekali                | PRD bagian 25 ada tetapi sebagian usang (menu, nomor QR, akun Google kedua). Latihan belum                       |
+| 3. Jawaban pertanyaan dosen  | Lembar contekan                                                       | Sembilan jawaban di PRD bagian 25.3 dan pertanyaan ERD di `05-erd-lrs.md` bagian 13. Belum dijadikan satu lembar |
+| 4. Jurnal                    | Terpisah dari build aplikasi (kelompok 2 sampai 3 orang)              | Belum jelas apakah diminta dosen. Tidak dikerjakan kecuali pemilik meminta                                       |
+
+Estimasi PRD: 8 jam, peran PM dan QA/Dokumentasi.
+
+### Susunan laporan yang diusulkan
+
+Sesuaikan dengan sistematika dosen bila ada.
+
+| Bab                   | Isi                                                                                  | Bahan                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| 1. Pendahuluan        | Latar belakang, masalah, tujuan, ruang lingkup                                       | `01`, `02`                                                                |
+| 2. Perencanaan proyek | WBS, estimasi dan jadwal, biaya, risiko                                              | `02`, `07`, `08`, `09`                                                    |
+| 3. Analisis           | Kebutuhan, analisis data, use case                                                   | `03`, `04`                                                                |
+| 4. Perancangan        | ERD, LRS, kamus data, arsitektur, desain UI                                          | `05`, `06`, `docs/design-system.md`                                       |
+| 5. Implementasi       | Struktur proyek, teknologi, fitur kunci (sesi meja, `buat_pesanan`, RLS), deployment | **Baru.** Dari PRD bagian 12 sampai 14, 17, 20 dan `docs/serah-terima.md` |
+| 6. Pengujian          | Metode, black box, BVA, RLS, aksesibilitas, UAT, bug                                 | `10`, `11`                                                                |
+| 7. Penutup            | Kesimpulan, keterbatasan, saran pengembangan                                         | **Baru.** Dari PRD bagian 26 dan `02` bagian 2                            |
+| Lampiran              | Kamus data, skenario use case, tangkapan layar, bukti uji                            | `04`, `05`, `docs/mppl/bukti/`, `docs/mppl/gambar/`                       |
+
+Dokumen yang benar-benar baru hanya dua: bab 5 dan bab 7. Sisanya merangkai dan merapikan yang sudah ada.
+
+### Urutan kerja yang diusulkan
+
+1. Pastikan format laporan (Word atau PDF) dan sistematika dosen. Tanpa itu pakai susunan di atas.
+2. Tulis bab 5 (implementasi) dan bab 7 (penutup).
+3. Rangkai laporan dan tambahkan tangkapan layar yang kurang (alur pelanggan bisa diambil dari produksi).
+4. Perbarui skenario demo (menu kafe, QR meja 1, 18, 27, dua akun Google yang terdaftar sebagai Test user) dan susun contekan jawaban dosen.
+5. Jalankan alur demo di produksi dari awal sambil mencatat waktu (target sekitar 7 menit). Bagian ini butuh pemilik mengklik pemilih akun Google.
+6. Cek ulang `docs/mppl/09-risiko.md` dan checklist H-1 di `docs/serah-terima.md`.
+
+### Masukan yang hanya bisa diberikan pemilik atau pelaksana
+
+- Format laporan dan sistematika dari dosen (template, jumlah halaman).
+- Apakah jurnal diminta.
+- Isian `[...]` di dokumen: nama dosen, tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu, tanda tangan di charter.
+- `public/qris.png` dan cetak QR meja 1, 18, 27 (pindai satu dengan HP).
+- Dua akun Google untuk demo, keduanya terdaftar sebagai Test user. Uji login dari perangkat presentasi jauh sebelum hari H (R14).
+- Konfirmasi ke dosen atau teman bahwa "data analisis" berarti analisis kebutuhan data.
+- Hasil UAT bila ingin dimasukkan ke bab pengujian (opsional), dan TC-10 serta TC-30 lewat UI (opsional).
+- Latihan demo oleh pelaksana sendiri, karena dosen akan bertanya kepadanya (R8).
+- Pembersihan data uji sebelum demo (SQL di `docs/serah-terima.md`). Menghapus hanya atas persetujuan pemilik.
+
+### DoD (PRD bagian 18)
+
+- [ ] Laporan lengkap sesuai checklist PRD bagian 24.
+- [ ] Demo berhasil dijalankan ulang dari awal di URL produksi.
+
+### Kalimat pembuka untuk sesi baru
+
+```text
+Lanjut M8 proyek RE:coffee. Baca bagian "M8" di docs/PROGRESS.md dan memori proyek, lalu kerjakan sesuai rencana di sana.
+M8 murni dokumentasi: tidak ada fitur baru. Mulai dengan bab implementasi dan bab penutup laporan, lalu rangkai laporan.
+Tanyakan dulu format laporan dan sistematika dari dosen.
+```
 
 ---
 

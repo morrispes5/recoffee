@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Navigate } from 'react-router';
 import { Button, InlineMessage, Skeleton } from '../../components/ui';
 import { toUserMessage } from '../../lib/errors';
@@ -15,11 +15,17 @@ export function RequireAdmin({ children }: { children: ReactNode }) {
     staleTime: 0,
   });
   const denied = access.data === false;
+  // Setelah signOut selesai, user menjadi null dan cache akses terhapus, sehingga `denied` kembali
+  // false. Tanpa catatan ini pengalihan kedua ke /admin/masuk kehilangan status penolakan dan
+  // pesan "Akun ini bukan admin" tidak pernah tampil.
+  const [pernahDitolak, setPernahDitolak] = useState(false);
+  if (denied && !pernahDitolak) setPernahDitolak(true);
 
   useEffect(() => {
     if (denied) void signOut().catch(() => undefined);
   }, [denied, signOut]);
 
+  if (denied || pernahDitolak) return <Navigate to="/admin/masuk" state="akses-ditolak" replace />;
   if (loading || (user && access.isPending)) {
     return (
       <main className="mx-auto w-full max-w-admin px-5 py-12">
@@ -27,7 +33,6 @@ export function RequireAdmin({ children }: { children: ReactNode }) {
       </main>
     );
   }
-  if (denied) return <Navigate to="/admin/masuk" state="akses-ditolak" replace />;
   if (!user) return <Navigate to="/admin/masuk" replace />;
   if (access.isError) {
     return (

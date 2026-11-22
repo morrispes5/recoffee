@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen } from '@testing-library/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fetchIsAdmin, type AuthUser } from './api';
@@ -42,6 +44,36 @@ function renderAdmin(activeUser: AuthUser | null) {
   return signOut;
 }
 
+/**
+ * Meniru AuthProvider asli: begitu signOut selesai, sesi hilang (user menjadi null) dan cache
+ * 'admin' dibuang. Pengalihan ke halaman masuk harus tetap membawa status penolakan.
+ */
+function AuthSungguhan() {
+  const queryClient = useQueryClient();
+  const [aktif, setAktif] = useState<AuthUser | null>(user);
+  const signOut = async () => {
+    queryClient.removeQueries({ queryKey: ['admin'] });
+    setAktif(null);
+  };
+  return (
+    <AuthContext value={{ user: aktif, loading: false, signIn: async () => undefined, signOut }}>
+      <MemoryRouter initialEntries={['/admin/antrian']}>
+        <Routes>
+          <Route path="/admin/masuk" element={<LoginDestination />} />
+          <Route
+            path="/admin/antrian"
+            element={
+              <RequireAdmin>
+                <p>Antrian kasir</p>
+              </RequireAdmin>
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    </AuthContext>
+  );
+}
+
 afterEach(() => {
   cleanup();
   vi.resetAllMocks();
@@ -61,6 +93,18 @@ describe('RequireAdmin', () => {
     expect(await screen.findByText('Akses admin ditolak')).toBeInTheDocument();
     expect(screen.queryByText('Antrian kasir')).not.toBeInTheDocument();
     expect(signOut).toHaveBeenCalledOnce();
+  });
+
+  it('tetap menampilkan penolakan setelah sesi non-admin benar-benar berakhir', async () => {
+    vi.mocked(fetchIsAdmin).mockResolvedValue(false);
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    render(
+      <QueryClientProvider client={queryClient}>
+        <AuthSungguhan />
+      </QueryClientProvider>,
+    );
+    expect(await screen.findByText('Akses admin ditolak')).toBeInTheDocument();
+    expect(screen.queryByText('Masuk admin')).not.toBeInTheDocument();
   });
 
   it('baru menampilkan antrian setelah database mengonfirmasi akses', async () => {

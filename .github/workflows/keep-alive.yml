@@ -1,0 +1,21 @@
+name: keep-alive
+
+# Menjaga project Supabase gratis tidak di-pause saat jeda sebelum demo (PRD 20.3).
+# Hanya membaca data publik (nomor meja). Nilai SUPABASE_URL dan SUPABASE_ANON_KEY
+# disimpan di GitHub Secrets, bukan di repo.
+on:
+  schedule:
+    - cron: '0 1 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baca satu baris dari tabel meja
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          curl -fsS "$SUPABASE_URL/rest/v1/meja?select=nomor&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY"

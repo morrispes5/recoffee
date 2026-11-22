@@ -4,21 +4,21 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                            | Status                                                                                                                                    |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                           |
-| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                             |
-| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                 |
-| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                 |
-| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                 |
-| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                 |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                                                      |
-| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                 |
-| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                 |
-| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                 |
-| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik                                     |
-| M7 Deployment                        | **Sebagian (22 Nov 2026)**: produksi aktif di https://recoffee-ten.vercel.app; uji login Google di produksi dan cetak QR menunggu pemilik |
-| M8                                   | Belum                                                                                                                                     |
+| Milestone                            | Status                                                                                                                                                     |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                                            |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                                              |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                                  |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                                  |
+| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                                  |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                                  |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                                                                       |
+| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                                  |
+| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                                  |
+| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                  |
+| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik                                                      |
+| M7 Deployment                        | **Sebagian (22 Nov 2026)**: produksi aktif di https://recoffee-ten.vercel.app; login Google di produksi terbukti; `qris.png` dan cetak QR menunggu pemilik |
+| M8                                   | Belum                                                                                                                                                      |
 
 ---
 
@@ -41,7 +41,7 @@ Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
 - Browser tanpa sesi login: `/meja/18/tagihan` dibuka langsung menampilkan halaman tagihan (TC-24 lulus); `/meja/18` memuat 22 menu dari Supabase; `/admin/antrian` dialihkan ke `/admin/masuk`; konsol tanpa error.
 - Ke-28 QR didekode ulang dengan pembaca QR (`jsqr`, dijalankan di luar repo): semuanya berisi `https://recoffee-ten.vercel.app/meja/N` yang sesuai nomor mejanya. Halaman `/qr-meja/cetak.html` di produksi memuat 28 kartu berlabel "RE:coffee — Meja N".
 - Push ke `main` memicu deploy produksi otomatis (status Ready). Workflow `keep-alive` dijalankan manual sekali dan hijau, jadi rahasia GitHub dan kunci Supabase benar.
-- Alur login Google dari domain produksi sampai ke pemilih akun Google dengan `redirect_to` ke URL produksi dan callback ke Supabase. Memilih akun adalah langkah pemilik.
+- Login Google di domain produksi berhasil. Log autentikasi Supabase (22 Nov 2026, sekitar 08:54 dan 08:57 UTC) mencatat login `pkce` dengan provider `google` dari `recoffee-ten.vercel.app` untuk akun kasir, termasuk yang dimulai dari `/admin`. Pemilik juga mencoba sendiri dan tidak melihat error. Satu akun kedua (non-admin) juga berhasil mendaftar sebagai pelanggan dari `/meja/2`, jadi versi UI TC-10, 14, 30, dan 31 sekarang bisa dijalankan.
 
 ### Keputusan dan catatan
 
@@ -51,7 +51,6 @@ Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
 
 ### Belum selesai
 
-- Login Google di domain produksi dibuktikan sampai selesai (butuh pemilik memilih akun di pemilih Google).
 - `public/qris.png` belum ada (menutup TC-11 dan B-03).
 - Cetak minimal 3 QR (meja 1, 18, 27) dan pindai satu dengan kamera HP.
 
@@ -59,7 +58,7 @@ Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
 
 - [x] URL produksi bisa diakses via HTTPS.
 - [x] Refresh di `/meja/18` dan `/admin/antrian` tidak 404. (Dibuka langsung: halaman tampil; `/admin/antrian` dialihkan ke login karena belum masuk.)
-- [ ] Login Google berjalan di domain produksi. (Sampai pemilih akun; menunggu pemilik memilih akun.)
+- [x] Login Google berjalan di domain produksi. (Dibuktikan lewat log autentikasi Supabase dan dicoba pemilik.)
 - [ ] 28 QR tergenerate mengarah ke domain produksi; minimal 3 dicetak untuk demo. (28 QR sudah dibuat; pencetakan menunggu pemilik.)
 
 ---

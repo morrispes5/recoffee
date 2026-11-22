@@ -62,9 +62,26 @@ Login Google: Client Secret pertama tidak valid (`invalid_client` di log auth Su
   - Admin: lompat status baru→diantar → `TRANSISI_STATUS_TIDAK_VALID`; TC-16 baru→diproses→diantar berhasil; TC-17 konfirmasi bayar menutup sesi (`selesai`, QRIS, total_bayar 46000, dikonfirmasi `morrispes5@gmail.com`), meja 5 kembali kosong, pelanggan melihat status terakhir `selesai` dan tagihan aktif `null`.
 - Endpoint pengaturan Auth mengembalikan `external.google: false`. Aktifkan provider Google sesuai langkah M4, termasuk redirect localhost. Setelah aktif, uji pesanan sampai pembayaran dengan akun admin dan akun pelanggan di dua browser.
 
+### Uji end-to-end dengan data asli (22 Nov 2026, Chrome laptop, satu akun)
+
+Akun `morrispes5@gmail.com` dipakai sebagai pelanggan sekaligus kasir di meja 5:
+
+1. Dialog **Lengkapi data diri** muncul sebelum memesan (TC-27). Diisi data uji "Uji Kasir" / `081234567890`, bisa diganti lewat "Ubah data diri".
+2. Keranjang 2 Kopi Tubruk, 1 Es Kopi Susu, 1 Pisang Goreng, dengan catatan "less sugar": 4 item, Rp64.000. **Kirim pesanan** berhasil ("Pesanan terkirim ke barista.").
+3. Dasbor: tagihan berjalan Rp64.000, pesanan menunggu 1, badge Antrian 1, meja 5 hijau, Terlaris terisi.
+4. Antrian: Proses, lalu status Diproses dan tombol berubah menjadi Antar (TC-16 sebagian).
+5. Tagihan pelanggan: Minta bill → QRIS. Muncul "Bill diminta. Kasir akan segera memproses." dan panel QRIS Rp64.000 (gambar masih penanda karena `public/qris.png` belum ada).
+6. Dasbor: meja 5 kuning berdenyut, kartu Minta bill 1, "Perlu ditagih" Rp64.000 QRIS.
+7. Detail meja: peringatan "1 pesanan belum diantar". Konfirmasi bayar Rp64.000 lewat QRIS kembali ke dasbor dengan pesan sukses. Pendapatan hari ini Rp64.000 (1 transaksi QRIS) dan meja kosong lagi.
+8. Pelanggan melihat "Pembayaran sudah dikonfirmasi. Terima kasih sudah mampir." (TC-17). Tidak ada error di konsol.
+
+Temuan: pesanan yang masih "Diproses" tetap ada di antrian setelah sesinya dibayar, sampai ditandai Antar. Ini sesuai query PRD, dan sudah tercatat di bagian Usulan sebagai keputusan pemilik.
+
+Belum diuji: dua akun Google berbeda di satu meja (TC-10 lewat UI) dan penolakan akun non-admin. Keduanya butuh akun Google kedua yang didaftarkan sebagai test user.
+
 ### DoD
 
-- [ ] Alur end-to-end dengan data asli berjalan di HP dan laptop.
+- [ ] Alur end-to-end dengan data asli berjalan di HP dan laptop. (Laptop lulus 22 Nov; HP belum.)
 - [ ] Waktu pembaruan pelanggan ≤ 10 detik dan admin ≤ 5 detik terukur.
 - [ ] Akun Google non-admin ditolak di admin dan bisa memesan dari halaman pelanggan.
 - [ ] Pesanan dua akun Google pada satu meja bergabung dan masing-masing nama tampil.

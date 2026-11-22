@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import '@fontsource/gloock/400.css';
 import '@fontsource-variable/plus-jakarta-sans';
 import './styles/index.css';
+// Tangkap error redirect login Google sebelum router mengganti URL.
+import './features/auth/oauthError';
 import { Providers } from './app/providers';
 import { AppRouter } from './app/router';
 

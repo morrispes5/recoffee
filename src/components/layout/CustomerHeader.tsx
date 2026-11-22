@@ -1,6 +1,7 @@
 import { Receipt, SignIn, SignOut } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { ambilErrorLogin, PESAN_LOGIN_GAGAL } from '../../features/auth/oauthError';
 import { useAuth } from '../../features/auth/useAuth';
 import { toUserMessage } from '../../lib/errors';
 import { InlineMessage } from '../ui';
@@ -20,7 +21,9 @@ export function CustomerHeader({
   onUbahProfil: () => void;
 }) {
   const { user, loading, signIn, signOut } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(() =>
+    ambilErrorLogin() ? PESAN_LOGIN_GAGAL : null,
+  );
 
   async function changeSession(action: () => Promise<void>) {
     setError(null);

@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router';
 import { Logo } from '../components/brand/Logo';
 import { RakWarung } from '../components/brand/RakWarung';
 import { Button, InlineMessage } from '../components/ui';
+import { ambilErrorLogin, PESAN_LOGIN_GAGAL } from '../features/auth/oauthError';
 import { useAuth } from '../features/auth/useAuth';
 import { toUserMessage } from '../lib/errors';
 
@@ -12,9 +13,10 @@ export default function AdminLoginPage() {
   const { signIn } = useAuth();
   const { state } = useLocation();
   const [proses, setProses] = useState(false);
-  const [error, setError] = useState<string | null>(() =>
-    state === 'akses-ditolak' ? 'Akun ini belum terdaftar sebagai admin RE:coffee.' : null,
-  );
+  const [error, setError] = useState<string | null>(() => {
+    if (state === 'akses-ditolak') return 'Akun ini belum terdaftar sebagai admin RE:coffee.';
+    return ambilErrorLogin() ? PESAN_LOGIN_GAGAL : null;
+  });
 
   async function masuk() {
     setProses(true);

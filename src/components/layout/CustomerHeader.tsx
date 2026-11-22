@@ -1,6 +1,9 @@
 import { Receipt, SignIn, SignOut } from '@phosphor-icons/react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from '../../features/auth/useAuth';
+import { toUserMessage } from '../../lib/errors';
+import { InlineMessage } from '../ui';
 import { CustomerTopBar } from './CustomerTopBar';
 
 export const linkHeaderClass =
@@ -17,6 +20,17 @@ export function CustomerHeader({
   onUbahProfil: () => void;
 }) {
   const { user, loading, signIn, signOut } = useAuth();
+  const [error, setError] = useState<string | null>(null);
+
+  async function changeSession(action: () => Promise<void>) {
+    setError(null);
+    try {
+      await action();
+    } catch (e) {
+      setError(toUserMessage(e));
+    }
+  }
+
   return (
     <>
       <CustomerTopBar>
@@ -25,14 +39,18 @@ export function CustomerHeader({
           Tagihan meja
         </Link>
         {loading ? null : user ? (
-          <button type="button" onClick={() => void signOut()} className={linkHeaderClass}>
+          <button
+            type="button"
+            onClick={() => void changeSession(signOut)}
+            className={linkHeaderClass}
+          >
             <SignOut size={18} aria-hidden="true" />
             Keluar
           </button>
         ) : (
           <button
             type="button"
-            onClick={() => void signIn()}
+            onClick={() => void changeSession(signIn)}
             className="ml-1 inline-flex min-h-11 items-center gap-1.5 rounded-ui border border-garis px-3 text-body-s font-semibold text-tubruk hover:border-tubruk"
           >
             <SignIn size={18} aria-hidden="true" />
@@ -40,6 +58,11 @@ export function CustomerHeader({
           </button>
         )}
       </CustomerTopBar>
+      {error ? (
+        <InlineMessage tone="error" className="mt-4">
+          {error}
+        </InlineMessage>
+      ) : null}
       {user && nama ? (
         <p className="mt-4 flex flex-wrap items-center gap-x-1 text-body-s text-ampas">
           <span>

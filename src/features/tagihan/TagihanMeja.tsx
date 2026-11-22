@@ -13,7 +13,7 @@ import { TagihanView } from './TagihanView';
 
 /** Isi halaman tagihan untuk user yang sudah login (PRD 16.4). */
 export function TagihanMeja({ nomor }: { nomor: number }) {
-  const tagihanQ = useTagihan(nomor, true);
+  const tagihanQ = useTagihan(nomor);
   const tagihan = tagihanQ.data;
 
   useEffect(() => {
@@ -43,6 +43,20 @@ export function TagihanMeja({ nomor }: { nomor: number }) {
 
   if (!tagihan) {
     if (sesiTerakhir && statusQ.isPending) return <Skeleton lines={3} label="Memuat" />;
+    if (sesiTerakhir && statusQ.isError) {
+      return (
+        <InlineMessage
+          tone="error"
+          action={
+            <Button variant="ghost" onClick={() => void statusQ.refetch()}>
+              Coba lagi
+            </Button>
+          }
+        >
+          {toUserMessage(statusQ.error)}
+        </InlineMessage>
+      );
+    }
     if (statusQ.data === 'selesai') return <TerimaKasih nomor={nomor} />;
     if (statusQ.data === 'batal') {
       return (
@@ -52,7 +66,7 @@ export function TagihanMeja({ nomor }: { nomor: number }) {
     return <Kosong nomor={nomor} judul="Belum ada pesanan di meja ini." teksLink="Pilih menu" />;
   }
 
-  return <TagihanAktif nomor={nomor} tagihan={tagihan} />;
+  return <TagihanAktif key={tagihan.sesi_id} nomor={nomor} tagihan={tagihan} />;
 }
 
 function TagihanAktif({ nomor, tagihan }: { nomor: number; tagihan: Tagihan }) {

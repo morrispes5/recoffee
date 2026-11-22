@@ -2,6 +2,7 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { createBrowserRouter, RouterProvider, type RouteObject } from 'react-router';
 import { CustomerLayout } from '../components/layout/CustomerLayout';
 import { Skeleton } from '../components/ui';
+import { RequireAdmin } from '../features/auth/RequireAdmin';
 import MejaPage from '../pages/MejaPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
@@ -50,7 +51,7 @@ const devRoutes: RouteObject[] = DevUiPage
     ]
   : [];
 
-// Peta route PRD 16.1. RequireAdmin untuk /admin/* ditambahkan di M5.
+// Peta route PRD 16.1.
 const routes: RouteObject[] = [
   {
     element: <CustomerLayout />,
@@ -85,9 +86,11 @@ const routes: RouteObject[] = [
   {
     path: '/admin',
     element: (
-      <Muat>
-        <AdminLayout />
-      </Muat>
+      <RequireAdmin>
+        <Muat>
+          <AdminLayout />
+        </Muat>
+      </RequireAdmin>
     ),
     children: [
       {

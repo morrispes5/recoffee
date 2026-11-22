@@ -12,7 +12,42 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                              |
 | M4 Backend Supabase                  | **Database selesai (21 Nov 2026)**; Google login menunggu setup manual |
 | Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                              |
-| M5–M8                                | Belum                                                                  |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi (21 Nov 2026)**. Uji penuh menunggu Google OAuth   |
+| M6–M8                                | Belum                                                                  |
+
+---
+
+## M5 — Integrasi frontend ↔ Supabase (21 Nov 2026)
+
+### Yang selesai
+
+- Lapisan API pelanggan dan kasir memakai Supabase. Menu, profil, pesanan, tagihan, denah, antrian, dan kelola menu terhubung ke tabel, view, dan RPC dari M4. Payload pesanan berisi ID menu, jumlah, dan catatan. Database menentukan harga.
+- Login Google memakai PKCE. Route kasir menunggu hasil `is_admin()` sebelum menampilkan data. Akun yang ditolak diarahkan ke halaman masuk dan diminta keluar. Setelah pindah akun, cache data yang terkait sesi dibersihkan.
+- Tagihan dan menu pelanggan diperbarui setiap 10 detik. Denah, detail meja, dan antrian diperbarui setiap 5 detik. Tombol status antrian memeriksa status terakhir di database sebelum memperbaruinya.
+- Keranjang tetap tersimpan per meja selama proses login. Item mock lama atau item yang sudah diarsipkan ditandai tidak tersedia agar bisa dihapus dari keranjang. ID sesi terakhir tetap disimpan untuk tampilan setelah pembayaran dikonfirmasi.
+- Panel dan sumber data mock dilepas. Bundle JS awal sekitar 204 KB gzip (batas PRD 250 KB).
+
+### Pemeriksaan
+
+- Build, lint, dan format lolos. Semua 67 tes lulus, termasuk tiga tes akses admin untuk tamu, pelanggan, dan kasir.
+- API Supabase mengembalikan 12 menu publik dan 28 meja. Panggilan `is_admin()` dengan peran publik mengembalikan `false`, dan kueri detail kasir serta antrian tidak mengembalikan data sesi/pesanan.
+- Browser localhost menampilkan menu asli. Tagihan meminta login, dan tautan langsung ke `/admin/antrian` dialihkan ke halaman masuk admin saat belum ada sesi.
+- Review kode M5 (22 Nov 2026): integrasi sesuai PRD M5. Harga tetap dari database, hasil RPC `get_tagihan_meja` divalidasi Zod, query admin tetap dilindungi RLS, tidak ada sisa import `src/mocks`.
+- Simulasi aturan bisnis langsung di database (22 Nov 2026), tiga akun pelanggan uji + email admin, dalam satu transaksi yang dibatalkan otomatis (tidak ada data tersisa: 0 user, 0 sesi, 0 pesanan):
+  - TC-27 pesan tanpa data diri → `PROFIL_BELUM_LENGKAP`; TC-28/29 profil tidak valid → `PROFIL_TIDAK_VALID`; qty 21 → `QTY_TIDAK_VALID`.
+  - TC-10: dua akun di meja 5 masuk ke satu tagihan (2 pesanan, total Rp46.000, nama Rina dan Dimas, `milik_saya` benar, nomor HP tidak ikut terkirim).
+  - TC-31: akun yang belum memesan minta bill → `BUKAN_PEMESAN_MEJA`. Pelanggan memanggil `konfirmasi_bayar` → `BUKAN_ADMIN`. Pelanggan ubah status pesanan langsung → 0 baris (RLS).
+  - TC-12: pesan saat bill diminta → `TAGIHAN_SEDANG_DIPROSES`.
+  - Admin: lompat status baru→diantar → `TRANSISI_STATUS_TIDAK_VALID`; TC-16 baru→diproses→diantar berhasil; TC-17 konfirmasi bayar menutup sesi (`selesai`, QRIS, total_bayar 46000, dikonfirmasi `morrispes5@gmail.com`), meja 5 kembali kosong, pelanggan melihat status terakhir `selesai` dan tagihan aktif `null`.
+- Endpoint pengaturan Auth mengembalikan `external.google: false`. Aktifkan provider Google sesuai langkah M4, termasuk redirect localhost. Setelah aktif, uji pesanan sampai pembayaran dengan akun admin dan akun pelanggan di dua browser.
+
+### DoD
+
+- [ ] Alur end-to-end dengan data asli berjalan di HP dan laptop.
+- [ ] Waktu pembaruan pelanggan ≤ 10 detik dan admin ≤ 5 detik terukur.
+- [ ] Akun Google non-admin ditolak di admin dan bisa memesan dari halaman pelanggan.
+- [ ] Pesanan dua akun Google pada satu meja bergabung dan masing-masing nama tampil.
+- [ ] Alur end-to-end berjalan tanpa error di konsol.
 
 ---
 

@@ -1,9 +1,13 @@
+import { z } from 'zod';
+
 /** sesi_id terakhir per meja di sessionStorage, untuk mendeteksi layar terima kasih (M5 tugas 6). */
 const key = (nomor: number) => `recoffee:sesi:${nomor}`;
+const sesiIdSchema = z.uuid();
 
 export function bacaSesiTerakhir(nomor: number): string | null {
   try {
-    return sessionStorage.getItem(key(nomor));
+    const parsed = sesiIdSchema.safeParse(sessionStorage.getItem(key(nomor)));
+    return parsed.success ? parsed.data : null;
   } catch {
     return null;
   }

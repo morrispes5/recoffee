@@ -4,5 +4,5 @@ import { fetchMenu } from './api';
 export const menuKey = ['menu'] as const;
 
 export function useMenu() {
-  return useQuery({ queryKey: menuKey, queryFn: fetchMenu, staleTime: 30_000 });
+  return useQuery({ queryKey: menuKey, queryFn: fetchMenu, refetchInterval: 10_000 });
 }

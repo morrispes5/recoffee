@@ -1,28 +1,26 @@
 import { GoogleLogo } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { Logo } from '../components/brand/Logo';
 import { RakWarung } from '../components/brand/RakWarung';
 import { Button, InlineMessage } from '../components/ui';
 import { useAuth } from '../features/auth/useAuth';
 import { toUserMessage } from '../lib/errors';
 
-/**
- * `/admin/masuk` (PRD 16.5). Mock: langsung masuk sebagai kasir demo.
- * M5: redirect Google → cek is_admin(); bila false, signOut + pesan akun tidak terdaftar.
- */
+/** `/admin/masuk` (PRD 16.5). */
 export default function AdminLoginPage() {
   const { signIn } = useAuth();
-  const navigate = useNavigate();
+  const { state } = useLocation();
   const [proses, setProses] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(() =>
+    state === 'akses-ditolak' ? 'Akun ini belum terdaftar sebagai admin RE:coffee.' : null,
+  );
 
   async function masuk() {
     setProses(true);
     setError(null);
     try {
       await signIn(`${window.location.origin}/admin`);
-      void navigate('/admin');
     } catch (e) {
       setError(toUserMessage(e));
       setProses(false);

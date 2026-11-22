@@ -1,26 +1,21 @@
-import { bacaDb, bacaUserMock, tundaMock, ubahDb } from '../../mocks/db';
+import { getSupabase } from '../../lib/supabase';
 import type { Profil } from '../../types/domain';
-import { normalisasiHp, POLA_HP } from './schema';
+import { getUser } from '../auth/api';
 
-/** M5: from('pelanggan').select('nama, no_hp, email').eq('id', user.id).maybeSingle() */
 export async function fetchProfil(): Promise<Profil | null> {
-  await tundaMock();
-  const user = bacaUserMock();
+  const user = await getUser();
   if (!user) throw new Error('BELUM_LOGIN');
-  return bacaDb().profil[user.id] ?? null;
+
+  const { data, error } = await getSupabase()
+    .from('pelanggan')
+    .select('nama, no_hp, email')
+    .eq('id', user.id)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
 }
 
-/** M5: rpc('simpan_profil', { p_nama, p_no_hp }). Validasi sama dengan function database. */
 export async function simpanProfil(nama: string, noHp: string): Promise<void> {
-  await tundaMock();
-  const user = bacaUserMock();
-  if (!user) throw new Error('BELUM_LOGIN');
-  const namaBersih = nama.trim();
-  const hp = normalisasiHp(noHp);
-  if (namaBersih.length < 2 || namaBersih.length > 50 || !POLA_HP.test(hp)) {
-    throw new Error('PROFIL_TIDAK_VALID');
-  }
-  ubahDb((db) => {
-    db.profil[user.id] = { nama: namaBersih, no_hp: hp, email: user.email.toLowerCase() };
-  });
+  const { error } = await getSupabase().rpc('simpan_profil', { p_nama: nama, p_no_hp: noHp });
+  if (error) throw error;
 }

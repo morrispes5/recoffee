@@ -1,32 +1,48 @@
-import { bacaUserMock, dengarUserMock, MOCK_USERS, setUserMock } from '../../mocks/db';
+import type { Session } from '@supabase/supabase-js';
+import { getSupabase } from '../../lib/supabase';
 
 export interface AuthUser {
   id: string;
   email: string;
 }
 
-/** M5: supabase.auth.getSession() */
+function getSessionUser(session: Session | null): AuthUser | null {
+  const user = session?.user;
+  return user?.email ? { id: user.id, email: user.email } : null;
+}
+
 export async function getUser(): Promise<AuthUser | null> {
-  return bacaUserMock();
+  const { data, error } = await getSupabase().auth.getSession();
+  if (error) throw error;
+  return getSessionUser(data.session);
 }
 
-/** M5: supabase.auth.onAuthStateChange(...) */
-export function onAuthChange(cb: (user: AuthUser | null) => void): () => void {
-  return dengarUserMock(cb);
+export function onAuthChange(callback: (user: AuthUser | null) => void): () => void {
+  const { data } = getSupabase().auth.onAuthStateChange((_event, session) => {
+    callback(getSessionUser(session));
+  });
+  return () => data.subscription.unsubscribe();
 }
 
-/**
- * M5: supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } }).
- * Mock M2–M3: tidak ada redirect; anggap langsung kembali dari Google. Tujuan `/admin` masuk
- * sebagai kasir demo, selain itu sebagai pelanggan demo. Cek is_admin() dibuat di M5.
- */
 export async function signInWithGoogle(redirectTo: string): Promise<void> {
-  await new Promise((r) => setTimeout(r, 400));
-  const keAdmin = new URL(redirectTo, window.location.origin).pathname.startsWith('/admin');
-  setUserMock(keAdmin ? MOCK_USERS.admin : MOCK_USERS.saya);
+  const callback = new URL(redirectTo);
+  callback.hash = '';
+  callback.search = '';
+
+  const { error } = await getSupabase().auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: callback.href, queryParams: { prompt: 'select_account' } },
+  });
+  if (error) throw error;
 }
 
-/** M5: supabase.auth.signOut() */
 export async function signOut(): Promise<void> {
-  setUserMock(null);
+  const { error } = await getSupabase().auth.signOut({ scope: 'local' });
+  if (error) throw error;
+}
+
+export async function fetchIsAdmin(): Promise<boolean> {
+  const { data, error } = await getSupabase().rpc('is_admin');
+  if (error) throw error;
+  return data === true;
 }

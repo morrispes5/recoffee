@@ -5,6 +5,7 @@ const PESAN_KODE: Record<string, string> = {
   TAGIHAN_SEDANG_DIPROSES: 'Bill sudah diminta. Tambah pesanan lewat kasir.',
   QTY_TIDAK_VALID: 'Jumlah tiap menu harus 1 sampai 20.',
   MENU_TIDAK_TERSEDIA: 'Ada menu yang baru saja habis. Hapus dari keranjang lalu kirim lagi.',
+  MENU_TIDAK_DITEMUKAN: 'Menu ini tidak ditemukan. Muat ulang daftar menu.',
   METODE_TIDAK_VALID: 'Pilih metode bayar dulu.',
   SESI_TIDAK_AKTIF: 'Meja ini tidak punya tagihan aktif.',
   BUKAN_ADMIN: 'Akun ini tidak punya akses admin.',
@@ -13,6 +14,7 @@ const PESAN_KODE: Record<string, string> = {
   PROFIL_TIDAK_VALID: 'Nama 2–50 huruf dan nomor HP harus benar. Contoh: 081234567890.',
   BUKAN_PEMESAN_MEJA: 'Bill hanya bisa diminta oleh yang sudah memesan di meja ini.',
   TRANSISI_STATUS_TIDAK_VALID: 'Status pesanan sudah berubah. Muat ulang antrian.',
+  SUPABASE_ENV_INVALID: 'Koneksi RE:coffee belum dikonfigurasi.',
 };
 
 export const PESAN_DEFAULT = 'Gagal terhubung. Cek koneksi lalu coba lagi.';

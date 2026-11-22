@@ -1,9 +1,5 @@
-import { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { CustomerFooter } from './CustomerFooter';
-
-// Panel data mock hanya di mode dev; tidak ikut build produksi.
-const DevToolbar = import.meta.env.DEV ? lazy(() => import('../../mocks/DevToolbar')) : null;
 
 /**
  * Kerangka halaman pelanggan: satu kolom, maks 480 px, padding samping 20 px (PRD 15.4).
@@ -19,11 +15,6 @@ export function CustomerLayout() {
         </main>
         <CustomerFooter />
       </div>
-      {DevToolbar ? (
-        <Suspense fallback={null}>
-          <DevToolbar />
-        </Suspense>
-      ) : null}
     </div>
   );
 }

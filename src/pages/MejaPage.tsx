@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { CangkirTubruk, Uap } from '../components/brand/icons';
 import { CustomerHeader } from '../components/layout/CustomerHeader';
 import { LangkahPesan } from '../features/menu/LangkahPesan';
-import { Button, InlineMessage } from '../components/ui';
+import { Button, InlineMessage, Skeleton } from '../components/ui';
 import { MasukGoogleButton } from '../features/auth/MasukGoogleButton';
 import { clearPending, peekPending, setPending } from '../features/auth/pending';
 import { useAuth } from '../features/auth/useAuth';
@@ -33,9 +33,9 @@ export default function MejaPage() {
 }
 
 function MejaView({ nomor }: { nomor: number }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const profilQ = useProfil(user?.id ?? null);
-  const tagihanQ = useTagihan(nomor, user !== null);
+  const tagihanQ = useTagihan(nomor);
   const menuQ = useMenu();
   const { state, dispatch } = useCart();
   const kirim = useKirimPesanan(nomor);
@@ -56,12 +56,14 @@ function MejaView({ nomor }: { nomor: number }) {
   const lengkapiOpen = belumAdaProfil && !profilDitunda;
   const billDiminta = tagihanQ.data?.status === 'minta_bill';
 
-  const habisIds = useMemo(
-    () => new Set((menuQ.data ?? []).filter((m) => !m.tersedia).map((m) => m.id)),
-    [menuQ.data],
-  );
+  const habisIds = useMemo(() => {
+    if (!menuQ.data) return new Set<string>();
+    const availableIds = new Set(menuQ.data.filter((menu) => menu.tersedia).map((menu) => menu.id));
+    return new Set(state.items.map((item) => item.menuId).filter((id) => !availableIds.has(id)));
+  }, [menuQ.data, state.items]);
 
   function kirimSekarang() {
+    if (kirim.isPending || billDiminta || habisIds.size > 0 || state.items.length === 0) return;
     kirim.mutate(
       {
         items: state.items.map((i) => ({ menu_id: i.menuId, qty: i.qty })),
@@ -91,7 +93,9 @@ function MejaView({ nomor }: { nomor: number }) {
   }
 
   let aksi;
-  if (!user) {
+  if (loading) {
+    aksi = <Skeleton lines={1} label="Memeriksa sesi masuk" />;
+  } else if (!user) {
     aksi = (
       <div className="flex flex-col gap-3">
         <p className="text-body-s text-ampas">Biar pesanan tercatat atas namamu.</p>
@@ -106,6 +110,19 @@ function MejaView({ nomor }: { nomor: number }) {
     aksi = (
       <InlineMessage tone="info">Bill sudah diminta. Tambah pesanan lewat kasir.</InlineMessage>
     );
+  } else if (profilQ.isError && !profil) {
+    aksi = (
+      <InlineMessage
+        tone="error"
+        action={
+          <Button variant="ghost" onClick={() => void profilQ.refetch()}>
+            Coba lagi
+          </Button>
+        }
+      >
+        {toUserMessage(profilQ.error)}
+      </InlineMessage>
+    );
   } else {
     aksi = (
       <div className="flex flex-col gap-3">
@@ -116,7 +133,7 @@ function MejaView({ nomor }: { nomor: number }) {
           fullWidth
           onClick={handleKirim}
           loading={kirim.isPending}
-          disabled={state.items.length === 0 || profilQ.isPending}
+          disabled={state.items.length === 0 || profilQ.isPending || habisIds.size > 0}
         >
           Kirim pesanan
         </Button>

@@ -17,8 +17,9 @@ export function useSimpanProfil() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (v: { nama: string; noHp: string }) => simpanProfil(v.nama, v.noHp),
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: ['profil'] });
+    onSuccess: () => {
+      // Biarkan dialog menjalankan onSaved sebelum hasil refetch menutupnya.
+      void qc.invalidateQueries({ queryKey: ['profil'] });
       // Nama baru juga tampil di tagihan.
       void qc.invalidateQueries({ queryKey: ['tagihan'] });
     },

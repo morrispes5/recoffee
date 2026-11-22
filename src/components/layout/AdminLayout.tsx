@@ -1,8 +1,11 @@
 import { SignOut } from '@phosphor-icons/react';
+import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../../features/auth/useAuth';
 import { cn } from '../../lib/cn';
+import { toUserMessage } from '../../lib/errors';
 import { Logo } from '../brand/Logo';
+import { InlineMessage } from '../ui';
 
 const NAV = [
   // Detail meja dibuka dari denah, jadi tab Denah tetap aktif di sana.
@@ -15,18 +18,21 @@ const NAV = [
   { to: '/admin/menu', label: 'Menu', aktif: (p: string) => p.startsWith('/admin/menu') },
 ] as const;
 
-/**
- * Kerangka admin: navigasi atas sederhana, maks 1120 px, rata kiri (PRD 15.4, 16.6).
- * Guard RequireAdmin + cek is_admin() dipasang di M5.
- */
+/** Kerangka admin dengan navigasi atas (PRD 15.4, 16.6). */
 export function AdminLayout() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [error, setError] = useState<string | null>(null);
 
   async function keluar() {
-    await signOut();
-    void navigate('/admin/masuk');
+    setError(null);
+    try {
+      await signOut();
+      void navigate('/admin/masuk', { replace: true });
+    } catch (e) {
+      setError(toUserMessage(e));
+    }
   }
 
   return (
@@ -86,6 +92,11 @@ export function AdminLayout() {
         </div>
       </header>
       <main className="mx-auto w-full max-w-admin px-5 py-10 sm:px-8 sm:py-12">
+        {error ? (
+          <InlineMessage tone="error" className="mb-6">
+            {error}
+          </InlineMessage>
+        ) : null}
         <Outlet />
       </main>
     </div>

@@ -4,21 +4,21 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                            | Status                                                                                                                                                     |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                                            |
-| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                                              |
-| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                                  |
-| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                                  |
-| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                                  |
-| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                                  |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun lewat UI sebagian (TC-31 lulus; TC-10 dan TC-30 belum)                      |
-| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                                  |
-| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                                  |
-| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                  |
-| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 1 kasus lagi (TC-11, menunggu `qris.png`) menunggu pemilik                         |
-| M7 Deployment                        | **Sebagian (22 Nov 2026)**: produksi aktif di https://recoffee-ten.vercel.app; login Google di produksi terbukti; `qris.png` dan cetak QR menunggu pemilik |
-| M8                                   | Belum                                                                                                                                                      |
+| Milestone                            | Status                                                                                                                                                                                                                                                                             |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                                                                                                                                                                    |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                                                                                                                                                                      |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                                                                                                                                                          |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                                                                                                                                                          |
+| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                                                                                                                                                          |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                                                                                                                                                          |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun lewat UI sebagian (TC-31 lulus; TC-10 dan TC-30 belum)                                                                                                                                              |
+| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                                                                                                                                                          |
+| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                                                                                                                                                          |
+| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                                                                                                                                          |
+| M6 Testing                           | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: uji otomatis (94 tes), black box (29 UI, 2 SQL, 1 sebagian), 3 bug diperbaiki (B-01, B-02, B-04; B-03 menunggu `qris.png`). Tindak lanjut tidak memblokir: `qris.png` (TC-11), sesi UAT, TC-10 dan TC-30 lewat UI |
+| M7 Deployment                        | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: produksi aktif di https://recoffee-ten.vercel.app, login Google terbukti, 28 QR dibuat, keep-alive hijau. Tindak lanjut: `qris.png` dan cetak QR                                                                  |
+| M8                                   | Belum                                                                                                                                                                                                                                                                              |
 
 ---
 
@@ -61,6 +61,8 @@ Panduan operasional dan pasang ulang dari nol: `docs/serah-terima.md`.
 - [x] Login Google berjalan di domain produksi. (Dibuktikan lewat log autentikasi Supabase dan dicoba pemilik.)
 - [ ] 28 QR tergenerate mengarah ke domain produksi; minimal 3 dicetak untuk demo. (28 QR sudah dibuat; pencetakan menunggu pemilik.)
 
+**Keputusan pemilik (22 Nov 2026):** M7 ditutup dari sisi kode. Pencetakan QR dan `qris.png` menjadi tindak lanjut yang menunggu pemilik (lihat checklist H-1 di `docs/serah-terima.md`).
+
 ---
 
 ## M6 — Testing (22 Nov 2026)
@@ -93,6 +95,8 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 - [x] `npm run test` lulus (93 tes). Lint dan build bersih.
 - [ ] 100% kasus black box prioritas tinggi lulus. (22 dari 23 lulus; hanya TC-11 sebagian, menunggu `qris.png`.)
 - [ ] Hasil UAT terdokumentasi. (Panduan dan formulir siap; sesi belum dijalankan.)
+
+**Keputusan pemilik (22 Nov 2026):** M6 ditutup dari sisi kode dan pekerjaan lanjut ke dokumen M0. Dua DoD di atas sengaja tidak dicentang karena belum terpenuhi; keduanya tercatat sebagai tindak lanjut yang menunggu pemilik (`qris.png`, sesi UAT).
 
 ### Data uji
 

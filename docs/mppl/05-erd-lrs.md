@@ -1,7 +1,8 @@
 # 05. ERD dan LRS RE:coffee
 
 > Dokumen MPPL (M0). Sumber rancangan: PRD bagian 10. Skema fisiknya ada di `supabase/migrations/0001_schema.sql`.
-> Diperbarui 22 Nov 2026 setelah revisi menu dari klien (lihat bagian 1).
+> Diperbarui 22 Nov 2026 setelah revisi menu dari klien (lihat bagian 1), lalu diperdalam dengan notasi (min, max)
+> (5.1), aksi referensial dan indeks (10.1, 10.2), serta normalisasi bertahap dan ketergantungan fungsional (11.1, 11.2).
 
 Urutan perancangan data: **ERD konseptual (notasi Chen) → transformasi → LRS → tabel fisik → kamus data**.
 ERD menjawab "apa saja yang ada dan bagaimana hubungannya". LRS menjawab "bagaimana itu disusun menjadi record dan kunci".
@@ -80,6 +81,24 @@ Dua keputusan yang perlu bisa dijelaskan:
 Aturan yang **tidak bisa** digambarkan lewat kardinalitas: _satu meja hanya boleh punya satu sesi terbuka pada satu waktu_.
 Di ERD hubungannya tetap 1:M (sepanjang waktu banyak sesi). Batasan waktunya dijaga di level fisik oleh
 _partial unique index_ `sesi_meja_satu_terbuka_idx`. ERD menangkap struktur, aturan bisnis tertentu dijaga oleh constraint.
+
+### 5.1 Kardinalitas dalam notasi (min, max)
+
+Notasi (min, max) menyatakan **paling sedikit** dan **paling banyak** kemunculan satu entitas pada relasi. Nilai min 0 sama
+dengan partisipasi parsial, min 1 sama dengan partisipasi total.
+
+| Relasi            | Entitas   | (min, max) | Dibaca                                                                    |
+| ----------------- | --------- | ---------- | ------------------------------------------------------------------------- |
+| **Membuat**       | PELANGGAN | (0, N)     | Seorang pelanggan membuat nol sampai banyak pesanan                       |
+|                   | PESANAN   | (1, 1)     | Sebuah pesanan dibuat tepat satu pelanggan                                |
+| **Memiliki**      | MEJA      | (0, N)     | Sebuah meja memiliki nol sampai banyak sesi sepanjang waktu               |
+|                   | SESI_MEJA | (1, 1)     | Sebuah sesi milik tepat satu meja                                         |
+| **Mencakup**      | SESI_MEJA | (1, N)     | Sebuah sesi mencakup satu sampai banyak pesanan                           |
+|                   | PESANAN   | (1, 1)     | Sebuah pesanan berada di tepat satu sesi                                  |
+| **Berisi**        | PESANAN   | (1, N)     | Sebuah pesanan berisi satu sampai banyak menu                             |
+|                   | MENU      | (0, N)     | Sebuah menu ada di nol sampai banyak pesanan                              |
+| **Mengonfirmasi** | ADMIN     | (0, N)     | Seorang admin mengonfirmasi nol sampai banyak sesi                        |
+|                   | SESI_MEJA | (0, 1)     | Sebuah sesi dikonfirmasi paling banyak satu admin, kosong selama berjalan |
 
 ## 6. Diagram ERD (notasi Chen)
 
@@ -220,6 +239,33 @@ Perubahan dari ERD ke LRS yang terlihat di gambar:
 | Pelanggan hanya membaca data sendiri, admin membaca semua          | Row Level Security (migrasi `0002`)                                               |
 | Harga tidak bisa dimanipulasi dari browser                         | `buat_pesanan()` mengambil harga dari tabel MENU di server                        |
 
+### 10.1 Aksi referensial (foreign key)
+
+Semua foreign key memakai **RESTRICT** atau **NO ACTION** pada penghapusan, tidak ada `ON DELETE CASCADE`. Itu sengaja:
+sesi, pesanan, dan menu tidak pernah dihapus (BR-08, BR-09), jadi riwayat transaksi tidak boleh hilang karena induknya dihapus.
+
+| Foreign key                   | Mengacu ke      | Saat induk dihapus | Saat kunci induk berubah | Boleh kosong | Alasan                                                            |
+| ----------------------------- | --------------- | ------------------ | ------------------------ | ------------ | ----------------------------------------------------------------- |
+| `sesi_meja.nomor_meja`        | `meja.nomor`    | NO ACTION          | NO ACTION                | Tidak        | Meja fisik tidak dihapus                                          |
+| `sesi_meja.dikonfirmasi_oleh` | `admin.email`   | NO ACTION          | **CASCADE**              | Ya           | Kosong selama sesi berjalan. Bila email admin diganti, jejak ikut |
+| `pelanggan.id`                | `auth.users.id` | RESTRICT           | NO ACTION                | Tidak        | Satu akun Google sama dengan satu data pelanggan                  |
+| `pesanan.sesi_id`             | `sesi_meja.id`  | RESTRICT           | NO ACTION                | Tidak        | Pesanan selalu terikat ke sesi (BR-02)                            |
+| `pesanan.pelanggan_id`        | `pelanggan.id`  | RESTRICT           | NO ACTION                | Tidak        | Setiap pesanan punya pemesan (BR-12)                              |
+| `item_pesanan.pesanan_id`     | `pesanan.id`    | RESTRICT           | NO ACTION                | Tidak        | Item tidak berdiri sendiri                                        |
+| `item_pesanan.menu_id`        | `menu.id`       | RESTRICT           | NO ACTION                | Tidak        | Menu yang pernah dipesan hanya diarsipkan (BR-09)                 |
+
+### 10.2 Indeks
+
+| Indeks                       | Tabel dan kolom                                         | Jenis          | Fungsi                                                      |
+| ---------------------------- | ------------------------------------------------------- | -------------- | ----------------------------------------------------------- |
+| `sesi_meja_satu_terbuka_idx` | `sesi_meja (nomor_meja)` untuk `aktif` dan `minta_bill` | Unique parsial | Menjaga aturan satu sesi terbuka per meja (BR-01)           |
+| `sesi_meja_status_idx`       | `sesi_meja (status)`                                    | Biasa          | Denah dan dasbor memfilter sesi menurut status              |
+| `menu_kategori_urutan_idx`   | `menu (kategori, urutan)` untuk menu tidak diarsipkan   | Parsial        | Daftar menu per kategori di halaman pelanggan               |
+| `pesanan_sesi_idx`           | `pesanan (sesi_id)`                                     | Biasa          | Mengambil pesanan satu sesi untuk tagihan                   |
+| `pesanan_pelanggan_idx`      | `pesanan (pelanggan_id)`                                | Biasa          | Mengecek apakah pelanggan sudah memesan (syarat minta bill) |
+| `pesanan_antrian_idx`        | `pesanan (created_at)` untuk `baru` dan `diproses`      | Parsial        | Antrian barista urut dari yang terlama                      |
+| `item_pesanan_menu_idx`      | `item_pesanan (menu_id)`                                | Biasa          | Menu terlaris dan pemeriksaan menu yang pernah dipesan      |
+
 ## 11. Catatan normalisasi
 
 - Semua record memenuhi **3NF**: setiap field non-kunci hanya bergantung pada primary key record-nya.
@@ -230,6 +276,76 @@ Perubahan dari ERD ke LRS yang terlihat di gambar:
 - `sesi_meja.total_bayar` juga snapshot final saat sesi ditutup.
 - Status meja **tidak disimpan** karena atribut turunan dari sesi terbuka; menyimpannya membuka peluang data tidak sinkron
   (meja "kosong" padahal ada tagihan). Ia dihitung oleh view `v_status_meja`.
+
+### 11.1 Normalisasi bertahap
+
+Bahan awalnya satu **tagihan meja** seperti yang dilihat kasir: satu lembar yang memuat meja, sesi, daftar pesanan, pemesan, dan
+daftar menu yang dipesan. Dari lembar itu ditunjukkan bagaimana tujuh record LRS terbentuk.
+
+**Bentuk tidak normal (UNF).** Ada kelompok yang berulang, yaitu pesanan dalam satu tagihan dan item dalam satu pesanan.
+
+```
+TAGIHAN (nomor_meja, kapasitas, status_sesi, metode_bayar, total_bayar, dibuka_at, minta_bill_at, ditutup_at,
+         dikonfirmasi_oleh, nama_admin,
+         { pesanan_id, status_pesanan, catatan, created_at,
+           pelanggan_id, email, nama, no_hp,
+           { menu_id, nama_menu, kategori, harga, tersedia, qty, harga_satuan } } )
+```
+
+**1NF.** Kelompok berulang dipecah sehingga setiap sel berisi satu nilai dan setiap baris mewakili satu menu dalam satu pesanan.
+Kunci utama menjadi **(pesanan_id, menu_id)**.
+
+```
+R1 (pesanan_id*, menu_id*, sesi_id, nomor_meja, kapasitas, status_sesi, metode_bayar, total_bayar, dibuka_at,
+    minta_bill_at, ditutup_at, dikonfirmasi_oleh, nama_admin, status_pesanan, catatan, created_at,
+    pelanggan_id, email, nama, no_hp, nama_menu_master, kategori, harga, tersedia,
+    qty, harga_satuan, nama_menu)
+```
+
+Masalah yang masih ada (anomali): mengganti nomor HP pelanggan berarti mengubah banyak baris (anomali ubah), menu baru tidak bisa
+disimpan sebelum ada yang memesannya (anomali tambah), dan menghapus pesanan terakhir yang berisi suatu menu ikut menghapus
+data menu itu (anomali hapus).
+
+**2NF.** Atribut yang hanya bergantung pada **sebagian** kunci dipisahkan.
+
+| Ketergantungan                                                    | Hasil record                                                                                |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `menu_id` menentukan nama, kategori, harga, tersedia              | **MENU** (menu_id\*, nama, deskripsi, kategori, harga, tersedia, ...)                       |
+| `pesanan_id` menentukan sesi, status, catatan, pemesan            | **PESANAN** (pesanan_id\*, sesi_id, nomor_meja, ..., pelanggan_id, email, nama, no_hp, ...) |
+| (`pesanan_id`, `menu_id`) menentukan qty, harga_satuan, nama_menu | **ITEM_PESANAN** (pesanan_id\*, menu_id\*, qty, harga_satuan, nama_menu)                    |
+
+**3NF.** Ketergantungan **transitif** (non-kunci menentukan non-kunci) dipisahkan.
+
+| Ketergantungan transitif                                                                  | Hasil record                                                                                                                         |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `pesanan_id` menentukan `sesi_id`, lalu `sesi_id` menentukan status, metode, waktu, total | **SESI_MEJA** (id\*, nomor_meja\*\*, status, metode_bayar, total_bayar, dibuka_at, minta_bill_at, ditutup_at, dikonfirmasi_oleh\*\*) |
+| `nomor_meja` menentukan `kapasitas`                                                       | **MEJA** (nomor\*, kapasitas)                                                                                                        |
+| `pesanan_id` menentukan `pelanggan_id`, lalu `pelanggan_id` menentukan email, nama, no_hp | **PELANGGAN** (id\*, email, nama, no_hp, ...)                                                                                        |
+| `dikonfirmasi_oleh` menentukan `nama_admin`                                               | **ADMIN** (email\*, nama, created_at)                                                                                                |
+
+Hasil akhir: **MEJA, SESI_MEJA, PELANGGAN, PESANAN, MENU, ITEM_PESANAN, ADMIN**, sama dengan LRS di bagian 8.
+
+**Snapshot `nama_menu` dan `harga_satuan` di ITEM_PESANAN bukan pelanggaran 3NF.** Keduanya bergantung pada kunci penuh
+(pesanan_id, menu_id) karena merupakan sifat **baris pesanan itu** (nama dan harga pada saat transaksi), bukan sifat menu
+sekarang. Jadi tidak ada ketergantungan transitif lewat `menu_id`. Ini yang membuat tagihan lama tidak berubah ketika harga
+atau nama menu diubah.
+
+### 11.2 Ketergantungan fungsional dan kunci kandidat
+
+| Record       | Primary key      | Kunci kandidat atau alternatif                                                       | Ketergantungan fungsional utama                                       | Bentuk normal |
+| ------------ | ---------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ------------- |
+| MEJA         | `nomor`          | -                                                                                    | `nomor` menentukan `kapasitas`                                        | BCNF          |
+| MENU         | `id`             | -                                                                                    | `id` menentukan semua atribut lain                                    | BCNF          |
+| PELANGGAN    | `id`             | `email` (unik karena berasal dari akun Google, tidak dijaga constraint di tabel ini) | `id` menentukan email, nama, no_hp, waktu                             | BCNF          |
+| SESI_MEJA    | `id`             | -                                                                                    | `id` menentukan semua atribut lain                                    | BCNF          |
+| PESANAN      | `id`             | -                                                                                    | `id` menentukan sesi, pemesan, status, catatan, waktu                 | BCNF          |
+| ITEM_PESANAN | `id` (surrogate) | (`pesanan_id`, `menu_id`) dijaga `UNIQUE`                                            | (`pesanan_id`, `menu_id`) menentukan id, nama_menu, qty, harga_satuan | BCNF          |
+| ADMIN        | `email`          | -                                                                                    | `email` menentukan nama dan created_at                                | BCNF          |
+
+Setiap determinan pada tabel di atas adalah kunci (utama atau kandidat), jadi seluruh record memenuhi BCNF dan otomatis 3NF.
+
+Aturan bisnis yang **bukan** ketergantungan fungsional dan dijaga di tempat lain: satu sesi terbuka per meja (partial unique
+index), status pesanan hanya maju satu langkah (trigger), dan harga tidak dikirim dari browser (function `buat_pesanan()`).
 
 ## 12. Bukti konsistensi ERD, LRS, dan database
 
@@ -257,13 +373,16 @@ Bila dosen meminta PNG, buka file `.drawio` di app.diagrams.net lalu **File → 
 
 ## 13. Pertanyaan yang mungkin muncul saat presentasi
 
-| Pertanyaan                                                         | Inti jawaban                                                                                                                                     |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Kenapa PELANGGAN terhubung ke PESANAN, bukan ke SESI_MEJA?         | Satu meja bisa diisi beberapa orang yang masing-masing login. Tagihan milik meja (open bill), pelanggan dicatat per pesanan untuk akuntabilitas. |
-| Kenapa pelanggan wajib login dan isi data diri?                    | Mencegah pesanan iseng; setiap pesanan bisa ditelusuri ke orang yang jelas.                                                                      |
-| Kenapa ITEM_PESANAN ada di LRS tapi tidak di ERD?                  | Di ERD ia relasi M:N "Berisi" yang punya atribut; aturan transformasi M:N mengubahnya menjadi record sendiri di LRS.                             |
-| Kenapa perlu SESI_MEJA, tidak langsung MEJA ke PESANAN?            | Satu meja dipakai banyak pengunjung bergantian. Tanpa sesi, pesanan jam 10 dan jam 14 tercampur dalam satu tagihan.                              |
-| Kalau satu meja hanya boleh satu sesi aktif, kenapa relasinya 1:M? | Kardinalitas menggambarkan sepanjang waktu (banyak sesi). Batasan "satu yang aktif" dijaga partial unique index.                                 |
-| Kenapa harga disimpan dua kali (MENU dan ITEM_PESANAN)?            | Di MENU harga sekarang, di ITEM_PESANAN harga saat transaksi. Snapshot disengaja.                                                                |
-| Kenapa ADMIN dihubungkan ke SESI_MEJA?                             | Jejak audit: siapa yang mengonfirmasi pembayaran atau membatalkan sesi.                                                                          |
-| Menu diganti, apakah ERD ikut berubah?                             | Tidak. Menu hanya data di entitas MENU. Menu lama diarsipkan, bukan dihapus, supaya tagihan lama tetap utuh.                                     |
+| Pertanyaan                                                         | Inti jawaban                                                                                                                                               |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kenapa PELANGGAN terhubung ke PESANAN, bukan ke SESI_MEJA?         | Satu meja bisa diisi beberapa orang yang masing-masing login. Tagihan milik meja (open bill), pelanggan dicatat per pesanan untuk akuntabilitas.           |
+| Kenapa pelanggan wajib login dan isi data diri?                    | Mencegah pesanan iseng; setiap pesanan bisa ditelusuri ke orang yang jelas.                                                                                |
+| Kenapa ITEM_PESANAN ada di LRS tapi tidak di ERD?                  | Di ERD ia relasi M:N "Berisi" yang punya atribut; aturan transformasi M:N mengubahnya menjadi record sendiri di LRS.                                       |
+| Kenapa perlu SESI_MEJA, tidak langsung MEJA ke PESANAN?            | Satu meja dipakai banyak pengunjung bergantian. Tanpa sesi, pesanan jam 10 dan jam 14 tercampur dalam satu tagihan.                                        |
+| Kalau satu meja hanya boleh satu sesi aktif, kenapa relasinya 1:M? | Kardinalitas menggambarkan sepanjang waktu (banyak sesi). Batasan "satu yang aktif" dijaga partial unique index.                                           |
+| Kenapa harga disimpan dua kali (MENU dan ITEM_PESANAN)?            | Di MENU harga sekarang, di ITEM_PESANAN harga saat transaksi. Snapshot disengaja.                                                                          |
+| Kenapa ADMIN dihubungkan ke SESI_MEJA?                             | Jejak audit: siapa yang mengonfirmasi pembayaran atau membatalkan sesi.                                                                                    |
+| Menu diganti, apakah ERD ikut berubah?                             | Tidak. Menu hanya data di entitas MENU. Menu lama diarsipkan, bukan dihapus, supaya tagihan lama tetap utuh.                                               |
+| Tunjukkan bahwa skema sudah 3NF, bukan hanya mengaku               | Bagian 11.1: dari tagihan tidak normal ke 1NF, 2NF, lalu 3NF. Setiap pemisahan punya ketergantungan yang jelas. Bagian 11.2 menunjukkan semua record BCNF. |
+| Apakah snapshot harga di ITEM_PESANAN melanggar normalisasi?       | Tidak. Harga dan nama itu bergantung pada kunci penuh (pesanan_id, menu_id) sebagai sifat baris pesanan, bukan lewat `menu_id`.                            |
+| Kenapa foreign key memakai RESTRICT, bukan CASCADE?                | Riwayat transaksi tidak boleh hilang. Sesi, pesanan, dan menu tidak pernah dihapus (BR-08, BR-09). Lihat bagian 10.1.                                      |

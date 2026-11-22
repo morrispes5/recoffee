@@ -6,7 +6,7 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 | Milestone                            | Status                                                                                                                                                                                                                                                                             |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                                                                                                                                                                                                    |
+| M0 Perencanaan dan dokumen MPPL      | **Selesai (22 Nov 2026)**: dokumen `docs/mppl/01` sampai `09` dan ERD + LRS; tafsiran "data analisis" belum dikonfirmasi ke dosen                                                                                                                                                  |
 | M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                                                                                                                                                                                                      |
 | M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                                                                                                                                                                                                          |
 | M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                                                                                                                                                          |
@@ -19,6 +19,54 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M6 Testing                           | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: uji otomatis (94 tes), black box (29 UI, 2 SQL, 1 sebagian), 3 bug diperbaiki (B-01, B-02, B-04; B-03 menunggu `qris.png`). Tindak lanjut tidak memblokir: `qris.png` (TC-11), sesi UAT, TC-10 dan TC-30 lewat UI |
 | M7 Deployment                        | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: produksi aktif di https://recoffee-ten.vercel.app, login Google terbukti, 28 QR dibuat, keep-alive hijau. Tindak lanjut: `qris.png` dan cetak QR                                                                  |
 | M8                                   | Belum                                                                                                                                                                                                                                                                              |
+
+---
+
+## M0 — Dokumen MPPL (22 Nov 2026)
+
+Dokumen M0 disusun **setelah** implementasi (M1 sampai M7) atas keputusan pemilik, jadi urutannya menyimpang dari PRD bagian 18
+(dokumen dulu, baru coding). Isinya memakai PRD sebagai sumber dan diperbarui dengan hasil pengerjaan yang sebenarnya.
+
+### Yang selesai
+
+| Dokumen                                       | Isi                                                                                                                                                                                           |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs/mppl/01-project-charter.md`             | Charter 11 bagian mengikuti template PRD 24.1, dengan status deliverable, milestone, dan kriteria sukses per 22 Nov                                                                           |
+| `docs/mppl/02-ruang-lingkup-wbs.md`           | In-scope per FR, out-of-scope, asumsi, batasan, **tabel perubahan scope selama pengerjaan (8 baris)**, WBS, dan kamus WBS dengan status                                                       |
+| `docs/mppl/03-kebutuhan-dan-analisis-data.md` | FR-01 sampai FR-25 dengan kasus uji pembukti, NFR-01 sampai NFR-11 dengan status, analisis data (identifikasi, data turunan, DFD level 0 dan 1, angka dasbor, matriks CRUD, volume, validasi) |
+| `docs/mppl/04-use-case.md`                    | Dua aktor, 12 use case, diagram use case, skenario lengkap semua use case, dan penelusuran UC ke FR ke TC                                                                                     |
+| `docs/mppl/05-erd-lrs.md` (diperdalam)        | Ditambah notasi (min, max), aksi referensial foreign key, daftar indeks, normalisasi bertahap UNF ke 3NF, ketergantungan fungsional dan BCNF, dan tiga pertanyaan presentasi baru             |
+| `docs/mppl/06-desain.md`                      | Arsitektur, pola akses data, autentikasi, teknologi, ringkasan design system dan aksesibilitas, peta dan spesifikasi halaman, tangkapan layar, keputusan desain                               |
+| `docs/mppl/07-estimasi-jadwal.md`             | Estimasi 34 jam (sekitar 41 dengan buffer), Gantt rencana, realisasi per milestone, analisis deviasi, sisa pekerjaan                                                                          |
+| `docs/mppl/08-biaya.md`                       | SDM Rp1.760.000, infrastruktur Rp0, contingency Rp176.000, total sekitar Rp1.940.000 ditambah biaya cetak, catatan bila dioperasikan nyata                                                    |
+| `docs/mppl/09-risiko.md`                      | 16 risiko (13 dari PRD, 3 baru) dengan status per 22 Nov, risiko yang sudah terjadi dan pelajarannya                                                                                          |
+
+Tambahan: `scripts/generate-use-case.mjs` membuat `docs/mppl/diagram/use-case.svg` dan `use-case.drawio`, tiga tangkapan layar di
+`docs/mppl/gambar/`, dan empat diagram Mermaid (DFD level 0 dan 1, arsitektur, Gantt) yang sudah divalidasi dirender tanpa error.
+
+### Keputusan dan catatan
+
+- Dokumen ditulis sebagai dokumen mandiri untuk dosen (PRD adalah dokumen kerja internal). Angka dan status memakai keadaan 22 Nov.
+- **Isian yang hanya diketahui pelaksana** ditandai `[...]`: nama dosen, tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu,
+  dan tanda tangan di charter.
+- Dua tafsiran "data analisis" dicakup di `03`: analisis kebutuhan data (utama, sesuai PRD) dan ringkasan analitik dasbor.
+- Diagram tersedia sebagai `.svg` dan `.drawio`. Versi PNG belum dibuat; bila dosen meminta, ekspor dari draw.io (File, Export as, PNG).
+- Perubahan scope yang sudah terjadi tercatat di `02` bagian 5. Perubahan berikutnya masuk bagian "Usulan" di bawah.
+- Tiga ketidaksesuaian PRD dengan implementasi dicatat apa adanya: halaman tagihan perlu login, mitigasi R11 diganti Test user,
+  dan ringkasan dasbor melonggarkan "laporan omzet" menjadi ringkasan hari ini saja.
+
+### Belum dikerjakan
+
+- PRD M0 tugas 7: konfirmasi ke dosen atau teman bahwa "data analisis" berarti bab analisis kebutuhan data.
+- Melengkapi isian `[...]` di charter dan biaya.
+
+### DoD
+
+- [x] Charter berisi nama pelaksana, tujuan, scope, jadwal, biaya, risiko. (`01-project-charter.md`; nama dosen menunggu pelaksana)
+- [x] ERD memakai belah ketupat untuk relasi, kardinalitas dan partisipasi lengkap, tidak ada entitas terisolasi. (`05` bagian 5, 5.1, 6: 6 persegi panjang, 5 belah ketupat)
+- [x] LRS menunjukkan ITEM_PESANAN sebagai hasil transformasi M:N, semua FK ditandai `**`. (`05` bagian 7 dan 8)
+- [x] ERD, LRS, kamus data, dan SQL saling konsisten. (`05` bagian 12: 7 dari 7 record sama persis dengan `information_schema`)
+- [x] Scope dikunci dan dicatat. (`02` bagian 1 sampai 5; perubahan setelah ini masuk "Usulan")
 
 ---
 

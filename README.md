@@ -6,7 +6,11 @@ Sistem pemesanan kopi berbasis meja (open bill) — proyek UAS Manajemen Proyek 
 - Progres per milestone: [`docs/PROGRESS.md`](docs/PROGRESS.md)
 - Operasional dan serah terima: [`docs/serah-terima.md`](docs/serah-terima.md)
 - Design system: [`docs/design-system.md`](docs/design-system.md)
-- ERD, LRS, dan kamus data: [`docs/mppl/05-erd-lrs.md`](docs/mppl/05-erd-lrs.md)
+- Dokumen MPPL (`docs/mppl/`): [project charter](docs/mppl/01-project-charter.md), [ruang lingkup dan WBS](docs/mppl/02-ruang-lingkup-wbs.md),
+  [kebutuhan dan analisis data](docs/mppl/03-kebutuhan-dan-analisis-data.md), [use case](docs/mppl/04-use-case.md),
+  [ERD, LRS, dan kamus data](docs/mppl/05-erd-lrs.md), [desain sistem dan antarmuka](docs/mppl/06-desain.md),
+  [estimasi dan jadwal](docs/mppl/07-estimasi-jadwal.md), [biaya](docs/mppl/08-biaya.md), [risiko](docs/mppl/09-risiko.md),
+  [pengujian](docs/mppl/10-pengujian.md), dan [UAT](docs/mppl/11-uat.md)
 
 ## Menjalankan
 
@@ -17,6 +21,7 @@ npm run build
 npm run lint
 npm run test
 node scripts/generate-diagrams.mjs   # membuat ulang ERD dan LRS di docs/mppl/diagram
+node scripts/generate-use-case.mjs   # membuat ulang diagram use case di docs/mppl/diagram
 ```
 
 ## Mencoba alur pesanan di localhost
@@ -37,6 +42,6 @@ Produksi: https://recoffee-ten.vercel.app (Vercel, tersambung ke repo GitHub; pu
 
 ## Pengujian
 
-`npm run test` menjalankan 93 tes (unit, komponen, dan aksesibilitas axe-core). Laporan black box lengkap dengan bukti gambar ada di `docs/mppl/10-pengujian.md`; panduan UAT dengan teman di `docs/mppl/11-uat.md`.
+`npm run test` menjalankan 94 tes (unit, komponen, dan aksesibilitas axe-core). Laporan black box lengkap dengan bukti gambar ada di `docs/mppl/10-pengujian.md`; panduan UAT dengan teman di `docs/mppl/11-uat.md`.
 
 Stack: Vite, React, TypeScript (strict), React Router, TanStack Query, Tailwind CSS v4, Phosphor Icons, Zod, Supabase, Vitest. Tambahan atas permintaan pemilik: `motion` (animasi), `sonner` (toast), `canvas-confetti` (konfeti).

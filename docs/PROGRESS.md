@@ -25,7 +25,7 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 **Konteks yang ditegaskan pemilik:** ini tugas kuliah (PPL/MPPL) yang hanya dipresentasikan ke dosen. Tidak ada pengguna sungguhan, dan kalaupun di-hosting tidak ada yang memakainya. Prioritasnya tampilan, interaksi, dan dokumentasi, bukan hardening produksi. Implikasi:
 
 - Aplikasi Google OAuth cukup tetap berstatus **Testing**. Daftarkan akun dosen/penguji dan teman UAT sebagai _test user_ (batas 100). Publish ke _In production_ (yang mewajibkan halaman beranda dan privacy policy di domain sendiri) tidak wajib untuk demo.
-- Data uji di database (dua sesi selesai atas nama "Uji Kasir" di meja 5 dan 12, total Rp162.000) sebaiknya dibersihkan sebelum demo agar dasbor mulai dari nol.
+- Data uji di database (dua sesi selesai atas nama "Uji Kasir" di meja 5 dan 12, total Rp162.000) **sudah dibersihkan 22 Nov 2026** atas persetujuan pemilik: 6 item, 2 pesanan, dan 2 sesi dihapus. Yang dipertahankan: akun Google, profil pelanggan (nama uji "Uji Kasir", bisa diganti lewat "Ubah data diri"), 22 menu aktif + 12 menu arsip, 28 meja, dan admin. Dasbor kembali Rp0, 28 meja kosong. Bersihkan lagi dengan cara yang sama bila nanti ada uji coba baru sebelum demo.
 
 Aturan PRD yang dilonggarkan atas permintaan eksplisit pemilik: daftar library (bagian 11, ditambah tiga paket di bawah), "visual hanya SVG tulis tangan atau Phosphor" tetap dipatuhi (lihat butir 4), animasi minimal (15.9), dan beranda minimal (16.2).
 

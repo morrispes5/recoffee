@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 800" width="1240" height="800" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-size="13" fill="#2B201B">
+<defs><marker id="panah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#2B201B" stroke-width="1.6"/></marker></defs>
+<rect width="1240" height="800" fill="#fff"/>
+<rect x="200" y="20" width="840" height="750" rx="10" fill="none" stroke="#2B201B" stroke-width="2"/>
+<text x="220" y="48" font-weight="800" font-size="16">Sistem RE:coffee</text>
+<line x1="124" y1="376" x2="245" y2="100" stroke="#76695F" stroke-width="1.4"/>
+<line x1="124" y1="376" x2="245" y2="200" stroke="#76695F" stroke-width="1.4"/>
+<line x1="124" y1="376" x2="245" y2="300" stroke="#76695F" stroke-width="1.4"/>
+<line x1="124" y1="376" x2="245" y2="400" stroke="#76695F" stroke-width="1.4"/>
+<line x1="124" y1="376" x2="245" y2="500" stroke="#76695F" stroke-width="1.4"/>
+<line x1="124" y1="376" x2="245" y2="650" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="100" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="200" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="300" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="400" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="500" stroke="#76695F" stroke-width="1.4"/>
+<line x1="1116" y1="376" x2="1005" y2="600" stroke="#76695F" stroke-width="1.4"/>
+<polyline points="475,300 555,300" fill="none" stroke="#2B201B" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#panah)"/>
+<text x="480" y="290" font-size="11" font-style="italic" fill="#2F6B57" font-weight="700">&lt;&lt;include&gt;&gt;</text>
+<polyline points="475,300 515,300 515,650 475,650" fill="none" stroke="#2B201B" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#panah)"/>
+<circle cx="515" cy="300" r="3.5" fill="#2B201B"/>
+<text x="524" y="575" font-size="11" font-style="italic" fill="#2F6B57" font-weight="700">&lt;&lt;include&gt;&gt;</text>
+<polyline points="475,400 515,400" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="515" cy="400" r="3.5" fill="#2B201B"/>
+<polyline points="475,500 515,500" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="515" cy="500" r="3.5" fill="#2B201B"/>
+<polyline points="775,600 745,600 745,100 775,100" fill="none" stroke="#2B201B" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#panah)"/>
+<circle cx="745" cy="600" r="3.5" fill="#2B201B"/>
+<text x="752" y="156" font-size="11" font-style="italic" fill="#2F6B57" font-weight="700">&lt;&lt;include&gt;&gt;</text>
+<polyline points="775,200 745,200" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="745" cy="200" r="3.5" fill="#2B201B"/>
+<polyline points="775,300 745,300" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="745" cy="300" r="3.5" fill="#2B201B"/>
+<polyline points="775,400 745,400" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="745" cy="400" r="3.5" fill="#2B201B"/>
+<polyline points="775,500 745,500" fill="none" stroke="#2B201B" stroke-width="1.6"/>
+<circle cx="745" cy="500" r="3.5" fill="#2B201B"/>
+<polyline points="890,682 890,630" fill="none" stroke="#2B201B" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#panah)"/>
+<text x="900" y="664" font-size="11" font-style="italic" fill="#2F6B57" font-weight="700">&lt;&lt;extend&gt;&gt;</text>
+<ellipse cx="360" cy="100" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="100" text-anchor="middle" dominant-baseline="central">UC-01 Melihat menu</text>
+<ellipse cx="360" cy="200" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="200" text-anchor="middle" dominant-baseline="central">UC-02 Mengelola keranjang</text>
+<ellipse cx="360" cy="300" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="300" text-anchor="middle" dominant-baseline="central">UC-03 Mengirim pesanan</text>
+<ellipse cx="360" cy="400" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="400" text-anchor="middle" dominant-baseline="central">UC-04 Melihat tagihan meja</text>
+<ellipse cx="360" cy="500" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="491.5" text-anchor="middle" dominant-baseline="central">UC-05 Minta bill dan</text>
+<text x="360" y="508.5" text-anchor="middle" dominant-baseline="central">pilih metode bayar</text>
+<ellipse cx="360" cy="650" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="360" y="641.5" text-anchor="middle" dominant-baseline="central">UC-12 Masuk dengan Google dan</text>
+<text x="360" y="658.5" text-anchor="middle" dominant-baseline="central">melengkapi data diri</text>
+<ellipse cx="640" cy="300" rx="85" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="640" y="291.5" text-anchor="middle" dominant-baseline="central">Membuat atau</text>
+<text x="640" y="308.5" text-anchor="middle" dominant-baseline="central">memakai sesi meja</text>
+<ellipse cx="890" cy="100" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="100" text-anchor="middle" dominant-baseline="central">UC-06 Login dengan Google</text>
+<ellipse cx="890" cy="200" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="200" text-anchor="middle" dominant-baseline="central">UC-07 Memantau denah meja</text>
+<ellipse cx="890" cy="300" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="300" text-anchor="middle" dominant-baseline="central">UC-09 Membatalkan sesi meja</text>
+<ellipse cx="890" cy="400" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="400" text-anchor="middle" dominant-baseline="central">UC-10 Mengelola antrian pesanan</text>
+<ellipse cx="890" cy="500" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="500" text-anchor="middle" dominant-baseline="central">UC-11 Mengelola menu</text>
+<ellipse cx="890" cy="600" rx="115" ry="30" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="600" text-anchor="middle" dominant-baseline="central">UC-08 Mengonfirmasi pembayaran</text>
+<ellipse cx="890" cy="710" rx="115" ry="28" fill="#F4F4F2" stroke="#2B201B" stroke-width="2"/>
+<text x="890" y="710" text-anchor="middle" dominant-baseline="central">Mengganti metode bayar</text>
+<circle cx="100" cy="350" r="14" fill="#fff" stroke="#2B201B" stroke-width="2"/>
+<line x1="100" y1="364" x2="100" y2="404" stroke="#2B201B" stroke-width="2"/>
+<line x1="76" y1="376" x2="124" y2="376" stroke="#2B201B" stroke-width="2"/>
+<line x1="100" y1="404" x2="80" y2="440" stroke="#2B201B" stroke-width="2"/>
+<line x1="100" y1="404" x2="120" y2="440" stroke="#2B201B" stroke-width="2"/>
+<text x="100" y="466" text-anchor="middle" font-weight="700" font-size="15">Pelanggan</text>
+<circle cx="1140" cy="350" r="14" fill="#fff" stroke="#2B201B" stroke-width="2"/>
+<line x1="1140" y1="364" x2="1140" y2="404" stroke="#2B201B" stroke-width="2"/>
+<line x1="1116" y1="376" x2="1164" y2="376" stroke="#2B201B" stroke-width="2"/>
+<line x1="1140" y1="404" x2="1120" y2="440" stroke="#2B201B" stroke-width="2"/>
+<line x1="1140" y1="404" x2="1160" y2="440" stroke="#2B201B" stroke-width="2"/>
+<text x="1140" y="466" text-anchor="middle" font-weight="700" font-size="15">Admin / Kasir</text>
+<text x="40" y="784" font-size="12" fill="#76695F">Garis putus-putus berpanah = hubungan include atau extend (panah menuju use case yang dipakai atau diperluas). Garis lurus dari aktor = asosiasi.</text>
+</svg>

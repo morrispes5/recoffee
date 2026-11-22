@@ -19,7 +19,8 @@ Referensi metode: skill frontend-design (token dulu, satu elemen berani, sisanya
 | -------- | --------- | ------------------------------------------------------------------------------------------- |
 | `putih`  | `#FFFFFF` | Latar utama semua halaman                                                                   |
 | `tegel`  | `#F4F4F2` | Latar sekunder (area keranjang, baris hover tabel admin), sangat hemat                      |
-| `garis`  | `#E4E2DE` | Border 1 px, pemisah, leader titik di papan menu                                            |
+| `garis`  | `#E4E2DE` | Border 1 px kartu, pemisah, leader titik di papan menu (dekoratif, kontras rendah)          |
+| `batas`  | `#8F8379` | Batas kolom input, select, textarea, dan sakelar mati; kontras ±3,7:1 (WCAG 1.4.11, M6)     |
 | `tubruk` | `#2B201B` | Teks utama, ikon, logo                                                                      |
 | `ampas`  | `#76695F` | Teks sekunder (deskripsi menu, jam, keterangan); kontras ±5:1 di putih                      |
 | `blirik` | `#2F6B57` | Aksen utama: tombol primer, fokus ring, meja terisi; kontras ±6:1 di putih                  |

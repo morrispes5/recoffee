@@ -4,19 +4,58 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 
 ## Status singkat
 
-| Milestone                            | Status                                                                               |
-| ------------------------------------ | ------------------------------------------------------------------------------------ |
-| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum      |
-| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                        |
-| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                            |
-| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                            |
-| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)            |
-| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                            |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum |
-| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                            |
-| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                            |
-| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                            |
-| M6–M8                                | Belum                                                                                |
+| Milestone                            | Status                                                                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| M0 Perencanaan dan dokumen MPPL      | **Sebagian**: ERD + LRS selesai (`docs/mppl/05-erd-lrs.md`); dokumen lain belum                       |
+| M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                                         |
+| M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                                             |
+| M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                             |
+| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                             |
+| Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                             |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                  |
+| Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                             |
+| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                             |
+| Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                             |
+| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik |
+| M7–M8                                | Belum                                                                                                 |
+
+---
+
+## M6 — Testing (22 Nov 2026)
+
+Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar di `docs/mppl/bukti/`). Persiapan UAT: `docs/mppl/11-uat.md`.
+
+### Yang selesai
+
+- **Uji otomatis:** 93 tes lulus (88 sebelumnya + 5 aksesibilitas). Paket baru `axe-core` (devDependency) dipakai di `src/test/a11y.test.tsx` untuk memeriksa WCAG 2.1 A/AA pada form beranda, komponen form, dialog data diri, dan form menu admin, termasuk satu kontrol negatif agar jelas axe benar-benar mendeteksi pelanggaran.
+- **Uji database:** `supabase/tests/aturan_bisnis.sql` (baru) menyimulasikan tiga akun pelanggan dan admin dengan klaim JWT: 39 pemeriksaan `[OK]`, 0 `[GAGAL]`, termasuk batas qty 0/1/20/21. `rls_check.sql` (4 kelompok, 9 pemeriksaan) lulus. Kedua skrip membatalkan perubahannya sendiri.
+- **Black box (32 kasus PRD 19.3):** 25 lulus lewat UI, 4 lulus lewat SQL (TC-10, 14, 30, 31: butuh akun Google kedua untuk versi UI), 2 sebagian (TC-11: gambar QRIS belum ada; TC-26: bagian setelah login belum diuji), 1 ditunda (TC-24: butuh deploy).
+- **Aksesibilitas dasar:** kontras semua pasangan teks lulus AA; label form lengkap (42 elemen di halaman pelanggan, 80 di menu admin); keyboard di dialog admin logis (Tab, Esc, fokus kembali ke pemicu); axe 0 pelanggaran.
+
+### Bug yang ditemukan dan diperbaiki
+
+| ID   | Temuan                                                                                                                                    | Perbaikan                                                                                                                                                                          |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| B-01 | Pesanan dari sesi yang **dibatalkan** tetap tampil di antrian barista dan ikut terhitung di "Pesanan hari ini" dan "Menu terlaris" dasbor | `fetchAntrian` dan `fetchRingkasanHariIni` mengabaikan sesi berstatus `batal` (`admin-antrian/api.ts`, `admin-dashboard/api.ts`). Dicek di admin: antrian 3 menjadi 2 pesanan baru |
+| B-02 | Batas kolom input/select/textarea dan sakelar mati memakai `garis` (1,29:1), di bawah 3:1 (WCAG 1.4.11). Placeholder 2,9:1                | Token baru `batas` `#8F8379` (3,69:1) di `index.css`, dipakai `fieldStyles.ts` dan `Switch.tsx`. Placeholder memakai `ampas` penuh (5,31:1)                                        |
+
+### Belum selesai (butuh pemilik)
+
+- `public/qris.png` (foto QRIS toko dipotong tanpa NMID dan alamat) untuk menutup TC-11 dan B-03.
+- Akun Google kedua dan ketiga sebagai Test user untuk versi UI TC-10, 14, 30, 31.
+- Mencoba TC-26 sekali: isi keranjang saat keluar, masuk Google, cek keranjang masih utuh.
+- Sesi UAT dengan 3 sampai 5 teman memakai `docs/mppl/11-uat.md`; hasilnya diisi di bagian 6 dan 7 dokumen itu.
+- TC-24 dikerjakan di M7 setelah deploy.
+
+### DoD
+
+- [x] `npm run test` lulus (93 tes). Lint dan build bersih.
+- [ ] 100% kasus black box prioritas tinggi lulus. (20 dari 23 lulus; TC-11 dan TC-26 sebagian, TC-24 ditunda.)
+- [ ] Hasil UAT terdokumentasi. (Panduan dan formulir siap; sesi belum dijalankan.)
+
+### Data uji
+
+Pengujian meninggalkan data uji di Supabase: sesi meja 18 (selesai, QRIS, Rp92.000), meja 19 (selesai, kasir), meja 20 (batal), meja 21 (minta bill, Rp48.000), menu uji yang diarsipkan "Menu Uji Valid", dan profil "Uji Kasir". Dasbor menampilkan angka uji sampai dibersihkan; bersihkan sebelum demo atau UAT (urutan hapus: `item_pesanan`, `pesanan`, `sesi_meja`).
 
 ---
 

@@ -28,6 +28,10 @@ Isi `.env.local` dengan `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` (publis
 
 ## Database
 
-Jalankan migrasi `supabase/migrations/0001` sampai `0005` berurutan, lalu `supabase/seed.sql` (28 meja dan admin). Menu kafe dimasukkan oleh migrasi `0005`. Uji akses anon: `supabase/tests/rls_check.sql`.
+Jalankan migrasi `supabase/migrations/0001` sampai `0005` berurutan, lalu `supabase/seed.sql` (28 meja dan admin). Menu kafe dimasukkan oleh migrasi `0005`. Uji akses anon: `supabase/tests/rls_check.sql`. Uji aturan bisnis dengan akun simulasi: `supabase/tests/aturan_bisnis.sql` (keduanya dijalankan di SQL Editor dan membatalkan perubahannya sendiri).
+
+## Pengujian
+
+`npm run test` menjalankan 93 tes (unit, komponen, dan aksesibilitas axe-core). Laporan black box lengkap dengan bukti gambar ada di `docs/mppl/10-pengujian.md`; panduan UAT dengan teman di `docs/mppl/11-uat.md`.
 
 Stack: Vite, React, TypeScript (strict), React Router, TanStack Query, Tailwind CSS v4, Phosphor Icons, Zod, Supabase, Vitest. Tambahan atas permintaan pemilik: `motion` (animasi), `sonner` (toast), `canvas-confetti` (konfeti).

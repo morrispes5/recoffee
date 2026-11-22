@@ -12,11 +12,11 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                                                                                                  |
 | M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)                                                                                  |
 | Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                                                                                                  |
-| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum                                                                       |
+| M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun lewat UI sebagian (TC-31 lulus; TC-10 dan TC-30 belum)                      |
 | Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                                                                                                  |
 | Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                                                                                                  |
 | Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                  |
-| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 2 kasus lagi menunggu pemilik                                                      |
+| M6 Testing                           | **Sebagian (22 Nov 2026)**: uji otomatis dan black box selesai; UAT dan 1 kasus lagi (TC-11, menunggu `qris.png`) menunggu pemilik                         |
 | M7 Deployment                        | **Sebagian (22 Nov 2026)**: produksi aktif di https://recoffee-ten.vercel.app; login Google di produksi terbukti; `qris.png` dan cetak QR menunggu pemilik |
 | M8                                   | Belum                                                                                                                                                      |
 
@@ -69,29 +69,29 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 
 ### Yang selesai
 
-- **Uji otomatis:** 93 tes lulus (88 sebelumnya + 5 aksesibilitas). Paket baru `axe-core` (devDependency) dipakai di `src/test/a11y.test.tsx` untuk memeriksa WCAG 2.1 A/AA pada form beranda, komponen form, dialog data diri, dan form menu admin, termasuk satu kontrol negatif agar jelas axe benar-benar mendeteksi pelanggaran.
+- **Uji otomatis:** 94 tes lulus (88 sebelumnya + 5 aksesibilitas + 1 penolakan admin). Paket baru `axe-core` (devDependency) dipakai di `src/test/a11y.test.tsx` untuk memeriksa WCAG 2.1 A/AA pada form beranda, komponen form, dialog data diri, dan form menu admin, termasuk satu kontrol negatif agar jelas axe benar-benar mendeteksi pelanggaran.
 - **Uji database:** `supabase/tests/aturan_bisnis.sql` (baru) menyimulasikan tiga akun pelanggan dan admin dengan klaim JWT: 39 pemeriksaan `[OK]`, 0 `[GAGAL]`, termasuk batas qty 0/1/20/21. `rls_check.sql` (4 kelompok, 9 pemeriksaan) lulus. Kedua skrip membatalkan perubahannya sendiri.
-- **Black box (32 kasus PRD 19.3):** 26 lulus lewat UI (TC-24 lulus di produksi pada M7), 4 lulus lewat SQL (TC-10, 14, 30, 31: butuh akun Google kedua untuk versi UI), 2 sebagian (TC-11: gambar QRIS belum ada; TC-26: bagian setelah login belum diuji).
+- **Black box (32 kasus PRD 19.3):** 28 lulus lewat UI (TC-24 lulus di produksi pada M7; TC-26 dan TC-31 lulus lewat UI di produksi pada 22 Nov), 3 lulus lewat SQL (TC-10, 14, 30: versi UI butuh akun kedua dan ketiga), 1 sebagian (TC-11: gambar QRIS belum ada).
 - **Aksesibilitas dasar:** kontras semua pasangan teks lulus AA; label form lengkap (42 elemen di halaman pelanggan, 80 di menu admin); keyboard di dialog admin logis (Tab, Esc, fokus kembali ke pemicu); axe 0 pelanggaran.
 
 ### Bug yang ditemukan dan diperbaiki
 
-| ID   | Temuan                                                                                                                                    | Perbaikan                                                                                                                                                                          |
-| ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| B-01 | Pesanan dari sesi yang **dibatalkan** tetap tampil di antrian barista dan ikut terhitung di "Pesanan hari ini" dan "Menu terlaris" dasbor | `fetchAntrian` dan `fetchRingkasanHariIni` mengabaikan sesi berstatus `batal` (`admin-antrian/api.ts`, `admin-dashboard/api.ts`). Dicek di admin: antrian 3 menjadi 2 pesanan baru |
-| B-02 | Batas kolom input/select/textarea dan sakelar mati memakai `garis` (1,29:1), di bawah 3:1 (WCAG 1.4.11). Placeholder 2,9:1                | Token baru `batas` `#8F8379` (3,69:1) di `index.css`, dipakai `fieldStyles.ts` dan `Switch.tsx`. Placeholder memakai `ampas` penuh (5,31:1)                                        |
+| ID   | Temuan                                                                                                                                           | Perbaikan                                                                                                                                                                                |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| B-01 | Pesanan dari sesi yang **dibatalkan** tetap tampil di antrian barista dan ikut terhitung di "Pesanan hari ini" dan "Menu terlaris" dasbor        | `fetchAntrian` dan `fetchRingkasanHariIni` mengabaikan sesi berstatus `batal` (`admin-antrian/api.ts`, `admin-dashboard/api.ts`). Dicek di admin: antrian 3 menjadi 2 pesanan baru       |
+| B-02 | Batas kolom input/select/textarea dan sakelar mati memakai `garis` (1,29:1), di bawah 3:1 (WCAG 1.4.11). Placeholder 2,9:1                       | Token baru `batas` `#8F8379` (3,69:1) di `index.css`, dipakai `fieldStyles.ts` dan `Switch.tsx`. Placeholder memakai `ampas` penuh (5,31:1)                                              |
+| B-04 | Akun non-admin yang membuka `/admin` keluar otomatis, tetapi pesan "Akun ini bukan admin" tidak tampil (ditemukan saat uji UI TC-14 di produksi) | `RequireAdmin` mengingat penolakan karena setelah `signOut` selesai `user` menjadi null dan pengalihan kedua kehilangan status. Tes baru meniru `signOut` asli (`RequireAdmin.test.tsx`) |
 
 ### Belum selesai (butuh pemilik)
 
 - `public/qris.png` (foto QRIS toko dipotong tanpa NMID dan alamat) untuk menutup TC-11 dan B-03.
-- Akun Google kedua dan ketiga sebagai Test user untuk versi UI TC-10, 14, 30, 31.
-- Mencoba TC-26 sekali: isi keranjang saat keluar, masuk Google, cek keranjang masih utuh.
+- Versi UI TC-10 (dua akun memesan di satu meja) dan TC-30 (akun yang belum memesan menekan Minta bill), serta pengecekan ulang pesan penolakan TC-14 di produksi setelah deploy B-04.
 - Sesi UAT dengan 3 sampai 5 teman memakai `docs/mppl/11-uat.md`; hasilnya diisi di bagian 6 dan 7 dokumen itu.
 
 ### DoD
 
 - [x] `npm run test` lulus (93 tes). Lint dan build bersih.
-- [ ] 100% kasus black box prioritas tinggi lulus. (21 dari 23 lulus; TC-11 dan TC-26 sebagian.)
+- [ ] 100% kasus black box prioritas tinggi lulus. (22 dari 23 lulus; hanya TC-11 sebagian, menunggu `qris.png`.)
 - [ ] Hasil UAT terdokumentasi. (Panduan dan formulir siap; sesi belum dijalankan.)
 
 ### Data uji

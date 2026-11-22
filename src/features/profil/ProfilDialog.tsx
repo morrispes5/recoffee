@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react';
-import { Button, Dialog, InlineMessage, TextField } from '../../components/ui';
+import { Button, Dialog, TextField } from '../../components/ui';
+import { showAlert } from '../../lib/alertStore';
+import { notify } from '../../lib/notify';
 import { toUserMessage } from '../../lib/errors';
 import type { Profil } from '../../types/domain';
 import { useSimpanProfil } from './hooks';
@@ -41,8 +43,16 @@ function ProfilDialogIsi({ open, onClose, mode, email, awal, onSaved }: ProfilDi
       {
         onSuccess: () => {
           onClose();
+          notify.success('Data diri tersimpan', 'Pesananmu akan tercatat atas namamu.');
           onSaved?.();
         },
+        onError: (error) =>
+          showAlert({
+            tone: 'error',
+            title: 'Data diri belum tersimpan',
+            message: toUserMessage(error),
+            actions: [{ label: 'Coba lagi' }],
+          }),
       },
     );
   }
@@ -79,9 +89,6 @@ function ProfilDialogIsi({ open, onClose, mode, email, awal, onSaved }: ProfilDi
           autoComplete="tel"
           required
         />
-        {simpan.isError ? (
-          <InlineMessage tone="error">{toUserMessage(simpan.error)}</InlineMessage>
-        ) : null}
         <div className="mt-1 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <Button variant="secondary" onClick={onClose} disabled={simpan.isPending}>
             {mode === 'lengkapi' ? 'Nanti saja' : 'Batal'}

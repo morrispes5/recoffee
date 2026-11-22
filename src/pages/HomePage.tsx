@@ -3,7 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { IkonKategori } from '../components/brand/icons';
 import { Logo } from '../components/brand/Logo';
-import { RakWarung } from '../components/brand/RakWarung';
+import { RakKafe } from '../components/brand/RakKafe';
 import { Skeleton } from '../components/ui';
 import { useMenu } from '../features/menu/hooks';
 import { MasukMejaForm } from '../features/meja/MasukMejaForm';
@@ -93,7 +93,7 @@ export default function HomePage() {
         ) : null}
       </section>
 
-      <RakWarung className="mt-12 animate-muncul [animation-delay:200ms]" />
+      <RakKafe className="mt-12 animate-muncul [animation-delay:200ms]" />
 
       <section
         aria-labelledby="judul-sekilas"

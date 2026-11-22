@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import { CustomerFooter } from './CustomerFooter';
+import { PageTransition } from './PageTransition';
 
 /**
  * Kerangka halaman pelanggan: satu kolom, maks 480 px, padding samping 20 px (PRD 15.4).
@@ -9,9 +10,11 @@ import { CustomerFooter } from './CustomerFooter';
 export function CustomerLayout() {
   return (
     <div className="min-h-dvh bg-putih sm:bg-tegel">
-      <div className="mx-auto flex min-h-dvh w-full max-w-pelanggan flex-col bg-putih sm:border-x sm:border-garis">
+      <div className="latar-kopi mx-auto flex min-h-dvh w-full max-w-pelanggan flex-col bg-putih sm:border-x sm:border-garis">
         <main className="flex-1 px-5">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
         <CustomerFooter />
       </div>

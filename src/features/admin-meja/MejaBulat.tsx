@@ -1,3 +1,4 @@
+import { m } from 'motion/react';
 import { Link } from 'react-router';
 import { cn } from '../../lib/cn';
 import { formatRupiah } from '../../lib/format';
@@ -31,15 +32,17 @@ export function MejaBulat({ meja }: { meja: StatusMejaRow }) {
       aria-label={label}
       className="group flex flex-col items-center gap-2 rounded-ui py-1"
     >
-      <span
+      <m.span
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.93 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 18 }}
         className={cn(
           LINGKARAN,
-          'transition-transform duration-200 group-hover:scale-105 group-active:scale-95',
           mintaBill ? 'animate-denyut bg-lampu text-tubruk' : 'bg-blirik text-putih',
         )}
       >
         {meja.nomor}
-      </span>
+      </m.span>
       <span
         className={cn(
           'text-center text-body-s tabular-nums',

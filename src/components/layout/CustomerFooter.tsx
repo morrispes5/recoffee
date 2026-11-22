@@ -6,7 +6,7 @@ export function CustomerFooter() {
     <footer className="mt-20 border-t border-garis px-5 pt-6 pb-32 text-body-s text-ampas">
       <p className="flex items-center gap-2">
         <BijiKopi size={16} filled className="text-blirik" />
-        RE:coffee. Warung kopi, diseduh ulang.
+        RE:coffee. Ngopi santai, pesan dari meja.
       </p>
     </footer>
   );

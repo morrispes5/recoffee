@@ -11,8 +11,11 @@ import {
   Select,
   Skeleton,
 } from '../../components/ui';
+import { showAlert } from '../../lib/alertStore';
+import { celebrate } from '../../lib/celebrate';
 import { toUserMessage } from '../../lib/errors';
 import { formatJam, formatRupiah } from '../../lib/format';
+import { notify } from '../../lib/notify';
 import type { MetodeBayar } from '../../types/domain';
 import { StatusPesananBadge } from '../tagihan/StatusPesananBadge';
 import type { DetailMeja as DetailMejaData } from './api';
@@ -78,9 +81,21 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
     konfirmasi.mutate(
       { sesiId: detail.sesi_id, metode },
       {
-        onSuccess: () =>
-          void navigate('/admin', {
-            state: { pesan: `Pembayaran meja ${nomor} dikonfirmasi. Meja kosong lagi.` },
+        onSuccess: () => {
+          void navigate('/admin');
+          notify.success(
+            `Pembayaran meja ${nomor} dikonfirmasi`,
+            `${formatRupiah(detail.total)} lewat ${LABEL_METODE[metode]}. Meja kosong lagi.`,
+          );
+          // Tunggu dialog menutup agar konfeti tidak tertutup lapisan atas.
+          window.setTimeout(() => void celebrate(), 250);
+        },
+        onError: (error) =>
+          showAlert({
+            tone: 'error',
+            title: 'Pembayaran belum terkonfirmasi',
+            message: toUserMessage(error),
+            actions: [{ label: 'Mengerti' }],
           }),
       },
     );
@@ -88,9 +103,19 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
 
   function jalankanBatal() {
     batalkan.mutate(detail.sesi_id, {
-      onSuccess: () =>
-        void navigate('/admin', {
-          state: { pesan: `Sesi meja ${nomor} dibatalkan. Meja kosong lagi.` },
+      onSuccess: () => {
+        void navigate('/admin');
+        notify.warning(
+          `Sesi meja ${nomor} dibatalkan`,
+          'Pesanan tetap tercatat. Meja kosong lagi.',
+        );
+      },
+      onError: (error) =>
+        showAlert({
+          tone: 'error',
+          title: 'Sesi belum bisa dibatalkan',
+          message: toUserMessage(error),
+          actions: [{ label: 'Mengerti' }],
         }),
     });
   }
@@ -215,11 +240,7 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
             </Button>
           </>
         }
-      >
-        {konfirmasi.isError ? (
-          <InlineMessage tone="error">{toUserMessage(konfirmasi.error)}</InlineMessage>
-        ) : null}
-      </Dialog>
+      ></Dialog>
 
       <Dialog
         open={dialog === 'batal'}
@@ -236,11 +257,7 @@ function DetailMejaIsi({ detail }: { detail: DetailMejaData }) {
             </Button>
           </>
         }
-      >
-        {batalkan.isError ? (
-          <InlineMessage tone="error">{toUserMessage(batalkan.error)}</InlineMessage>
-        ) : null}
-      </Dialog>
+      ></Dialog>
     </div>
   );
 }

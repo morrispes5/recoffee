@@ -4,6 +4,7 @@ import { IkonKategori } from '../../components/brand/icons';
 import { Badge, Button, InlineMessage, Panel, Skeleton, Switch } from '../../components/ui';
 import { cn } from '../../lib/cn';
 import { toUserMessage } from '../../lib/errors';
+import { notify } from '../../lib/notify';
 import { formatRupiah } from '../../lib/format';
 import { LABEL_KATEGORI, type Menu } from '../../types/domain';
 import { URUTAN_KATEGORI } from '../menu/api';
@@ -19,11 +20,15 @@ export function MenuTable() {
     open: false,
     menu: null,
   });
-  const [pesan, setPesan] = useState<string | null>(null);
 
   function ubah(menu: Menu, patch: { tersedia?: boolean; diarsipkan?: boolean }, teks: string) {
-    setPesan(null);
-    ubahStatus.mutate({ id: menu.id, patch }, { onSuccess: () => setPesan(teks) });
+    ubahStatus.mutate(
+      { id: menu.id, patch },
+      {
+        onSuccess: () => notify.success(teks),
+        onError: (error) => notify.error(`${menu.nama} gagal diubah`, error),
+      },
+    );
   }
 
   const sedangDiubah = ubahStatus.isPending ? ubahStatus.variables.id : null;
@@ -58,15 +63,6 @@ export function MenuTable() {
           </Button>
         </div>
       </div>
-
-      {pesan ? (
-        <InlineMessage tone="sukses" className="animate-muncul">
-          {pesan}
-        </InlineMessage>
-      ) : null}
-      {ubahStatus.isError ? (
-        <InlineMessage tone="error">{toUserMessage(ubahStatus.error)}</InlineMessage>
-      ) : null}
 
       {menuQ.isPending ? (
         <Skeleton lines={8} label="Memuat menu" />
@@ -218,7 +214,9 @@ export function MenuTable() {
         open={form.open}
         menu={form.menu}
         onClose={() => setForm((f) => ({ ...f, open: false }))}
-        onSaved={(nama) => setPesan(form.menu ? `${nama} disimpan.` : `${nama} ditambahkan.`)}
+        onSaved={(nama) =>
+          notify.success(form.menu ? `${nama} disimpan` : `${nama} ditambahkan ke menu`)
+        }
       />
     </div>
   );

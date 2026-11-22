@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { CangkirTubruk } from '../../components/brand/icons';
 import { Button, buttonClass, InlineMessage, Skeleton } from '../../components/ui';
 import { toUserMessage } from '../../lib/errors';
+import { notify } from '../../lib/notify';
 import type { Tagihan } from '../../types/domain';
 import { useStatusTerakhir, useTagihan } from './hooks';
 import { MintaBillDialog } from './MintaBillDialog';
@@ -71,7 +72,6 @@ export function TagihanMeja({ nomor }: { nomor: number }) {
 
 function TagihanAktif({ nomor, tagihan }: { nomor: number; tagihan: Tagihan }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [baruDiminta, setBaruDiminta] = useState(false);
   const pemesan = tagihan.pesanan.some((p) => p.milik_saya);
 
   return (
@@ -90,9 +90,6 @@ function TagihanAktif({ nomor, tagihan }: { nomor: number; tagihan: Tagihan }) {
         )
       ) : (
         <div className="flex flex-col gap-5">
-          {baruDiminta ? (
-            <InlineMessage tone="sukses">Bill diminta. Kasir akan segera memproses.</InlineMessage>
-          ) : null}
           {tagihan.metode_bayar === 'qris' ? (
             <QrisPanel total={tagihan.total} />
           ) : (
@@ -117,7 +114,9 @@ function TagihanAktif({ nomor, tagihan }: { nomor: number; tagihan: Tagihan }) {
         onClose={() => setDialogOpen(false)}
         nomorMeja={nomor}
         total={tagihan.total}
-        onBerhasil={() => setBaruDiminta(true)}
+        onBerhasil={() =>
+          notify.success('Bill diminta', 'Kasir akan segera memproses pembayaranmu.')
+        }
       />
     </div>
   );

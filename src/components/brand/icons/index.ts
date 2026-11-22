@@ -1,8 +1,12 @@
 export { BijiKopi } from './BijiKopi';
 export { CangkirTubruk } from './CangkirTubruk';
+export { Croissant } from './Croissant';
+export { Daun } from './Daun';
 export { GelasBlirik } from './GelasBlirik';
+export { GelasEs } from './GelasEs';
 export { IkonKategori } from './IkonKategori';
 export { KalengKerupuk } from './KalengKerupuk';
+export { Kue } from './Kue';
 export { KursiPlastik } from './KursiPlastik';
 export { PiringRoti } from './PiringRoti';
 export { Teko } from './Teko';

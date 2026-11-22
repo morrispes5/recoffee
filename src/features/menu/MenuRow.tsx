@@ -1,4 +1,5 @@
 import { Plus } from '@phosphor-icons/react';
+import { m } from 'motion/react';
 import { IconButton } from '../../components/ui';
 import { cn } from '../../lib/cn';
 import { formatRupiah } from '../../lib/format';
@@ -17,7 +18,13 @@ export interface MenuRowProps {
 export function MenuRow({ menu, qty, onTambah, terkunci = false }: MenuRowProps) {
   const habis = !menu.tersedia;
   return (
-    <li className="py-4">
+    <m.li
+      className="py-4"
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '0px 0px -24px 0px' }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+    >
       <div className="flex items-center gap-3">
         <div className="flex min-w-0 flex-1 items-baseline gap-2">
           <span className={cn('text-body-l font-semibold', habis && 'text-ampas')}>
@@ -69,6 +76,6 @@ export function MenuRow({ menu, qty, onTambah, terkunci = false }: MenuRowProps)
       {menu.deskripsi ? (
         <p className="mt-1 max-w-[42ch] pr-16 text-body-s text-ampas">{menu.deskripsi}</p>
       ) : null}
-    </li>
+    </m.li>
   );
 }

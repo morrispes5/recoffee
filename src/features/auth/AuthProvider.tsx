@@ -1,6 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { notify } from '../../lib/notify';
 import * as authApi from './api';
+import { konsumsiLoginBerhasil } from './oauthError';
 import { AuthContext, type AuthContextValue } from './authContext';
 
 /** Sumber sesi awal dan perubahan sesi dari Supabase Auth. */
@@ -29,6 +31,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return () => window.clearTimeout(timer);
     }
   }, [queryClient]);
+
+  // Sambutan sekali setelah kembali dari Google (parameter ?code= dari PKCE).
+  useEffect(() => {
+    if (state.user && konsumsiLoginBerhasil()) {
+      notify.success('Berhasil masuk', state.user.email);
+    }
+  }, [state.user]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

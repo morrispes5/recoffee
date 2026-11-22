@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { CangkirTubruk, Uap } from '../components/brand/icons';
 import { CustomerHeader } from '../components/layout/CustomerHeader';
 import { LangkahPesan } from '../features/menu/LangkahPesan';
@@ -10,14 +10,14 @@ import { useAuth } from '../features/auth/useAuth';
 import { CartBar } from '../features/cart/CartBar';
 import { CartProvider } from '../features/cart/CartProvider';
 import { CartSheet } from '../features/cart/CartSheet';
-import { KirimSukses } from '../features/cart/KirimSukses';
 import { useCart } from '../features/cart/useCart';
 import { useMenu } from '../features/menu/hooks';
 import { MenuBoard } from '../features/menu/MenuBoard';
 import { useProfil } from '../features/profil/hooks';
 import { ProfilDialog } from '../features/profil/ProfilDialog';
 import { useKirimPesanan, useTagihan } from '../features/tagihan/hooks';
-import { toUserMessage } from '../lib/errors';
+import { showAlert } from '../lib/alertStore';
+import { errorCode, toUserMessage } from '../lib/errors';
 import { parseNomorMeja } from '../lib/meja';
 import { simpanMejaTerakhir } from '../lib/mejaTerakhir';
 import { MejaTidakDitemukan } from './MejaTidakDitemukan';
@@ -40,12 +40,12 @@ function MejaView({ nomor }: { nomor: number }) {
   const menuQ = useMenu();
   const { state, dispatch } = useCart();
   const kirim = useKirimPesanan(nomor);
+  const navigate = useNavigate();
 
   // Kembali dari login Google dengan aksi "kirim" tertunda: buka lagi sheet keranjang.
   const [sheetOpen, setSheetOpen] = useState(() => peekPending(nomor) === 'kirim');
   const [profilDitunda, setProfilDitunda] = useState(false);
   const [ubahProfil, setUbahProfil] = useState(false);
-  const [terkirim, setTerkirim] = useState(false);
 
   useEffect(() => {
     if (user) clearPending(nomor);
@@ -77,7 +77,31 @@ function MejaView({ nomor }: { nomor: number }) {
         onSuccess: () => {
           dispatch({ type: 'kosongkan' });
           setSheetOpen(false);
-          setTerkirim(true);
+          showAlert({
+            tone: 'success',
+            icon: 'cup',
+            celebrate: true,
+            title: 'Pesanan terkirim!',
+            message: `Barista lagi meracik pesanan meja ${nomor}. Pantau statusnya di tagihan meja.`,
+            actions: [
+              { label: 'Lihat tagihan', onClick: () => void navigate(`/meja/${nomor}/tagihan`) },
+              { label: 'Pesan lagi', variant: 'ghost' },
+            ],
+          });
+        },
+        onError: (error) => {
+          const menuHabis = errorCode(error) === 'MENU_TIDAK_TERSEDIA';
+          showAlert({
+            tone: 'error',
+            title: 'Pesanan gagal dikirim',
+            message: toUserMessage(error),
+            actions: [
+              menuHabis
+                ? { label: 'Cek keranjang', onClick: () => setSheetOpen(true) }
+                : { label: 'Coba lagi', onClick: kirimSekarang },
+              { label: 'Tutup', variant: 'ghost' },
+            ],
+          });
         },
       },
     );
@@ -130,9 +154,6 @@ function MejaView({ nomor }: { nomor: number }) {
   } else {
     aksi = (
       <div className="flex flex-col gap-3">
-        {kirim.isError ? (
-          <InlineMessage tone="error">{toUserMessage(kirim.error)}</InlineMessage>
-        ) : null}
         <Button
           fullWidth
           onClick={handleKirim}
@@ -178,11 +199,7 @@ function MejaView({ nomor }: { nomor: number }) {
         <MenuBoard terkunci={billDiminta} />
       </div>
 
-      {terkirim && state.items.length === 0 ? (
-        <KirimSukses nomorMeja={nomor} onTutup={() => setTerkirim(false)} />
-      ) : (
-        <CartBar onBuka={bukaSheet} />
-      )}
+      <CartBar onBuka={bukaSheet} />
 
       <CartSheet
         open={sheetOpen}

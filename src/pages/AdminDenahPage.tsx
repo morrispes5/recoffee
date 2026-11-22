@@ -1,6 +1,5 @@
 import { Coffee, ListChecks, Money, Receipt } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
 import { InlineMessage, Panel, Skeleton } from '../components/ui';
 import { useAntrian } from '../features/admin-antrian/hooks';
 import { PerluDitagih } from '../features/admin-dashboard/PerluDitagih';
@@ -10,7 +9,6 @@ import { useRingkasanHariIni } from '../features/admin-dashboard/hooks';
 import { DenahMeja } from '../features/admin-meja/DenahMeja';
 import { useDenah } from '../features/admin-meja/hooks';
 import { toUserMessage } from '../lib/errors';
-import { pesanDariState } from '../lib/flash';
 import { TOTAL_MEJA } from '../lib/meja';
 import { formatTanggalPanjang } from '../lib/waktu';
 
@@ -29,7 +27,6 @@ function useSekarang(intervalMs = 30_000): Date {
  * dan denah meja (PRD 16.6, diperkaya atas permintaan pemilik proyek).
  */
 export default function AdminDenahPage() {
-  const pesan = pesanDariState(useLocation().state);
   const now = useSekarang();
   const denahQ = useDenah();
   const antrianQ = useAntrian();
@@ -55,11 +52,6 @@ export default function AdminDenahPage() {
         </div>
       </header>
 
-      {pesan ? (
-        <InlineMessage tone="sukses" className="max-w-xl animate-muncul">
-          {pesan}
-        </InlineMessage>
-      ) : null}
       {galat ? <InlineMessage tone="error">{toUserMessage(galat)}</InlineMessage> : null}
 
       {siap && ringkasan ? (

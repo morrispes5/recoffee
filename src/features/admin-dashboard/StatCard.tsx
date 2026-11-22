@@ -1,4 +1,5 @@
 import { ArrowRight } from '@phosphor-icons/react';
+import { m } from 'motion/react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { cn } from '../../lib/cn';
@@ -38,7 +39,9 @@ export function StatCard({
 }) {
   const tampil = useCountUp(nilai);
   return (
-    <article
+    <m.article
+      whileHover={{ y: -3 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       style={{ animationDelay: `${delay}ms` }}
       className={cn(
         'animate-muncul flex flex-col gap-4 rounded-ui border bg-putih p-5 transition-colors duration-300',
@@ -73,6 +76,6 @@ export function StatCard({
           </Link>
         ) : null}
       </div>
-    </article>
+    </m.article>
   );
 }

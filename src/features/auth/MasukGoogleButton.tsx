@@ -1,6 +1,7 @@
 import { GoogleLogo } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { Button, InlineMessage } from '../../components/ui';
+import { Button } from '../../components/ui';
+import { showAlert } from '../../lib/alertStore';
 import { toUserMessage } from '../../lib/errors';
 import { useAuth } from './useAuth';
 
@@ -16,32 +17,32 @@ export function MasukGoogleButton({
 }) {
   const { signIn } = useAuth();
   const [proses, setProses] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   async function masuk() {
-    setError(null);
     setProses(true);
     sebelumMasuk?.();
     try {
       await signIn();
     } catch (e) {
-      setError(toUserMessage(e));
+      showAlert({
+        tone: 'error',
+        title: 'Belum bisa masuk',
+        message: toUserMessage(e),
+        actions: [{ label: 'Mengerti' }],
+      });
     } finally {
       setProses(false);
     }
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <Button
-        onClick={() => void masuk()}
-        loading={proses}
-        fullWidth={fullWidth}
-        icon={<GoogleLogo size={20} weight="bold" aria-hidden="true" />}
-      >
-        {label}
-      </Button>
-      {error ? <InlineMessage tone="error">{error}</InlineMessage> : null}
-    </div>
+    <Button
+      onClick={() => void masuk()}
+      loading={proses}
+      fullWidth={fullWidth}
+      icon={<GoogleLogo size={20} weight="bold" aria-hidden="true" />}
+    >
+      {label}
+    </Button>
   );
 }

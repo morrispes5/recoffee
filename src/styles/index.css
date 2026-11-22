@@ -72,6 +72,17 @@
   --animate-pop: pop 260ms ease-out;
   --animate-denyut: denyut 1.8s ease-out infinite;
   --animate-tumbuh: tumbuh 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-melayang: melayang 5s ease-in-out infinite;
+
+  @keyframes melayang {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-7px) rotate(2deg);
+    }
+  }
 
   @keyframes tumbuh {
     from {
@@ -126,9 +137,36 @@
   }
 }
 
+/*
+ * Latar bertema kopi (revisi 22 Nov 2026): pola ikon garis kopi, cangkir, daun, dan croissant
+ * yang sangat tipis, ditulis tangan di public/pola-kopi.svg. `--opasitas-pola` mengatur kekuatannya.
+ */
+@utility latar-kopi {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url('/pola-kopi.svg');
+    background-size: 240px 240px;
+    opacity: var(--opasitas-pola, 1);
+  }
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Lompat ke kategori menu meluncur halus, kecuali pengguna memilih kurangi gerakan. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

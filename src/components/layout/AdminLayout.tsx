@@ -1,12 +1,13 @@
 import { BookOpenText, ListChecks, SignOut, SquaresFour } from '@phosphor-icons/react';
-import { useState, type ReactNode } from 'react';
+import { m } from 'motion/react';
+import type { ReactNode } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import { useAntrian } from '../../features/admin-antrian/hooks';
 import { useAuth } from '../../features/auth/useAuth';
 import { cn } from '../../lib/cn';
-import { toUserMessage } from '../../lib/errors';
+import { notify } from '../../lib/notify';
 import { Logo } from '../brand/Logo';
-import { InlineMessage } from '../ui';
+import { PageTransition } from './PageTransition';
 
 const NAV: { to: string; label: string; ikon: ReactNode; aktif: (p: string) => boolean }[] = [
   // Detail meja dibuka dari denah, jadi tab Dasbor tetap aktif di sana.
@@ -30,29 +31,28 @@ const NAV: { to: string; label: string; ikon: ReactNode; aktif: (p: string) => b
   },
 ];
 
-/** Kerangka admin: header menempel, navigasi berikon, konten di atas latar `tegel`. */
+/** Kerangka admin: header menempel, navigasi berikon dengan pill yang bergeser, latar kopi. */
 export function AdminLayout() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [error, setError] = useState<string | null>(null);
   const antrian = useAntrian().data ?? [];
   const pesananBaru = antrian.filter((r) => r.status === 'baru').length;
 
   async function keluar() {
-    setError(null);
     try {
       await signOut();
       void navigate('/admin/masuk', { replace: true });
+      notify.info('Kamu sudah keluar', 'Sampai ketemu lagi!');
     } catch (e) {
-      setError(toUserMessage(e));
+      notify.error('Gagal keluar', e);
     }
   }
 
   const path = pathname.replace(/\/$/, '') || '/';
 
   return (
-    <div className="min-h-dvh bg-tegel">
+    <div className="latar-kopi min-h-dvh bg-tegel [--opasitas-pola:0.7]">
       <header className="sticky top-0 z-20 border-b border-garis bg-putih/95 backdrop-blur-sm">
         <div className="mx-auto flex w-full max-w-admin flex-wrap items-center gap-x-6 gap-y-1 px-5 py-2 sm:px-8">
           <Link to="/admin" className="rounded-ui py-2">
@@ -71,25 +71,35 @@ export function AdminLayout() {
                   to={item.to}
                   aria-current={aktif ? 'page' : undefined}
                   className={cn(
-                    'inline-flex min-h-11 items-center gap-2 rounded-ui px-3 text-body-s font-semibold transition-colors duration-150',
-                    aktif ? 'bg-tubruk text-putih' : 'text-ampas hover:bg-tegel hover:text-tubruk',
+                    'relative inline-flex min-h-11 items-center rounded-ui px-3 text-body-s font-semibold transition-colors duration-200',
+                    aktif ? 'text-putih' : 'text-ampas hover:bg-tegel hover:text-tubruk',
                   )}
                 >
-                  {item.ikon}
-                  {item.label}
-                  {badge ? (
-                    <span
-                      key={badge}
-                      className={cn(
-                        'grid min-w-5 animate-pop place-items-center rounded-full px-1.5 text-[0.75rem] leading-5 tabular-nums',
-                        aktif ? 'bg-lampu text-tubruk' : 'bg-blirik text-putih',
-                      )}
-                    >
-                      <span className="sr-only">, </span>
-                      {badge}
-                      <span className="sr-only"> pesanan baru</span>
-                    </span>
+                  {aktif ? (
+                    <m.span
+                      layoutId="nav-admin"
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-ui bg-tubruk"
+                      transition={{ type: 'spring', stiffness: 500, damping: 38 }}
+                    />
                   ) : null}
+                  <span className="relative inline-flex items-center gap-2">
+                    {item.ikon}
+                    {item.label}
+                    {badge ? (
+                      <span
+                        key={badge}
+                        className={cn(
+                          'grid min-w-5 animate-pop place-items-center rounded-full px-1.5 text-[0.75rem] leading-5 tabular-nums',
+                          aktif ? 'bg-lampu text-tubruk' : 'bg-blirik text-putih',
+                        )}
+                      >
+                        <span className="sr-only">, </span>
+                        {badge}
+                        <span className="sr-only"> pesanan baru</span>
+                      </span>
+                    ) : null}
+                  </span>
                 </Link>
               );
             })}
@@ -128,12 +138,9 @@ export function AdminLayout() {
         </div>
       </header>
       <main className="mx-auto w-full max-w-admin px-5 py-8 sm:px-8 sm:py-10">
-        {error ? (
-          <InlineMessage tone="error" className="mb-6">
-            {error}
-          </InlineMessage>
-        ) : null}
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
     </div>
   );

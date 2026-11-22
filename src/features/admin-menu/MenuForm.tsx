@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
-import { Button, Dialog, InlineMessage, Select, TextArea, TextField } from '../../components/ui';
+import { Button, Dialog, Select, TextArea, TextField } from '../../components/ui';
+import { showAlert } from '../../lib/alertStore';
 import { toUserMessage } from '../../lib/errors';
 import { LABEL_KATEGORI, type KategoriMenu, type Menu } from '../../types/domain';
 import { URUTAN_KATEGORI } from '../menu/api';
@@ -49,6 +50,13 @@ function MenuFormIsi({ open, onClose, menu, kategoriAwal = 'kopi', onSaved }: Me
           onClose();
           onSaved(hasil.data.nama);
         },
+        onError: (error) =>
+          showAlert({
+            tone: 'error',
+            title: 'Menu belum tersimpan',
+            message: toUserMessage(error),
+            actions: [{ label: 'Coba lagi' }],
+          }),
       },
     );
   }
@@ -105,9 +113,6 @@ function MenuFormIsi({ open, onClose, menu, kategoriAwal = 'kopi', onSaved }: Me
             inputMode="numeric"
           />
         </div>
-        {simpan.isError ? (
-          <InlineMessage tone="error">{toUserMessage(simpan.error)}</InlineMessage>
-        ) : null}
         <div className="mt-1 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <Button variant="secondary" onClick={onClose} disabled={simpan.isPending}>
             Batal

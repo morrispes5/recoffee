@@ -1,6 +1,7 @@
 import { QrCode, Storefront } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { Button, Dialog, InlineMessage } from '../../components/ui';
+import { Button, Dialog } from '../../components/ui';
+import { showAlert } from '../../lib/alertStore';
 import { toUserMessage } from '../../lib/errors';
 import { formatRupiah } from '../../lib/format';
 import type { MetodeBayar } from '../../types/domain';
@@ -30,6 +31,13 @@ export function MintaBillDialog({
         onClose();
         onBerhasil();
       },
+      onError: (error) =>
+        showAlert({
+          tone: 'error',
+          title: 'Bill belum bisa diminta',
+          message: toUserMessage(error),
+          actions: [{ label: 'Mengerti' }],
+        }),
     });
   }
 
@@ -66,9 +74,6 @@ export function MintaBillDialog({
         >
           Bayar di kasir
         </Button>
-        {minta.isError ? (
-          <InlineMessage tone="error">{toUserMessage(minta.error)}</InlineMessage>
-        ) : null}
         <Button variant="ghost" onClick={tutup} disabled={minta.isPending}>
           Batal
         </Button>

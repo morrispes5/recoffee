@@ -1,10 +1,11 @@
 import { Receipt, SignIn, SignOut } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router';
-import { ambilErrorLogin, PESAN_LOGIN_GAGAL } from '../../features/auth/oauthError';
+import { konsumsiErrorLogin, PESAN_LOGIN_GAGAL } from '../../features/auth/oauthError';
 import { useAuth } from '../../features/auth/useAuth';
+import { showAlert } from '../../lib/alertStore';
 import { toUserMessage } from '../../lib/errors';
-import { InlineMessage } from '../ui';
+import { notify } from '../../lib/notify';
 import { CustomerTopBar } from './CustomerTopBar';
 
 export const linkHeaderClass =
@@ -21,16 +22,38 @@ export function CustomerHeader({
   onUbahProfil: () => void;
 }) {
   const { user, loading, signIn, signOut } = useAuth();
-  const [error, setError] = useState<string | null>(() =>
-    ambilErrorLogin() ? PESAN_LOGIN_GAGAL : null,
-  );
 
-  async function changeSession(action: () => Promise<void>) {
-    setError(null);
+  // Kembali dari Google dengan error: beri tahu lewat alert, bukan diam saja.
+  useEffect(() => {
+    if (konsumsiErrorLogin()) {
+      showAlert({
+        tone: 'error',
+        title: 'Masuk dengan Google gagal',
+        message: PESAN_LOGIN_GAGAL,
+        actions: [{ label: 'Mengerti' }],
+      });
+    }
+  }, []);
+
+  async function masuk() {
     try {
-      await action();
+      await signIn();
     } catch (e) {
-      setError(toUserMessage(e));
+      showAlert({
+        tone: 'error',
+        title: 'Belum bisa masuk',
+        message: toUserMessage(e),
+        actions: [{ label: 'Mengerti' }],
+      });
+    }
+  }
+
+  async function keluar() {
+    try {
+      await signOut();
+      notify.info('Kamu sudah keluar', 'Sampai ketemu lagi!');
+    } catch (e) {
+      notify.error('Gagal keluar', e);
     }
   }
 
@@ -42,18 +65,14 @@ export function CustomerHeader({
           Tagihan meja
         </Link>
         {loading ? null : user ? (
-          <button
-            type="button"
-            onClick={() => void changeSession(signOut)}
-            className={linkHeaderClass}
-          >
+          <button type="button" onClick={() => void keluar()} className={linkHeaderClass}>
             <SignOut size={18} aria-hidden="true" />
             Keluar
           </button>
         ) : (
           <button
             type="button"
-            onClick={() => void changeSession(signIn)}
+            onClick={() => void masuk()}
             className="ml-1 inline-flex min-h-11 items-center gap-1.5 rounded-ui border border-garis px-3 text-body-s font-semibold text-tubruk hover:border-tubruk"
           >
             <SignIn size={18} aria-hidden="true" />
@@ -61,11 +80,6 @@ export function CustomerHeader({
           </button>
         )}
       </CustomerTopBar>
-      {error ? (
-        <InlineMessage tone="error" className="mt-4">
-          {error}
-        </InlineMessage>
-      ) : null}
       {user && nama ? (
         <p className="mt-4 flex flex-wrap items-center gap-x-1 text-body-s text-ampas">
           <span>

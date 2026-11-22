@@ -71,7 +71,7 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 
 - **Uji otomatis:** 94 tes lulus (88 sebelumnya + 5 aksesibilitas + 1 penolakan admin). Paket baru `axe-core` (devDependency) dipakai di `src/test/a11y.test.tsx` untuk memeriksa WCAG 2.1 A/AA pada form beranda, komponen form, dialog data diri, dan form menu admin, termasuk satu kontrol negatif agar jelas axe benar-benar mendeteksi pelanggaran.
 - **Uji database:** `supabase/tests/aturan_bisnis.sql` (baru) menyimulasikan tiga akun pelanggan dan admin dengan klaim JWT: 39 pemeriksaan `[OK]`, 0 `[GAGAL]`, termasuk batas qty 0/1/20/21. `rls_check.sql` (4 kelompok, 9 pemeriksaan) lulus. Kedua skrip membatalkan perubahannya sendiri.
-- **Black box (32 kasus PRD 19.3):** 28 lulus lewat UI (TC-24 lulus di produksi pada M7; TC-26 dan TC-31 lulus lewat UI di produksi pada 22 Nov), 3 lulus lewat SQL (TC-10, 14, 30: versi UI butuh akun kedua dan ketiga), 1 sebagian (TC-11: gambar QRIS belum ada).
+- **Black box (32 kasus PRD 19.3):** 29 lulus lewat UI (TC-24 lulus di produksi pada M7; TC-14, TC-26, dan TC-31 lulus lewat UI di produksi pada 22 Nov), 2 lulus lewat SQL (TC-10, 30: versi UI butuh akun kedua dan ketiga), 1 sebagian (TC-11: gambar QRIS belum ada).
 - **Aksesibilitas dasar:** kontras semua pasangan teks lulus AA; label form lengkap (42 elemen di halaman pelanggan, 80 di menu admin); keyboard di dialog admin logis (Tab, Esc, fokus kembali ke pemicu); axe 0 pelanggaran.
 
 ### Bug yang ditemukan dan diperbaiki
@@ -85,7 +85,7 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 ### Belum selesai (butuh pemilik)
 
 - `public/qris.png` (foto QRIS toko dipotong tanpa NMID dan alamat) untuk menutup TC-11 dan B-03.
-- Versi UI TC-10 (dua akun memesan di satu meja) dan TC-30 (akun yang belum memesan menekan Minta bill), serta pengecekan ulang pesan penolakan TC-14 di produksi setelah deploy B-04.
+- Versi UI TC-10 (dua akun memesan di satu meja) dan TC-30 (akun yang belum memesan menekan Minta bill).
 - Sesi UAT dengan 3 sampai 5 teman memakai `docs/mppl/11-uat.md`; hasilnya diisi di bagian 6 dan 7 dokumen itu.
 
 ### DoD

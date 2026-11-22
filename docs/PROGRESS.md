@@ -55,7 +55,7 @@ Laporan lengkap: `docs/mppl/10-pengujian.md` (hasil per kasus, BVA, bukti gambar
 
 ### Data uji
 
-Pengujian meninggalkan data uji di Supabase: sesi meja 18 (selesai, QRIS, Rp92.000), meja 19 (selesai, kasir), meja 20 (batal), meja 21 (minta bill, Rp48.000), menu uji yang diarsipkan "Menu Uji Valid", dan profil "Uji Kasir". Dasbor menampilkan angka uji sampai dibersihkan; bersihkan sebelum demo atau UAT (urutan hapus: `item_pesanan`, `pesanan`, `sesi_meja`).
+Pengujian sempat meninggalkan data uji di Supabase (4 sesi meja 18 sampai 21, 5 pesanan, 6 item, dan menu uji "Menu Uji Valid"). **Dibersihkan 22 Nov 2026** atas persetujuan pemilik, urutan hapus `item_pesanan`, `pesanan`, `sesi_meja`, lalu menu uji yang tidak dipakai pesanan mana pun. Hasil pemeriksaan: 0 item, 0 pesanan, 0 sesi; 22 menu aktif (semua tersedia) dan 12 menu arsip; harga Es Kopi Susu Aren Rp24.000; 28 meja, 1 admin, dan 1 profil ("Uji Kasir") tetap ada. Bersihkan lagi dengan cara yang sama setelah UAT atau uji coba berikutnya, sebelum demo.
 
 ---
 

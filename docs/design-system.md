@@ -156,3 +156,17 @@ Fokus: `outline: 2px solid var(--color-blirik); outline-offset: 2px` pada `:focu
 | Spasi                  | Skala bawaan Tailwind (1 = 4 px): 1, 2, 3, 4, 6, 8, 12, 16, 24 = 4…96 px                         |
 | Motion uap             | `animate-uap` (600 ms), mati otomatis saat `prefers-reduced-motion`                              |
 | Fokus                  | `:focus-visible` outline 2 px blirik, offset 2 px (global)                                       |
+
+## Revisi atas permintaan pemilik proyek (21–22 Nov 2026)
+
+Pemilik menilai hasil M1–M3 terlalu polos. Aturan di atas tetap berlaku (palet, font, radius, tanpa gradien/foto/gambar AI/emoji), dengan pelonggaran berikut:
+
+| Aturan awal (PRD 15/16)                                   | Sekarang                                                                                                                                                                                         |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Beranda hanya teks "Scan QR" (16.2)                       | **Landing page pemesanan**: judul, kotak "Duduk di meja berapa?" (input angka 1–28 → `/meja/:nomor`), tombol "Lanjut ke meja X", cuplikan menu, cara pesan. QR tetap langsung ke `/meja/:nomor`. |
+| Satu momen animasi saja (15.9)                            | Gerak halus: `animate-muncul`, `animate-naik`, `animate-pop`, `animate-denyut`, `animate-tumbuh`, umpan balik tekan tombol. Semua mati lewat `prefers-reduced-motion`.                           |
+| Latar wajib putih, `tegel` sangat hemat                   | Kolom pelanggan putih di atas latar `tegel` pada layar ≥ 640 px; admin berlatar `tegel` dengan panel putih (`<Panel>`).                                                                          |
+| Ringkasan admin berupa teks, bukan kartu statistik (16.6) | Dasbor kasir: 4 kartu angka (pendapatan hari ini, tagihan berjalan, pesanan menunggu, minta bill), panel "Perlu ditagih", "Terlaris hari ini", denah.                                            |
+| Tidak ada hover lift                                      | Meja di denah membesar sedikit saat hover; tombol mengecil sedikit saat ditekan.                                                                                                                 |
+
+Keputusan input nomor meja: **kolom angka manual**, bukan dropdown. Di HP keypad angka langsung muncul (cukup ketik "5"), nomor tertulis di meja, dan 28 pilihan dropdown lebih lambat digulir. Validasi sama dengan route (`parseNomorMeja`).

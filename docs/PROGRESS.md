@@ -10,11 +10,30 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | M1 Setup project dan design system   | **Selesai (21 Nov 2026)**, kecuali tugas 10 (GitHub + Vercel)                        |
 | M2 Frontend pelanggan (mock)         | **Selesai (21 Nov 2026)**                                                            |
 | M3 Frontend admin (mock)             | **Selesai (21 Nov 2026)**                                                            |
-| M4 Backend Supabase                  | **Database selesai (21 Nov 2026)**; Google login menunggu setup manual               |
+| M4 Backend Supabase                  | **Selesai (22 Nov 2026)**: database, RLS, dan login Google (mode Testing)            |
 | Revisi tampilan (permintaan pemilik) | **Selesai (21 Nov 2026)**                                                            |
 | M5 Integrasi frontend ↔ Supabase     | **Kode terintegrasi; login Google admin berhasil (22 Nov 2026)**. Uji dua akun belum |
 | Dasbor admin + animasi (pemilik)     | **Selesai (22 Nov 2026)**                                                            |
+| Landing page nomor meja (pemilik)    | **Selesai (22 Nov 2026)**                                                            |
 | M6–M8                                | Belum                                                                                |
+
+---
+
+## Landing page dengan input nomor meja atas permintaan pemilik proyek (22 Nov 2026)
+
+Masalah: beranda `/` hanya bertuliskan "Scan QR di meja kamu". Saat aplikasi dibuka lewat alamat utama (misalnya saat presentasi), halaman itu buntu. PRD 16.2 memang meminta beranda sependek itu, karena pelanggan seharusnya datang dari QR yang langsung membuka `/meja/:nomor`.
+
+Perubahan:
+
+1. **Beranda jadi landing page pemesanan**: judul "Kopi enak, pesan langsung dari meja.", kotak **"Duduk di meja berapa?"** dengan input nomor meja, rak warung, **Sekilas menu** (satu menu tersedia per kategori dari database, ditambah harga termurah), langkah **Cara pesan** (langkah 1 jadi "Masukkan nomor meja"), dan link Kasir di pojok atas.
+2. `features/meja/MasukMejaForm.tsx`: input angka (keypad numerik di HP, maksimal 2 digit, karakter non-angka dibuang). Validasinya memakai `parseNomorMeja` yang sama dengan route. Nomor di luar 1–28 ditolak dengan pesan "Nomor meja harus angka 1 sampai 28. Lihat angka di mejamu."; yang valid langsung ke `/meja/:nomor`.
+3. `lib/mejaTerakhir.ts`: halaman meja menyimpan nomor meja terakhir di `localStorage` (`recoffee:meja-terakhir`), lalu beranda menampilkan tombol **"Lanjut ke meja X"**.
+4. QR tidak berubah: tetap berisi `/meja/:nomor` (PRD 20.2), jadi pelanggan yang scan langsung ke menu tanpa melihat landing page.
+5. Keputusan: **input manual, bukan dropdown**. Di HP keypad angka langsung muncul, nomor tertulis di meja, dan 28 pilihan dropdown lambat digulir.
+
+Pemeriksaan: 5 tes baru untuk `MasukMejaForm` (nomor valid membuka menu; 0, 29, dan kosong ditolak; hanya angka yang diterima), sehingga total 83 tes lulus. Lint dan tipe bersih. Di browser 375 px, nomor 35 dan 0 ditolak dengan pesan, nomor 7 membuka Meja 7, dan tombol "Lanjut ke meja 5" tampil setelah meja 5 pernah dibuka.
+
+Dokumen ikut diperbarui: `docs/design-system.md` (tabel revisi atas permintaan pemilik) dan `README.md` (cara mencoba alur pesanan di localhost).
 
 ---
 

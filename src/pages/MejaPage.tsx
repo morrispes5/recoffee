@@ -19,6 +19,7 @@ import { ProfilDialog } from '../features/profil/ProfilDialog';
 import { useKirimPesanan, useTagihan } from '../features/tagihan/hooks';
 import { toUserMessage } from '../lib/errors';
 import { parseNomorMeja } from '../lib/meja';
+import { simpanMejaTerakhir } from '../lib/mejaTerakhir';
 import { MejaTidakDitemukan } from './MejaTidakDitemukan';
 
 /** `/meja/:nomor` Menu + keranjang (PRD 16.3). */
@@ -49,6 +50,9 @@ function MejaView({ nomor }: { nomor: number }) {
   useEffect(() => {
     if (user) clearPending(nomor);
   }, [user, nomor]);
+
+  // Untuk tombol "Lanjut ke meja X" di beranda.
+  useEffect(() => simpanMejaTerakhir(nomor), [nomor]);
 
   const profil = profilQ.data ?? null;
   const belumAdaProfil = user !== null && profilQ.isSuccess && profilQ.data === null;

@@ -42,7 +42,7 @@ Siapkan dulu, semuanya gratis:
 1. **[PEMILIK]** Buka https://github.com/morrispes5/recoffee, Settings, General, paling bawah **Danger Zone**,
    **Transfer ownership**. Isi username GitHub client, ketik `morrispes5/recoffee` untuk konfirmasi.
 2. **[CLIENT]** Buka email dari GitHub dan terima transfer. Repo sekarang di `github.com/<client>/recoffee`
-   (tetap privat).
+   (tetap publik, bisa diubah ke privat di Settings, General, Danger Zone).
 3. **[CLIENT]** Settings, Secrets and variables, Actions. Pastikan ada `SUPABASE_URL` dan `SUPABASE_ANON_KEY`.
    Bila hilang, isi ulang dengan nilai dari langkah 4 (Project Settings, API Keys, publishable key).
 4. **[CLIENT]** Tab Actions: bila workflow dimatikan setelah transfer, aktifkan, lalu jalankan `keep-alive` manual
@@ -66,10 +66,11 @@ seperti `docs/serah-terima.md` bagian 4. Data pesanan lama hilang, tapi isinya h
 
 ## Langkah 4. Jalankan di laptop client [CLIENT]
 
-Repo masih privat. Bila belum ditransfer (langkah 2), client hanya bisa clone setelah **[PEMILIK]** mengundangnya:
-https://github.com/morrispes5/recoffee, Settings, Collaborators, **Add people**, isi username GitHub client, lalu
-client menerima undangan lewat email. Alamat clone-nya `https://github.com/morrispes5/recoffee.git`. Saat clone
-pertama, Git di laptop client akan membuka jendela login GitHub; masuk dengan akun GitHub client.
+Sejak 24 Nov 2026 repo dibuat **publik** supaya client bisa clone tanpa undangan dan tanpa login. Bila belum
+ditransfer (langkah 2), alamat clone-nya `https://github.com/morrispes5/recoffee.git`. Untuk push perubahan dari
+laptop client, client tetap perlu diundang sebagai collaborator (Settings, Collaborators, **Add people**) atau repo
+ditransfer dulu. Riwayat repo sudah dicek: tidak ada `.env`, kunci rahasia, atau QRIS asli. Kunci publishable
+Supabase memang aman dibuka publik karena data dilindungi RLS.
 
 ```powershell
 git clone https://github.com/<client>/recoffee.git

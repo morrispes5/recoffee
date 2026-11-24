@@ -10,7 +10,7 @@ dan bagaimana memasang ulang dari nol kalau akun atau project berpindah.
 | Aplikasi produksi | https://recoffee-ten.vercel.app                                   | Akun Vercel pemilik (`morrispes5`) |
 | Halaman pelanggan | `/meja/N`, N = 1 sampai 28 (contoh `/meja/18`)                    |                                    |
 | Halaman kasir     | `/admin/masuk` (login Google), lalu `/admin`                      |                                    |
-| Kode              | https://github.com/morrispes5/recoffee (privat)                   | Akun GitHub pemilik                |
+| Kode              | https://github.com/morrispes5/recoffee (publik)                   | Akun GitHub pemilik                |
 | Database dan Auth | Project Supabase `recoffee`, region Singapore, free plan          | Organisasi Supabase pemilik        |
 | Login Google      | OAuth client di Google Cloud project `recoffee`                   | Akun Google pemilik                |
 | QR meja           | `public/qr-meja/meja-NN.svg`, halaman cetak `/qr-meja/cetak.html` | Dibuat dari repo                   |

@@ -27,6 +27,9 @@ perangkat baru, jadi coba login dari perangkat yang akan dipakai presentasi jauh
 
 Bila nanti infrastruktur harus dipindah ke akun lain, ikuti bagian 4.
 
+**Pembaruan 24 Nov 2026:** keputusan di atas diganti. Seluruh project dipindah ke akun client mengikuti
+[`pindah-ke-client.md`](pindah-ke-client.md). Setelah selesai, perbarui tabel bagian 1.
+
 ## 2. Checklist sebelum demo
 
 Lakukan sehari sebelum demo (H-1) dan ulangi singkat pada pagi harinya.

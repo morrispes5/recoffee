@@ -5,6 +5,7 @@ Sistem pemesanan kopi berbasis meja (open bill) — proyek UAS Manajemen Proyek 
 - PRD (sumber kebenaran): [`docs/REcoffeePrd.md`](docs/REcoffeePrd.md)
 - Progres per milestone: [`docs/PROGRESS.md`](docs/PROGRESS.md)
 - Operasional dan serah terima: [`docs/serah-terima.md`](docs/serah-terima.md)
+- Pindah ke akun client: [`docs/pindah-ke-client.md`](docs/pindah-ke-client.md)
 - Design system: [`docs/design-system.md`](docs/design-system.md)
 - Dokumen MPPL (`docs/mppl/`): [project charter](docs/mppl/01-project-charter.md), [ruang lingkup dan WBS](docs/mppl/02-ruang-lingkup-wbs.md),
   [kebutuhan dan analisis data](docs/mppl/03-kebutuhan-dan-analisis-data.md), [use case](docs/mppl/04-use-case.md),

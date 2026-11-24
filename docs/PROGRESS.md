@@ -18,9 +18,24 @@ Log per milestone (PRD aturan 9). Centang DoD hanya bila sudah diverifikasi.
 | Menu kafe, alert, animasi (pemilik)  | **Selesai (22 Nov 2026)**                                                                                                                                                                                                                                                          |
 | M6 Testing                           | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: uji otomatis (94 tes), black box (29 UI, 2 SQL, 1 sebagian), 3 bug diperbaiki (B-01, B-02, B-04; B-03 menunggu `qris.png`). Tindak lanjut tidak memblokir: `qris.png` (TC-11), sesi UAT, TC-10 dan TC-30 lewat UI |
 | M7 Deployment                        | **Ditutup dari sisi kode (22 Nov 2026)** atas keputusan pemilik: produksi aktif di https://recoffee-ten.vercel.app, login Google terbukti, 28 QR dibuat, keep-alive hijau. Tindak lanjut: `qris.png` dan cetak QR                                                                  |
-| M8 Laporan akhir dan persiapan demo  | **Laporan terisi di Google Docs (22 Nov 2026)**: 123 halaman, 6 bab, 42 gambar, 83 tabel, daftar isi otomatis. Sisa: nama dosen, tab kanan di daftar gambar/tabel, hasil UAT, skenario demo                                                                                         |
+| M8 Laporan akhir dan persiapan demo  | **Laporan terisi di Google Docs (22 Nov 2026)**: 123 halaman, 6 bab, 42 gambar, 83 tabel, daftar isi otomatis. Sisa: nama dosen, tab kanan di daftar gambar/tabel, hasil UAT, skenario demo                                                                                        |
 
 ---
+
+## Pindah ke akun client (24 Nov 2026, berjalan)
+
+Pemilik memutuskan seluruh project pindah ke akun client: repo GitHub ditransfer, project Supabase ditransfer
+(data, URL, dan kunci tetap), client membuat OAuth Google dan project Vercel sendiri (alamat `*.vercel.app` berubah,
+QR dibuat ulang). Keputusan 22 Nov "semua tetap di akun pemilik" tidak berlaku lagi. Langkah lengkap ada di
+[`docs/pindah-ke-client.md`](pindah-ke-client.md); `CLAUDE.md` di root ditambahkan supaya Claude Code di laptop client
+langsung paham project ini.
+
+- [ ] Langkah 0: akun client (Google, GitHub, Vercel, Supabase) dan Git + Node di laptop
+- [ ] Langkah 2: transfer repo GitHub
+- [ ] Langkah 3: transfer project Supabase
+- [ ] Langkah 4 sampai 6: jalan di laptop client, login Google client, deploy Vercel client
+- [ ] Langkah 7 dan 8: QR baru, alamat di dokumen, uji checklist
+- [ ] Langkah 9: bersih-bersih akun pemilik
 
 ## M8 — Laporan akhir dan persiapan demo (rencana, belum dimulai)
 
@@ -66,7 +81,7 @@ https://docs.google.com/document/d/1IgCogO9JQQ0A_5KCPdPw9nTyDaNmFDJyDDcYQ--MOW0/
 
 Sisa pekerjaan laporan:
 
-1. Ganti `[Nama Dosen Pengampu]` (sampul dan lembar persetujuan charter) dan cek prodi di sampul (ditulis Sistem Informasi).
+1. Nama dosen sudah diisi (Gusmayeni, S.Kom., M.Kom., 23 Nov 2026). Prodi di sampul (Sistem Informasi) belum dikonfirmasi pemilik.
 2. Tambah perhentian tab kanan di daftar gambar dan daftar tabel agar nomor halaman rata kanan (pilih barisnya, klik penggaris
    di 14 cm, pilih tab kanan). Gagal dikerjakan karena jendela Chrome tidak terlihat.
 3. Setelah ada perubahan isi: perbarui daftar isi (klik daftar isi, ikon segarkan) dan cek ulang nomor di daftar gambar/tabel.
@@ -85,12 +100,12 @@ realisasi tercatat di `07-estimasi-jadwal.md`. Ini menjaga laporan tetap jujur b
 
 **WBS 4 fase × 4 paket kerja (1.1 sampai 4.4)**, menggantikan WBS 6 fase di `02-ruang-lingkup-wbs.md` untuk laporan:
 
-| Fase (minggu)                          | x.1                                      | x.2                                | x.3                               | x.4                                  |
-| -------------------------------------- | ---------------------------------------- | ---------------------------------- | --------------------------------- | ------------------------------------ |
-| 1 Inisiasi dan perencanaan (M1)        | Kick-off dan kebutuhan klien             | Project charter dan stakeholder    | WBS dan estimasi pekerjaan        | Jadwal, anggaran, risiko             |
-| 2 Analisis dan perancangan (M1 dan M2) | Kebutuhan fungsional dan non-fungsional  | Use case, activity, sequence, flow | ERD, LRS, kamus data              | Design system dan mockup UI          |
-| 3 Implementasi (M2 sampai M4)          | Setup proyek dan database Supabase + RLS | Frontend pelanggan                 | Frontend kasir dan manajer        | Integrasi dan deployment Vercel      |
-| 4 Pengujian dan penutupan (M4 dan M5)  | Unit test dan black box                  | UAT                                | Perbaikan bug, QR meja, rilis     | Laporan, demo, serah terima (BAST)   |
+| Fase (minggu)                          | x.1                                      | x.2                                | x.3                           | x.4                                |
+| -------------------------------------- | ---------------------------------------- | ---------------------------------- | ----------------------------- | ---------------------------------- |
+| 1 Inisiasi dan perencanaan (M1)        | Kick-off dan kebutuhan klien             | Project charter dan stakeholder    | WBS dan estimasi pekerjaan    | Jadwal, anggaran, risiko           |
+| 2 Analisis dan perancangan (M1 dan M2) | Kebutuhan fungsional dan non-fungsional  | Use case, activity, sequence, flow | ERD, LRS, kamus data          | Design system dan mockup UI        |
+| 3 Implementasi (M2 sampai M4)          | Setup proyek dan database Supabase + RLS | Frontend pelanggan                 | Frontend kasir dan manajer    | Integrasi dan deployment Vercel    |
+| 4 Pengujian dan penutupan (M4 dan M5)  | Unit test dan black box                  | UAT                                | Perbaikan bug, QR meja, rilis | Laporan, demo, serah terima (BAST) |
 
 **Estimasi** memakai three-point (PERT, E = (O + 4M + P) / 6) per paket kerja. **Biaya** dihitung per peran simulasi (PM,
 System Analyst, UI/UX, Programmer, Tester) dikali jam PERT, ditambah infrastruktur (Rp0, paket gratis) dan contingency 10%.
@@ -100,16 +115,16 @@ Tarif per jam adalah asumsi dan ditulis sebagai asumsi.
 Kasir, dan Manajer kafe, dengan Kasir dan Manajer memakai peran admin yang sama (generalisasi aktor di diagram use case).
 Menunggu keputusan pemilik.
 
-| Bagian                         | Isi                                                                                                                                   | Bahan                                                  |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| Halaman depan                  | Sampul (judul, logo UNPAM, nama, NIM, dosen, prodi, fakultas, tahun), kata pengantar, daftar isi, daftar gambar, daftar tabel         | Logo dari pemilik                                      |
-| BAB I Pendahuluan              | Latar belakang, rumusan dan batasan masalah, tujuan, manfaat, metodologi, sistematika penulisan                                       | `01`, `02`                                             |
-| BAB II Landasan teori          | MPPL dan PMBOK, charter, WBS, PERT, Gantt dan jalur kritis, risiko, ERD, LRS, UML, black box, UAT, teknologi yang dipakai             | Baru, ringkas                                          |
-| BAB III Manajemen proyek       | Identitas, charter, stakeholder dan RACI, SWOT, ruang lingkup, WBS + kamus, estimasi PERT, Gantt 5 minggu, network diagram, milestone, anggaran, risiko, komunikasi, change log revisi klien, skenario proyek akademik | `01`, `02`, `07`, `08`, `09`; WBS, PERT, Gantt baru     |
-| BAB IV Analisis dan perancangan | Kebutuhan, analisis data, use case + spesifikasi, activity diagram, sequence diagram, user flow, ERD, LRS + transformasi, kamus data, arsitektur, design system, mockup | `03` sampai `06`; activity, sequence, user flow baru    |
-| BAB V Implementasi dan pengujian | Teknologi, struktur database (tangkapan layar Supabase: tabel, skema, RLS, function), tangkapan layar aplikasi produksi, deployment, QR meja, unit test, black box, BVA, aksesibilitas, UAT, bug | `10`, `11`, `serah-terima.md`; tangkapan layar baru    |
-| BAB VI Penutup                 | Kesimpulan, saran, lessons learned                                                                                                    | Baru                                                   |
-| Daftar pustaka dan lampiran    | Rujukan teori, BAST, bukti uji                                                                                                        | `docs/mppl/bukti/`                                     |
+| Bagian                           | Isi                                                                                                                                                                                                                    | Bahan                                                |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Halaman depan                    | Sampul (judul, logo UNPAM, nama, NIM, dosen, prodi, fakultas, tahun), kata pengantar, daftar isi, daftar gambar, daftar tabel                                                                                          | Logo dari pemilik                                    |
+| BAB I Pendahuluan                | Latar belakang, rumusan dan batasan masalah, tujuan, manfaat, metodologi, sistematika penulisan                                                                                                                        | `01`, `02`                                           |
+| BAB II Landasan teori            | MPPL dan PMBOK, charter, WBS, PERT, Gantt dan jalur kritis, risiko, ERD, LRS, UML, black box, UAT, teknologi yang dipakai                                                                                              | Baru, ringkas                                        |
+| BAB III Manajemen proyek         | Identitas, charter, stakeholder dan RACI, SWOT, ruang lingkup, WBS + kamus, estimasi PERT, Gantt 5 minggu, network diagram, milestone, anggaran, risiko, komunikasi, change log revisi klien, skenario proyek akademik | `01`, `02`, `07`, `08`, `09`; WBS, PERT, Gantt baru  |
+| BAB IV Analisis dan perancangan  | Kebutuhan, analisis data, use case + spesifikasi, activity diagram, sequence diagram, user flow, ERD, LRS + transformasi, kamus data, arsitektur, design system, mockup                                                | `03` sampai `06`; activity, sequence, user flow baru |
+| BAB V Implementasi dan pengujian | Teknologi, struktur database (tangkapan layar Supabase: tabel, skema, RLS, function), tangkapan layar aplikasi produksi, deployment, QR meja, unit test, black box, BVA, aksesibilitas, UAT, bug                       | `10`, `11`, `serah-terima.md`; tangkapan layar baru  |
+| BAB VI Penutup                   | Kesimpulan, saran, lessons learned                                                                                                                                                                                     | Baru                                                 |
+| Daftar pustaka dan lampiran      | Rujukan teori, BAST, bukti uji                                                                                                                                                                                         | `docs/mppl/bukti/`                                   |
 
 Gambar yang perlu dibuat baru: diagram WBS, Gantt 5 minggu, network diagram, 4 sampai 5 activity diagram, 3 sampai 4 sequence
 diagram (kirim pesanan, minta bill, konfirmasi bayar, login Google), 2 user flow (pelanggan, kasir), arsitektur, tangkapan layar
@@ -130,7 +145,7 @@ Supabase dan aplikasi. Diagram dibuat lewat skrip di `scripts/` seperti ERD dan 
 
 - Format laporan dan sistematika dari dosen (template, jumlah halaman).
 - Apakah jurnal diminta.
-- Isian `[...]` di dokumen: nama dosen, tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu, tanda tangan di charter.
+- Isian `[...]` di dokumen: tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu, tanda tangan di charter.
 - `public/qris.png` dan cetak QR meja 1, 18, 27 (pindai satu dengan HP).
 - Dua akun Google untuk demo, keduanya terdaftar sebagai Test user. Uji login dari perangkat presentasi jauh sebelum hari H (R14).
 - Konfirmasi ke dosen atau teman bahwa "data analisis" berarti analisis kebutuhan data.
@@ -178,7 +193,7 @@ Tambahan: `scripts/generate-use-case.mjs` membuat `docs/mppl/diagram/use-case.sv
 ### Keputusan dan catatan
 
 - Dokumen ditulis sebagai dokumen mandiri untuk dosen (PRD adalah dokumen kerja internal). Angka dan status memakai keadaan 22 Nov.
-- **Isian yang hanya diketahui pelaksana** ditandai `[...]`: nama dosen, tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu,
+- **Isian yang hanya diketahui pelaksana** ditandai `[...]`: tanggal pasti Pekan 14, biaya cetak QR, biaya alat bantu,
   dan tanda tangan di charter.
 - Dua tafsiran "data analisis" dicakup di `03`: analisis kebutuhan data (utama, sesuai PRD) dan ringkasan analitik dasbor.
 - Diagram tersedia sebagai `.svg` dan `.drawio`. Versi PNG belum dibuat; bila dosen meminta, ekspor dari draw.io (File, Export as, PNG).

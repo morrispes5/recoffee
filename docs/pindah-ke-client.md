@@ -66,6 +66,11 @@ seperti `docs/serah-terima.md` bagian 4. Data pesanan lama hilang, tapi isinya h
 
 ## Langkah 4. Jalankan di laptop client [CLIENT]
 
+Repo masih privat. Bila belum ditransfer (langkah 2), client hanya bisa clone setelah **[PEMILIK]** mengundangnya:
+https://github.com/morrispes5/recoffee, Settings, Collaborators, **Add people**, isi username GitHub client, lalu
+client menerima undangan lewat email. Alamat clone-nya `https://github.com/morrispes5/recoffee.git`. Saat clone
+pertama, Git di laptop client akan membuka jendela login GitHub; masuk dengan akun GitHub client.
+
 ```powershell
 git clone https://github.com/<client>/recoffee.git
 cd recoffee

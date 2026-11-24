@@ -3,7 +3,7 @@
 <p style="font-family:'Times New Roman',serif;font-size:12pt;text-align:center;line-height:1.5;margin:18pt 0 0 0"><b>RE:COFFEE<br>SISTEM PEMESANAN KAFE BERBASIS MEJA DENGAN QR CODE</b></p>
 <p style="font-family:'Times New Roman',serif;font-size:12pt;font-style:italic;text-align:center;line-height:1.5;margin:12pt 0 0 0">Perencanaan, pelaksanaan, dan pengendalian proyek selama lima minggu</p>
 <p style="font-family:'Times New Roman',serif;font-size:12pt;text-align:center;line-height:1.5;margin:18pt 0 0 0">Diajukan untuk memenuhi tugas Ujian Akhir Semester<br>mata kuliah Manajemen Proyek Perangkat Lunak</p>
-<p style="font-family:'Times New Roman',serif;font-size:12pt;text-align:center;line-height:1.5;margin:6pt 0 0 0">Dosen Pengampu: [Nama Dosen Pengampu]</p>
+<p style="font-family:'Times New Roman',serif;font-size:12pt;text-align:center;line-height:1.5;margin:6pt 0 0 0">Dosen Pengampu: Gusmayeni, S.Kom., M.Kom.</p>
 <p style="text-align:center;margin:30pt 0 30pt 0">{{img:logo-unpam.png:5}}</p>
 <p style="font-family:'Times New Roman',serif;font-size:12pt;text-align:center;line-height:1.5;margin:0">Disusun oleh:</p>
 <p style="font-family:'Times New Roman',serif;font-size:12pt;font-weight:bold;text-align:center;line-height:1.5;margin:0">Khairunisa Yulia Cahyani</p>

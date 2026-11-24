@@ -92,7 +92,7 @@ Tabel: Lembar persetujuan project charter
 | --- | --- | --- | --- |
 | Project manager | Khairunisa Yulia Cahyani | | 23 Oktober 2026 |
 | Klien | Pemilik kafe RE:coffee | | 23 Oktober 2026 |
-| Mengetahui, dosen pengampu | [Nama Dosen Pengampu] | | |
+| Mengetahui, dosen pengampu | Gusmayeni, S.Kom., M.Kom. | | |
 
 ## 3.4 Stakeholder dan Organisasi Proyek
 

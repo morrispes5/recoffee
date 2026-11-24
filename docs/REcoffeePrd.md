@@ -2229,7 +2229,7 @@ Matriks: risiko dengan kombinasi Tinggi–Tinggi atau Sedang–Tinggi (R1, R2, R
 ### 24.1 Template Project Charter (`docs/mppl/01-project-charter.md`)
 ```
 Judul proyek        : RE:coffee — Sistem Pemesanan Kopi Berbasis Meja
-Sponsor / Dosen     : [Nama dosen MPPL]
+Sponsor / Dosen     : Gusmayeni, S.Kom., M.Kom.
 Pelaksana           : Khairunisa Yulia Cahyani (241011701074) — PM, Developer, QA (proyek individu)
 Tanggal mulai       : [tanggal]
 Target selesai      : Pekan 14, akhir Desember 2026 ([tanggal])

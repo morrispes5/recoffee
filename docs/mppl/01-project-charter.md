@@ -9,7 +9,7 @@
 | ----------------- | --------------------------------------------------------------------------------------------- |
 | Judul proyek      | RE:coffee, sistem pemesanan kopi berbasis meja                                                |
 | Mata kuliah       | Manajemen Proyek Perangkat Lunak (MPPL), proyek UAS dengan tema bebas                         |
-| Sponsor / dosen   | `[Nama dosen MPPL]`                                                                           |
+| Sponsor / dosen   | Gusmayeni, S.Kom., M.Kom.                                                                           |
 | Pelaksana         | Khairunisa Yulia Cahyani (241011701074): Project Manager, Developer, dan QA (proyek individu) |
 | Tanggal mulai     | 21 November 2026 (commit pertama repositori)                                                  |
 | Target selesai    | Pekan 14, akhir Desember 2026 (`[tanggal pasti menurut kalender kampus]`)                     |
@@ -140,4 +140,4 @@ Daftar lengkap R1 sampai R16 beserta status ada di `09-risiko.md`.
 | Peran             | Nama                     | Tanda tangan | Tanggal |
 | ----------------- | ------------------------ | ------------ | ------- |
 | Pelaksana         | Khairunisa Yulia Cahyani |              |         |
-| Mengetahui, dosen | `[Nama dosen MPPL]`      |              |         |
+| Mengetahui, dosen | Gusmayeni, S.Kom., M.Kom.      |              |         |

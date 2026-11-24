@@ -9,7 +9,48 @@ Setiap langkah ditandai siapa yang mengerjakan:
 - **[CLIENT]** dikerjakan client. Client boleh minta bantuan Claude Code di laptopnya; `CLAUDE.md` di root repo
   sudah menjelaskan project ini ke Claude.
 
-## Ringkasan: apa pindah ke mana
+## Dua jalan
+
+- **Jalan A, transfer** (langkah 0 sampai 9 di bawah). Data dan URL Supabase ikut pindah, tapi pemilik lama harus
+  ikut klik di GitHub dan Supabase.
+- **Jalan B, pasang baru** (dipilih pemilik 24 Nov 2026). Client clone repo publik ini, lalu Claude Code di laptop
+  client memasang semuanya dari nol di akun client: repo GitHub sendiri, project Supabase baru dari
+  `supabase/migrations` dan `seed.sql`, OAuth Google, Vercel, dan QR baru. Pemilik lama tidak perlu ikut. Data
+  pesanan lama tidak ikut (isinya hanya data uji); menu dan 28 meja dibuat ulang oleh migrasi dan seed.
+
+### Prompt Jalan B untuk Claude Code di laptop client
+
+Buka Claude Code di folder kosong (misalnya `Documents\recoffee-nisa`), ganti `<gmail kamu>`, lalu tempel:
+
+```text
+Aku mau menjalankan project RE:coffee di laptop ini dan memasangnya di akun-akunku sendiri.
+Repo: https://github.com/morrispes5/recoffee (publik).
+
+1. Clone repo itu ke folder ini. Baca CLAUDE.md, README.md, docs/pindah-ke-client.md (bagian "Jalan B")
+   dan docs/serah-terima.md sampai paham.
+2. Cek Git dan Node.js (minimal versi 22). Kalau belum ada, kasih tahu cara memasangnya.
+3. Pasang dari nol di akunku, jangan pakai akun pemilik lama (morrispes5):
+   - GitHub: buat repo privat "recoffee" di akunku, ganti remote origin ke repo itu, lalu push.
+   - Supabase: buat project baru region Singapore. Jalankan supabase/migrations/0001 sampai 0005 berurutan,
+     lalu supabase/seed.sql dengan email admin diganti Gmail-ku.
+   - Isi .env.local dengan URL dan publishable key project baru, lalu npm install dan npm run dev.
+     Pastikan http://localhost:5173/meja/5 menampilkan menu.
+   - Google Cloud: buat OAuth client untuk login kasir (status Testing, Gmail-ku jadi test user),
+     sambungkan ke Supabase Auth provider Google.
+   - Vercel: import repo GitHub-ku, isi environment variables, deploy.
+   - Supabase URL Configuration (Site URL dan Redirect URLs untuk alamat Vercel dan localhost), GitHub Secrets
+     untuk workflow keep-alive, buat ulang QR meja dengan alamat Vercel baru, ganti alamat
+     recoffee-ten.vercel.app di dokumen, lalu commit dan push.
+4. Kerjakan satu per satu. Langkah yang harus diklik di dashboard jelaskan pelan-pelan dengan bahasa sederhana,
+   lalu tunggu aku bilang beres. Pakai CLI (gh, npx supabase, npx vercel) kalau bisa supaya cepat.
+   Rahasia seperti Client Secret Google aku isi sendiri di dashboard; jangan minta aku menempelnya di chat.
+5. Terakhir jalankan checklist uji di docs/serah-terima.md bagian 2, lalu perbarui docs/serah-terima.md
+   bagian 1 dan CLAUDE.md dengan akun dan alamat yang baru.
+
+Gmail-ku untuk login kasir: <gmail kamu>
+```
+
+## Jalan A: ringkasan apa pindah ke mana
 
 | Bagian              | Cara pindah                           | Data ikut?                     | Alamat berubah?                         |
 | ------------------- | ------------------------------------- | ------------------------------ | --------------------------------------- |

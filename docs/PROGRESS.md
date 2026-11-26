@@ -85,7 +85,7 @@ Sisa pekerjaan laporan:
 2. Tambah perhentian tab kanan di daftar gambar dan daftar tabel agar nomor halaman rata kanan (pilih barisnya, klik penggaris
    di 14 cm, pilih tab kanan). Gagal dikerjakan karena jendela Chrome tidak terlihat.
 3. Setelah ada perubahan isi: perbarui daftar isi (klik daftar isi, ikon segarkan) dan cek ulang nomor di daftar gambar/tabel.
-4. Isi hasil UAT setelah sesi dijalankan, dan pasang `qris.png` bila sudah ada.
+4. Isi hasil UAT setelah sesi dijalankan. `public/qris.png` sudah dipasang (26 Nov 2026, B-03); setelah tampil di produksi, ubah TC-11 menjadi lulus dan B-03 menjadi selesai di BAB V dan VI laporan.
 
 ### Susunan laporan (rencana revisi 22 Nov 2026, permintaan pemilik)
 

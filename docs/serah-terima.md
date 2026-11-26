@@ -42,7 +42,7 @@ Lakukan sehari sebelum demo (H-1) dan ulangi singkat pada pagi harinya.
 - [ ] Cek dashboard Supabase: project tidak berstatus _paused_. Bila paused, tekan **Restore project** dan tunggu
       beberapa menit.
 - [ ] GitHub, tab Actions, workflow `keep-alive`: jalankan manual (Run workflow) dan pastikan hijau.
-- [ ] `public/qris.png` terpasang dan hanya berisi kotak QR (tanpa NMID dan alamat).
+- [x] `public/qris.png` terpasang dan hanya berisi kotak QR (tanpa NMID dan alamat). Dipasang 26 Nov 2026.
 - [ ] Cetak `/qr-meja/cetak.html` (Ctrl+P), minimal meja 1, 18, dan 27. Pindai satu QR dengan kamera HP dan
       pastikan membuka meja yang benar.
 - [ ] Bila penguji akan mencoba memesan atau masuk kasir, daftarkan Gmail mereka sebagai _Test user_ di Google

@@ -13,7 +13,7 @@ Dua peran diuji: **pelanggan** (3 sampai 4 orang) dan **kasir** (1 sampai 2 oran
 - [ ] Siapkan alamat aplikasi. Dua pilihan: (a) situs hasil deploy M7, atau (b) laptop pemilik di jaringan
       Wi-Fi yang sama dengan alamat `http://<IP-laptop>:5173` (jalankan `npm run dev -- --host`). Pilihan (b)
       membutuhkan alamat itu ditambahkan ke Redirect URLs di Supabase, jadi pilihan (a) lebih mudah.
-- [ ] Pasang `public/qris.png` agar langkah bayar QRIS tidak menampilkan penanda kosong.
+- [x] Pasang `public/qris.png` agar langkah bayar QRIS tidak menampilkan penanda kosong (26 Nov 2026).
 - [ ] Bersihkan data uji lama (urutan hapus: `item_pesanan`, `pesanan`, `sesi_meja`) supaya denah mulai kosong.
 - [ ] Untuk peran kasir: daftarkan email teman di tabel `admin` selama sesi, lalu hapus setelahnya.
 
